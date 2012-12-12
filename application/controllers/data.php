@@ -14,7 +14,7 @@ class Data extends CI_Controller {
     	parent::__construct();
         // Your own constructor code
     }
-
+	// hallo world
 	public function index()
 	{
 		echo 'Hello World!';
