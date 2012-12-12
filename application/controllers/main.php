@@ -27,7 +27,7 @@ class main extends CI_Controller {
         $this -> layout_data['navigation'] = $this -> load -> view('navigation', NULL, true);
 
         //Models laden
-        $this -> load -> model('Dbuser_model');
+        $this -> load -> model('user_model');
         //Pr�fung des Logins und Session
         $this -> is_logged_in();
         $this -> updateSession();
@@ -45,11 +45,11 @@ class main extends CI_Controller {
         return true;
     }
 
-    function isAdmin($DBUserID = FALSE) {
-        if (!is_numeric($DBUserID)) {
+    function isAdmin($userID = FALSE) {
+        if (!is_numeric($userID)) {
             return FALSE;
         }
-        $id = $this -> Dbuser_model -> isAdmin($this -> session -> userdata('user_id'));
+        $id = $this -> user_model -> isAdmin($this -> session -> userdata('user_id'));
         if (is_numeric($id) && $id > 0) {
             return TRUE;
         } else {
@@ -105,7 +105,7 @@ class main extends CI_Controller {
                 break;
             case 'testdb' :
                 $this -> load -> model('User_model');
-                $this -> load -> model('Dbuser_model');
+                $this -> load -> model('user_model');
                 $this -> load -> model('Vera_model');
                 $this -> load -> model('Kreis_model');
                 $this -> load -> model('Quali_model');
@@ -211,11 +211,11 @@ class main extends CI_Controller {
                 break;
             case 'changePW' :
                 $site = "form/admin_change_pw";
-                $this -> load -> model('Dbuser_model');
+                $this -> load -> model('user_model');
                 $this -> form_validation -> set_message('required', 'Das Feld %s ist erforderlich.');
-                $this -> form_validation -> set_rules($this -> Dbuser_model -> getValidationRulesCHANGEPW());
+                $this -> form_validation -> set_rules($this -> user_model -> getValidationRulesCHANGEPW());
                 breaK;
-            case 'deleteDBUser' :
+            case 'deleteuser' :
                 if ($isAdmin) {
                     if (!empty($para1)) {
                         $contentData['pos'] = $para1;
@@ -288,9 +288,9 @@ class main extends CI_Controller {
             case 'administration' :
                 if ($isAdmin) {
                     $this -> load -> library('form_validation');
-                    $this -> load -> model('Dbuser_model');
+                    $this -> load -> model('user_model');
                     $site = 'administration';
-                    $this -> form_validation -> set_rules($this -> Dbuser_model -> getValidationRules());
+                    $this -> form_validation -> set_rules($this -> user_model -> getValidationRules());
                     if ($this -> form_validation -> run()) {
                         $this -> layout_data['isOK'] = TRUE;
                     }

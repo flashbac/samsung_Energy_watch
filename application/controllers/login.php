@@ -33,26 +33,23 @@ class login extends CI_Controller {
     }
 
     function validate_credentials() {
-        echo "<p>validate_credentials</p>";
-        $this -> load -> model('dbuser_model');
-        echo "<p>dbuser_model loaded</p>";
+        
+        $this -> load -> model('user_model');
 
-        //$query = $this -> dbuser_model -> check_user($this -> dbuser_model -> getIDfromUsername($this -> input -> post('username')), $this -> input -> post('username_pw'));
-        $query = $this -> dbuser_model -> check_user($this -> input -> post('username'), $this -> input -> post('username_pw'));
+        //$query = $this -> user_model -> check_user($this -> user_model -> getIDfromUsername($this -> input -> post('username')), $this -> input -> post('username_pw'));
+        $query = $this -> user_model -> check_user($this -> input -> post('username'), $this -> input -> post('username_pw'));
         
         
         if ($query)// if the user's credentials validated...
         {
-            echo "<p>user valid</p>";
-            $data = array('username' => $this -> input -> post('username'), 'user_id' => $this -> dbuser_model -> getIDfromUsername($this -> input -> post('username')), 'is_logged_in' => true);
+            $data = array('username' => $this -> input -> post('username'), 'user_id' => $this -> user_model -> getIDfromUsername($this -> input -> post('username')), 'is_logged_in' => true);
             $this -> updateSession();
             $this -> session -> set_userdata($data);
             $this -> session -> set_userdata('per_page','20');
-            $this -> session -> set_userdata('isAdmin',$this -> dbuser_model -> isAdmin($data['user_id']));
+            $this -> session -> set_userdata('isAdmin',$this -> user_model -> isAdmin($data['user_id']));
             redirect('main/index');
         } else// incorrect username or password
         {
-            echo "<p>user NOT valid</p>";
             $this -> index("LOGIN_FAIL");
         }
     }

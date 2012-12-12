@@ -3,19 +3,19 @@
     $errors = array();
     $successes = array();
     
-    if( !$id || !$this->Dbuser_model->isAdmin($id) ){
+    if( !$id || !$this->user_model->isAdmin($id) ){
         redirect(site_url("main/index")); 
     }   
-echo "";
     if(isset($isOK)){
+        echo "<p>is OK</p>";
         $userName   = $this->input->post('Benutzername');
         $userPW     = $this->input->post('Passwort');
         $pww        = $this->input->post('Passwortw');
         $isAdmin    = $this->input->post('Admin');
-        if($this->Dbuser_model->getIDfromUsername($userName)){
+        if($this->user_model->getIDfromUsername($userName)){
             $errors[] =  '<p>'.htmlentities("Benutzername ($userName) schon vorhanden!").'</p>';
         }else{
-            if($id = $this->Dbuser_model->addUser($userName, $userPW, $isAdmin)){
+            if($id = $this->user_model->addUser($userName, $userPW, $isAdmin)){
                 //erfolgreich
                 $successes[] = '<p>'.htmlentities("neuer Benutzer angelegt (ID: $id)").'</p>';
             }else{
