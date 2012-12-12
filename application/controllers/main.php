@@ -184,10 +184,10 @@ class main extends CI_Controller {
                     }
                 }
                 break;
-            case 'site_Veranstaltungen' :
+            case 'addZaehler' :
                 //**************Veranstaltungen**********************
-                $site = "form/vtabelle";
-                $this -> load -> model('Vera_model');
+                $site = "form/list_meter";
+                $this -> load -> model('Metermodel');
                 $contentData['pos'] = FALSE;
                 $contentData['delID'] = FALSE;
                 if ($para1) {
@@ -249,9 +249,9 @@ class main extends CI_Controller {
                     $this -> load -> model('Pos_model');
                 }
                 break;
-            case 'posList' :
-                $this -> load -> model('Pos_model');
-                $site = "form/pos_list";
+            case 'listmeters' :
+                $this -> load -> model('Meter_model');
+                $site = "form/list_meter";
                 $contentData['pos'] = $para1;
                 $contentData['delID'] = FALSE;
                 if ($para2 && $isAdmin) {
@@ -313,21 +313,16 @@ class main extends CI_Controller {
                     $this -> load -> model('Pos_model');
                 }
                 break;
-            case 'qualiAdd' :
+            case 'addMeter' :
                 if ($isAdmin) {
                     $this -> load -> library('form_validation');
-                    $this -> load -> model('Quali_model');
-                    $site = 'form/quali_add';
-                    $contentData['qualiID'] = $para1;
+                    $this -> load -> model('Meter_model');
+                    $site = 'form/add_meter';
+                    $contentData['meterID'] = $para1;
                     $this -> form_validation -> set_message('required', 'Das Feld %s ist erforderlich.');
-                    $this -> form_validation -> set_rules($this -> Quali_model -> getValidationRules());
+                    $this -> form_validation -> set_rules($this -> Meter_model -> getValidationRules());
                 } else {
                     $site = 'overview';
-                    $this -> load -> model('User_model');
-                    $this -> load -> model('Vera_model');
-                    $this -> load -> model('Kreis_model');
-                    $this -> load -> model('Quali_model');
-                    $this -> load -> model('Pos_model');
                 }
                 break;
 

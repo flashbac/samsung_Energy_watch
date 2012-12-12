@@ -3,8 +3,8 @@
 	<li><a class="u3" href="<?php echo site_url("main/index"); ?>">Hauptseite</a></li>
 	<li><a class="u1">Z&auml;hler</a></li>
 	
-	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/site_neuesMitglied/new"); ?>">Z&auml;hler anlegen</a></li>
-	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/listMitglieder"); ?>">Z&auml;hler anzeigen</a></li>
+	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/addMeter"); ?>">Z&auml;hler anlegen</a></li>
+	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/listmeters"); ?>">Z&auml;hler anzeigen</a></li>
 	
 	<li><a class="u1">Verbrauch</a></li>
 	
