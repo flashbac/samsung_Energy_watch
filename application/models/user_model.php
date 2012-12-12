@@ -125,7 +125,7 @@ class user_model extends CI_Model {
         }
         $salt = $this -> generateSalt();
         $hasedPW = sha1($userPW . $salt);
-        $query = "INSERT INTO `user` (Name, Password, Salt, Admin) VALUES ('$userName', '$hasedPW', '$salt', $isAdmin);";
+        $query = "INSERT INTO `user` (UserName, Password, Salt, Admin) VALUES ('$userName', '$hasedPW', '$salt', $isAdmin);";
 
         $DBAnswer = $this -> db -> query($query);
 
@@ -227,12 +227,12 @@ class user_model extends CI_Model {
     }
 
     function getValidationRules() {
-        $config = array( array('field' => 'Benutzername', 'label' => 'Benutzername', 'rules' => 'required|trim|min_length[5]|max_length[12]|xss_clean'), array('field' => 'Password', 'label' => 'Password', 'rules' => 'required|min_length[5]|max_length[20]|matches[Passwordw]'), array('field' => 'Passwordw', 'label' => 'Passwordw', 'rules' => 'required|min_length[5]|max_length[20]'));
+        $config = array( array('field' => 'Benutzername', 'label' => 'Benutzername', 'rules' => 'required|trim|min_length[5]|max_length[12]|xss_clean'), array('field' => 'Passwort', 'label' => 'Passwort', 'rules' => 'required|min_length[5]|max_length[20]|matches[Passwortw]'), array('field' => 'Passwortw', 'label' => 'Passwortw', 'rules' => 'required|min_length[5]|max_length[20]'));
         return $config;
     }
 
     function getValidationRulesCHANGEPW() {
-        $config = array( array('field' => 'altPW', 'label' => 'altes Password', 'rules' => 'required|trim|min_length[5]|max_length[12]|xss_clean'), array('field' => 'newPW', 'label' => 'Password', 'rules' => 'required|min_length[5]|max_length[20]|matches[newPWw]'), array('field' => 'newPWw', 'label' => 'Passwordw', 'rules' => 'required|min_length[5]|max_length[20]'));
+        $config = array( array('field' => 'altPW', 'label' => 'altes Password', 'rules' => 'required|trim|min_length[5]|max_length[12]|xss_clean'), array('field' => 'newPW', 'label' => 'Passwort', 'rules' => 'required|min_length[5]|max_length[20]|matches[newPWw]'), array('field' => 'newPWw', 'label' => 'Passwortw', 'rules' => 'required|min_length[5]|max_length[20]'));
         return $config;
     }
 
