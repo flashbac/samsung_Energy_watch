@@ -267,22 +267,23 @@ class main extends CI_Controller {
                     $contentData['delID'] = $para2;
                 }
                 break;
-            case 'kreisList' :
-                $this -> load -> model('Kreis_model');
-                $this -> load -> model('User_model');
-                $site = "form/kreis_list";
-                $contentData['delID'] = FALSE;
+            case 'chart' :
+                
+                //$this -> load -> model('User_model');
+                $site = "form/chart";
+                $contentData['meterID'] = FALSE;
+                $contentData['date'] = FALSE;
                 if ($para1) {
                     if (is_numeric($para1)) {
-                        $contentData['pos'] = $para1;
-                        if ($para2 && $isAdmin) {
-                            $contentData['delID'] = $para2;
+                        $contentData['meterID'] = $para1;
+                        if ($para2) {
+                            $contentData['date'] = $para2;
                         }
                     } else {
 
                     }
                 } else {
-                    $contentData['pos'] = FALSE;
+                    $contentData['meterID'] = FALSE;
                 }
                 break;
             case 'administration' :
