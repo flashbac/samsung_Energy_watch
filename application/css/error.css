@@ -1,0 +1,102 @@
+div.error
+{
+	background-image: url(../img/Kasten2_rot_hell.png);
+	margin-right: 1.5em;
+	padding-top: 2em;
+	padding-bottom: 0.5em;
+	-moz-border-radius: 3px;
+	width:auto;
+	height:auto;
+	min-height:70px;
+}
+
+div.error h2, div.error b
+{
+	color: red;
+}
+
+div.error p{
+	padding-left: 8em;
+}
+
+* .right
+{
+	float:right;
+}
+
+* .left
+{
+	float:left;
+}
+
+img.skaliere
+{
+max-width: 100%;
+height: auto;
+}
+
+div.success
+{
+	background-image: url(../img/Kasten2_petrol_hell.png);
+	margin-right: 1.5em;
+	padding-top: 2em;
+	padding-bottom: 0.5em;
+	-moz-border-radius: 3px;
+	width:auto;
+	height:auto;
+	min-height:70px;
+}
+
+div.succes h2, div.success b
+{
+	color: red;
+}
+
+div.success p{
+	padding-left: 8em;
+}
+
+* .right
+{
+	float:right;
+}
+
+* .left
+{
+	float:left;
+}
+
+div.info
+{
+	background-image: url(../img/Kasten2_gelb_hell.png);
+	margin-right: 1.5em;
+	padding-top: 2em;
+	padding-bottom: 0.5em;
+	-moz-border-radius: 3px;
+	width:auto;
+	height:auto;
+	min-height:70px;
+	font-variant: small-caps;
+}
+
+div.info p{
+	padding-left: 10em;
+}
+
+div.info h1{
+	padding-left:4em;
+}
+
+div.info h2{
+	padding-left:5.4em;
+}
+
+* .right
+{
+	float:right;
+}
+
+* .left
+{
+	float:left;
+}

@@ -1,0 +1,36 @@
+@CHARSET "UTF-8";
+
+div#content{
+	margin-left: 20em;
+	width: 934px;
+}
+
+#content h1{
+	margin-left:-2em;
+}
+
+#content h2{
+	margin-left:-2.6em;
+}
+
+#content h1, h2, h3{
+	text-decoration:	underline;
+}
+
+.star_gold_add img, .star_silver_add img, .star_gold_delete img, .star_silver_delete img{
+	margin-left: 0;
+    margin-top: -5.2em;
+}
+
+#content th{
+	text-align: left;
+    text-indent: 30px;
+}
+
+#content td{
+	padding-left: 2em;
+}
+
+#suche_b1 b{
+	margin-left: 2em;
+}

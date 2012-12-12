@@ -1,0 +1,139 @@
+#content table {
+	margin-left: 2em;
+	margin-bottom: 40px;
+	margin-top:2em;
+	
+	/*table-layout:fixed;
+	width: 95%;*/
+	
+}
+
+#content td{
+	border-right: 1px solid #aaaaaa;
+	text-align: left;
+	padding-left: 9px;
+	padding-right: 9px;
+	font-size:14px;
+}
+
+/*.highlight { background-color: #8888FF }*/
+.highlight {
+	background-color: #CCE5FF;
+}
+
+#content td:last-child {
+	border-right: none;
+	text-align: center;
+	
+}
+
+/*#content th {
+	text-align: left;
+	padding-left: 0.5em;
+	padding-right: 8em;
+	background: #eeeeff;
+	border-bottom: 1px solid white;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}*/
+
+#name {
+	text-align: left;
+	background: #eeeeff;
+	padding-left: 0.5em;
+	padding-right: 26em;
+	border-bottom: 1px solid white;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}
+
+#plz {
+	text-align: center;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	background: #eeeeff;
+	border-bottom: 1px solid white;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}
+
+#fkt {
+	text-align: left;
+	padding-left: 0.5em;
+	padding-right: 10em;
+	background: #eeeeff;
+	border-bottom: 1px solid white;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}
+
+
+#bezahlt {
+	text-align: center;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	background: #eeeeff;
+	border-bottom: 1px solid white;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}
+
+#del {
+	text-align: center;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	background: #eeeeff;
+	border-bottom: 1px solid white;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}
+
+#content a, #content strong {
+
+	margin-bottom:2em;
+	text-decoration: none;
+	color: black;
+}
+
+ueber:visited{
+color:#000000;
+text-decoration: none;	
+}
+ ueber:active{
+color:#000000;
+text-decoration: none;	
+}
+
+.ueber{
+	font-variant: small-caps;
+    margin-left: 4px;
+/*    word-spacing: -6px;*/
+}
+
+#content a, #content strong {
+
+	margin-bottom:2em;
+}
+
+
+#content div.paging {
+	font-variant: small-caps;
+    margin-left: 2em;
+    margin-bottom: 4em;
+}
+
+#content h2 {
+	font-size: 19px;
+    font-variant: small-caps;
+    margin-left: 1.5em;
+    margin-top: 1.5em;
+}
+
+.a2 img:hover {
+	font-weight: normal;
+	background: #FA5858;
+}
+
+.ueber img{
+ padding-left:25px;
+}

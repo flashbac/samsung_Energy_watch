@@ -1,0 +1,35 @@
+@CHARSET "UTF-8";
+
+div#content h3{
+	
+		/*font-family:Verdana,Tahoma,Arial,sans-serif; */
+		color:#000000;
+		font-size: 20px; 
+		font-variant:	small-caps;
+		margin-top: 1.5em;
+}
+
+div#content legend{
+	
+		/*font-family:Verdana,Tahoma,Arial,sans-serif; */
+		color:#000000;
+		font-size: 20px; 
+		color:#525252;
+		line-height: 30px;
+		margin-top: 3px;
+		font-weight: bolder;
+		font-variant:	small-caps;
+}
+
+table{
+		/*font-family:Verdana,Tahoma,Arial,sans-serif; */
+		color:#000000;
+		font-size: 14px;
+		margin-left: 14px;
+		margin-top: 7px;
+		font-variant:	small-caps;
+}
+
+#submitbutton{
+	margin-bottom: 5em;
+}

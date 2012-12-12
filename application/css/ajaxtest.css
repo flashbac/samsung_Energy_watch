@@ -1,0 +1,23 @@
+	div#tele {
+	position: absolute;
+	padding-bottom: .5em;
+	width: 20em;
+	height: 1.5em;
+	}
+	
+	div#tele div.telefon {
+	position: relative;
+	left: 7em;
+	top: .25em;
+	width: 20em;
+	}
+
+	div#tele div.telefon select {
+	width: 5em;
+	}
+
+    div#tele label	{
+	position: absolute;
+	right: 13.5em;
+	top: .25em;
+	}

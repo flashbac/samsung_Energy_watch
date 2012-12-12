@@ -1,0 +1,81 @@
+#content table {
+	margin-left: 2em;
+	margin-bottom: 40px;
+	
+}
+
+.a1{
+	border-right: 1px solid #aaaaaa;
+	text-align: left;
+	padding-left: 5px;
+	font-size:14px;
+}
+
+tr {
+	background-color: #FFFFFF;
+}
+
+.normal {
+	background-color: #FFFFFF
+}
+/*.highlight { background-color: #8888FF }*/
+.highlight {
+	background-color: #CCE5FF;
+}
+
+#content td:last-child {
+	border-right: none;
+	text-align: center;
+	
+}
+
+#pos{
+	text-align: left;
+	padding-left: 0.5em;
+	padding-right: 40em;
+	background: #eeeeff;
+	border-bottom: 1px solid white;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}
+
+#content strong, div.paging a:hover {
+	font-weight: normal;
+	background: #CCE5FF;
+}
+
+#content a, #content strong {
+	/*background: #e3e3e3;*/
+	padding: 4px 7px;
+	text-decoration: none;
+	/*border: 1px solid #cac9c9;*/
+	color: #292929;
+	/*font-size: 13px;*/
+	font-size:14px;
+	display: inline-block;
+}
+
+div.paging a, div.paging strong {
+	background: #e3e3e3;
+	padding: 4px 7px;
+	text-decoration: none;
+	border: 1px solid #cac9c9;
+	color: #292929;
+	font-size: 13px;
+}
+
+#content div.paging {
+	font-variant: small-caps;
+    margin-left: 2em;
+    margin-bottom: 4em;
+}
+
+#content h3 {
+	font-variant: small-caps;
+    margin-left: 2em;
+    margin-top: 1.5em;
+}
+#content  img:hover {
+	font-weight: normal;
+	background: #FA5858;
+}

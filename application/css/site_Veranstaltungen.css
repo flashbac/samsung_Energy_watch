@@ -1,0 +1,160 @@
+
+#content table {
+	margin-left: 2em;
+	margin-bottom: 40px;
+	table-layout:fixed;
+}
+
+.a1{
+	border-right: 1px solid #aaaaaa;
+	text-align: left;
+	padding: 0.1em;
+}
+
+td.a4 img:hover {
+	font-weight: normal;
+	background: #FA5858;
+}
+
+.normal {
+	background-color: #FFFFFF
+}
+
+/*.highlight { background-color: #8888FF }*/
+.highlight {
+	background-color: #CCE5FF;
+}
+
+#content td:last-child {
+	border-right: none;
+	text-align: center;
+}
+
+#name {
+	text-align: left;
+	padding-left: 0.5em;
+	padding-right: 10em;
+	background: #eeeeff;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}
+#gr {
+	text-align: left;
+	padding-left: 0.5em;
+	padding-right: 2.5em;
+	background: #eeeeff;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}
+
+#plz {
+	text-align: left;
+	padding-left: 0.5em;
+	padding-right: 2.5em;
+	background: #eeeeff;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}
+
+#dstart {
+	text-align: left;
+	padding-left: 0.5em;
+	padding-right: 2.5em;
+	background: #eeeeff;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}
+
+#dende {
+	text-align: left;
+	padding-left: 0.5em;
+	padding-right: 2.5em;
+	background: #eeeeff;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}
+
+#maxT {
+	text-align: left;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	background: #eeeeff;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}
+
+#tnb {
+	text-align: center;
+	padding-left: 0.5em;
+	padding-right: 0.7em;
+	background: #eeeeff;
+	border: 1px solid #aaaaaa;
+	font-variant:	small-caps;
+}
+
+/*#edit {
+	border-bottom: 1px solid #aaaaaa;
+}
+#excel {
+	border-bottom: 1px solid #aaaaaa;
+}*/
+
+
+#content strong, div.paging a:hover {
+	font-weight: normal;
+	background: #CCE5FF;
+}
+
+#content a, #content strong {
+	/*background: #e3e3e3;*/
+	padding: 4px 7px;
+	text-decoration: none;
+	/*border: 1px solid #cac9c9;*/
+	color: #292929;
+	/*font-size: 13px;*/
+	font-size:12px;
+	display: inline-block;
+}
+
+div.paging a, div.paging strong {
+	background: #e3e3e3;
+	padding: 4px 7px;
+	text-decoration: none;
+	border: 1px solid #cac9c9;
+	color: #292929;
+	font-size: 13px;
+}
+
+#content div.paging {
+	font-variant: small-caps;
+    margin-left: 2em;
+    margin-bottom: 4em;
+}
+
+#content h3 {
+    font-variant: small-caps;
+    margin-left: 2em;
+    margin-top: 1.5em;
+}
+
+#searchform{
+	/*position: absolute;
+	top: 45px;
+	left: 590px;
+	font-variant:	small-caps;*/
+	
+	font-variant: small-caps;
+    left: 65.5%;
+    position: relative;
+    top: -38px;
+}
+
+#searchform input{
+	width: 250px;
+}
+
+#typing{
+	left: 1003px;
+    position: absolute;
+    top: 36px;
+}
