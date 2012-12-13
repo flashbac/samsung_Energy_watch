@@ -115,7 +115,6 @@
 	        point.update(newVal);
 	        
 	    }, 3000);
-	});
             
             });
     </script>
