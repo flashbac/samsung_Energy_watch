@@ -194,7 +194,7 @@ class main extends CI_Controller {
                     if (is_numeric($para1)) {
                         $contentData['pos'] = $para1;
                     } else {
-                        if ($isAdmin && $para2) {
+                        if ($para2) {
                             switch ($para1) {
                                 case 'delete' :
                                     if(is_numeric($para2)){
