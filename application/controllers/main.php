@@ -334,16 +334,14 @@ class main extends CI_Controller {
                 }
                 break;
             case 'addMeter' :
-                if ($isAdmin) {
+                
                     $this -> load -> library('form_validation');
                     $this -> load -> model('Meter_model');
                     $site = 'form/add_meter';
                     $contentData['meterID'] = $para1;
                     $this -> form_validation -> set_message('required', 'Das Feld %s ist erforderlich.');
                     $this -> form_validation -> set_rules($this -> Meter_model -> getValidationRules());
-                } else {
-                    $site = 'overview';
-                }
+                
                 break;
 
             case 'alteUserLoeschen' :
