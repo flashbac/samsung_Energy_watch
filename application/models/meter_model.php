@@ -65,7 +65,7 @@ class Meter_model extends CI_Model {
          */
          $query = "SELECT kreisverband.Name from userkreisverband left join
 				kreisverband on kreisverband.KreisverbandID = userkreisverband.KreisverbandID
-                WHERE userkreisverband.UserID=$UserID;";
+                WHERE userkreisverband.UserID=$userID;";
 				
          if($keineWdh){
              $query = "SELECT DISTINCT ID, Name, MeterNumber, Description, Unit FROM `meter` ORDER BY Name LIMIT $limitStart,$limitStop;";
