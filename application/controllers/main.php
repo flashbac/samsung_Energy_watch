@@ -187,7 +187,7 @@ class main extends CI_Controller {
             case 'addMeter' :
                 //**************Veranstaltungen**********************
                 $site = "form/list_meter";
-                $this -> load -> model('Metermodel');
+                $this -> load -> model('Meter_model');
                 $contentData['pos'] = FALSE;
                 $contentData['delID'] = FALSE;
                 if ($para1) {
