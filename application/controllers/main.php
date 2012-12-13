@@ -286,6 +286,25 @@ class main extends CI_Controller {
                     $contentData['meterID'] = FALSE;
                 }
                 break;
+			case 'chart2' :
+                
+                //$this -> load -> model('User_model');
+                $site = "form/chart2";
+                $contentData['meterID'] = FALSE;
+                $contentData['date'] = FALSE;
+                if ($para1) {
+                    if (is_numeric($para1)) {
+                        $contentData['meterID'] = $para1;
+                        if ($para2) {
+                            $contentData['date'] = $para2;
+                        }
+                    } else {
+
+                    }
+                } else {
+                    $contentData['meterID'] = FALSE;
+                }
+                break;
             case 'administration' :
                 if ($isAdmin) {
                     $this -> load -> library('form_validation');

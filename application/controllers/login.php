@@ -33,8 +33,9 @@ class login extends CI_Controller {
     }
 
     function validate_credentials() {
-        
+        echo "<p>start credetials</p>";
         $this -> load -> model('user_model');
+		echo "<p>model loaded</p>";
 
         //$query = $this -> user_model -> check_user($this -> user_model -> getIDfromUsername($this -> input -> post('username')), $this -> input -> post('username_pw'));
         $query = $this -> user_model -> check_user($this -> input -> post('username'), $this -> input -> post('username_pw'));

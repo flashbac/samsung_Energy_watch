@@ -8,7 +8,7 @@
 	
 	<li><a class="u1">Verbrauch</a></li>
 	
-	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/site_neueVeranstaltungen/new"); ?>">aktuellen Verbrauch anzeigen</a></li>
+	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/chart2"); ?>">aktuellen Verbrauch anzeigen</a></li>
 	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/chart"); ?>">Verbrauchs History</a></li>
 	
 	<li><a class="u1" ?>Administration</a></li>
