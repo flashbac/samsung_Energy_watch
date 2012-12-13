@@ -58,7 +58,7 @@ $per_page = $this -> session -> userdata('per_page');
 if(!$pos){
 $pos = 1;
 }
-$data = $this -> Meter_model -> getMeters(($pos-1)*$per_page,$per_page);
+$data = $this -> Meter_model -> getMeters($id, ($pos-1)*$per_page,$per_page);
 if ($data === FALSE) {
 
 echo "<p>Keine Positionen vorhanden!</p>";
