@@ -1,11 +1,13 @@
 
 <ul>
 	<li><a class="u3" href="<?php echo site_url("main/index"); ?>">Hauptseite</a></li>
+	
+	<?php if(! $this->config->item('meter_mode') == 'single'){?>
 	<li><a class="u1">Z&auml;hler</a></li>
 	
 	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/addMeter"); ?>">Z&auml;hler anlegen</a></li>
 	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/listmeters"); ?>">Z&auml;hler anzeigen</a></li>
-	
+	<?php } ?>
 	<li><a class="u1">Verbrauch</a></li>
 	
 	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/chart2"); ?>">aktuellen Verbrauch anzeigen</a></li>
