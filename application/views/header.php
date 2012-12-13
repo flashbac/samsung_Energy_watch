@@ -9,6 +9,8 @@
 <!-- <p align="right" >  -->
 
 <?php
+if(! $this->config->item('meter_mode') == 'single'){
+
 if ($case == "OK"){
 	$username = $this -> session -> userdata('username');
 	$img = base_url().'img/edit.png';
@@ -36,6 +38,7 @@ if ($case == "OK"){
 }
 ?>
 </div>
+<?php }?>
 <!-- </p> -->
 
 
