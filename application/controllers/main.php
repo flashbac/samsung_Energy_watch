@@ -184,7 +184,7 @@ class main extends CI_Controller {
                     }
                 }
                 break;
-            case 'addZaehler' :
+            case 'addMeter' :
                 //**************Veranstaltungen**********************
                 $site = "form/list_meter";
                 $this -> load -> model('Metermodel');
