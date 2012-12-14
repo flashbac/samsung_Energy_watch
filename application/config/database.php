@@ -48,7 +48,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = '88.198.13.243 ';
+$db['default']['hostname'] = '88.198.13.243';
 //$db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'energyAdmin';
 $db['default']['password'] = 'smartmeter';
