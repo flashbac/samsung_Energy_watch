@@ -18,12 +18,11 @@
 		$DBAnswer = $this -> db -> query($query);
         $DBAnswer = $DBAnswer -> result_array();
 		
-		if (count($DBAnswer)>0){
-          	return $DBAnswer;
-		} 
- 		else{
-          	return FALSE;
-		}
+        if (count($DBAnswer)>0) {
+            return $DBAnswer;
+        } else {
+            return FALSE;
+        }
 	}
 	
 	
