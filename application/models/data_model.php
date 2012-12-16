@@ -1,14 +1,15 @@
 <?php
    class Data_model extends CI_Model {
    	
-	 public function __construct() {
-        $this -> load -> database();
+	public function __construct() {
+       $this -> load -> database();
     }
 
     public function getAllUserPosition($userID = FALSE) {
         if (!is_numeric($userID)) {
             return FALSE;
-    }
+    	}
+	}
 	
 	public function getLastValue($meterID){
 		
