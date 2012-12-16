@@ -187,14 +187,14 @@ class main extends CI_Controller {
             case 'addZaehler' :
                 //**************Veranstaltungen**********************
                 $site = "form/list_meter";
-                $this -> load -> model('Metermodel');
+                $this -> load -> model('Meter_model');
                 $contentData['pos'] = FALSE;
                 $contentData['delID'] = FALSE;
                 if ($para1) {
                     if (is_numeric($para1)) {
                         $contentData['pos'] = $para1;
                     } else {
-                        if ($isAdmin && $para2) {
+                        if ($para2) {
                             switch ($para1) {
                                 case 'delete' :
                                     if(is_numeric($para2)){
@@ -286,6 +286,25 @@ class main extends CI_Controller {
                     $contentData['meterID'] = FALSE;
                 }
                 break;
+			case 'chart2' :
+                
+                //$this -> load -> model('User_model');
+                $site = "form/chart2";
+                $contentData['meterID'] = FALSE;
+                $contentData['date'] = FALSE;
+                if ($para1) {
+                    if (is_numeric($para1)) {
+                        $contentData['meterID'] = $para1;
+                        if ($para2) {
+                            $contentData['date'] = $para2;
+                        }
+                    } else {
+
+                    }
+                } else {
+                    $contentData['meterID'] = FALSE;
+                }
+                break;
             case 'administration' :
                 if ($isAdmin) {
                     $this -> load -> library('form_validation');
@@ -315,16 +334,14 @@ class main extends CI_Controller {
                 }
                 break;
             case 'addMeter' :
-                if ($isAdmin) {
+                
                     $this -> load -> library('form_validation');
                     $this -> load -> model('Meter_model');
                     $site = 'form/add_meter';
                     $contentData['meterID'] = $para1;
                     $this -> form_validation -> set_message('required', 'Das Feld %s ist erforderlich.');
                     $this -> form_validation -> set_rules($this -> Meter_model -> getValidationRules());
-                } else {
-                    $site = 'overview';
-                }
+                
                 break;
 
             case 'alteUserLoeschen' :

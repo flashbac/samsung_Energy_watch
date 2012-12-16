@@ -13,11 +13,20 @@ class Data extends CI_Controller {
     {
     	parent::__construct();
         // Your own constructor code
+        
+        //Models laden
+        $this -> load -> model('data_model');
     }
 	// hallo world
 	public function index()
 	{
 		echo 'Hello World!';
+	}
+	
+	public function getvalue($meterID)
+	{
+		echo $this -> Data_model -> getLastValue($meterID);
+	
 	}
 	
 	

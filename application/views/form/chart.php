@@ -12,6 +12,9 @@
                 marginRight: 130,
                 marginBottom: 25
             },
+            credits: {
+            enabled: false
+            },
             title: {
                 text: 'Monnatlicher Verbrauch',
                 x: -20 //center

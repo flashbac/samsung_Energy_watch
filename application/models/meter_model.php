@@ -55,18 +55,22 @@ class Meter_model extends CI_Model {
         }
     }
 
-    public function getMeters($limitStart = 0, $limitStop = 100, $keineWdh = FALSE) {
-        if (!is_numeric($limitStart) || !is_numeric($limitStop)) {
+    public function getMeters($userID = FALSE, $limitStart = 0, $limitStop = 100, $keineWdh = FALSE) {
+        if ($userID == FALSE || !is_numeric($limitStart) || !is_numeric($limitStop)) {
             return FALSE;
         }
 
         /* Bsp. fuer SQL WHERE query
          * SELECT * FROM Persons WHERE UserID=1;
          */
+         $query = "SELECT kreisverband.Name from userkreisverband left join
+				kreisverband on kreisverband.KreisverbandID = userkreisverband.KreisverbandID
+                WHERE userkreisverband.UserID=$userID;";
+				
          if($keineWdh){
              $query = "SELECT DISTINCT ID, Name, MeterNumber, Description, Unit FROM `meter` ORDER BY Name LIMIT $limitStart,$limitStop;";
          }else{
-             $query = "SELECT ID, Name, MeterNumber, Description, Unit  FROM `meter` ORDER BY Name LIMIT $limitStart,$limitStop;";
+             $query = "SELECT ID, Name, MeterNumber, Description, Unit  FROM `meter` WHERE userID=$userID ORDER BY Name LIMIT $limitStart,$limitStop;";
          }
 
         $DBAnswer = $this -> db -> query($query);

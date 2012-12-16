@@ -33,7 +33,6 @@ class login extends CI_Controller {
     }
 
     function validate_credentials() {
-        
         $this -> load -> model('user_model');
 
         //$query = $this -> user_model -> check_user($this -> user_model -> getIDfromUsername($this -> input -> post('username')), $this -> input -> post('username_pw'));
@@ -63,6 +62,14 @@ class login extends CI_Controller {
     }
 
     function index($case = "") {
+        if($this->config->item('meter_mode') == 'single'){
+            $data = array('username' => 'single_user', 'user_id' => '1', 'is_logged_in' => true);
+            $this -> updateSession();
+            $this -> session -> set_userdata($data);
+            $this -> session -> set_userdata('per_page','20');
+            $this -> session -> set_userdata('isAdmin',1);
+        }
+        
         if ($case == "LOGOUT") {
             $this -> session -> sess_destroy();
         } else {
@@ -70,6 +77,7 @@ class login extends CI_Controller {
                 redirect('main/index');
             }
         }
+                
         $this -> layout_data['case'] = $case;
 
         //				$this -> layout_data['cssfile'] =  $nextWebsite.".css";

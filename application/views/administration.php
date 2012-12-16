@@ -7,7 +7,6 @@
         redirect(site_url("main/index")); 
     }   
     if(isset($isOK)){
-        echo "<p>is OK</p>";
         $userName   = $this->input->post('Benutzername');
         $userPW     = $this->input->post('Passwort');
         $pww        = $this->input->post('Passwortw');
