@@ -13,7 +13,7 @@
 	
 	public function getLastValue($meterID){
 		
-		$query = "SELECT `Value` `TimeStamp` FROM `value` WHERE `MeterID` = $meterID ORDER BY `TimeStamp` DESC LIMIT 1";
+		$query = "SELECT `Value`, `TimeStamp` FROM `value` WHERE `MeterID` = $meterID ORDER BY `TimeStamp` DESC LIMIT 1";
 		
 		$DBAnswer = $this -> db -> query($query);
         $DBAnswer = $DBAnswer -> result_array();
@@ -25,6 +25,23 @@
         }
 	}
 	
+	public function putValue($meterID, $value)
+	{
+		if (!is_numeric($meterID) || !is_numeric($value)) {
+        	return FALSE;
+        }
+		$query = 	"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
+					"VALUES (NULL , '$meterID', '$value', NOW( ));";
+					
+        $DBAnswer = $this -> db -> query($query);
+
+        if (count($DBAnswer)>0) {
+            return TRUE; //$this -> db -> insert_id();
+        } else {
+            return FALSE;
+        }
+	
+	}
 	
 }
 ?>
