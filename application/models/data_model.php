@@ -40,8 +40,34 @@
         } else {
             return FALSE;
         }
-	
 	}
 	
+	public function getArea($meterID, $startTime, $endTime){
+			
+		$query = "SELECT  `Value` ,  `TimeStamp` 
+				 FROM  `value` 
+				 WHERE  `MeterID` = $meterID
+				 AND  `TimeStamp` >=  $startTime
+				 AND  `TimeStamp` <=  $endTime
+ 				 ORDER BY  `TimeStamp` DESC" ;
+		/*
+		 * Alternative mit Array Formatierung?
+		 * 
+		$query = "SELECT  `Value` ,  `TimeStamp` 
+				 FROM  `value` 
+				 WHERE  `MeterID` = $meterID
+				 AND  `TimeStamp` >=  (SELECT date_format($startTime, '%Y-%m-%d %k:%i:%s'))
+				 AND  `TimeStamp` <=  (SELECT date_format($endTime, '%Y-%m-%d %k:%i:%s'))
+ 				 ORDER BY  `TimeStamp` DESC" ;
+			*/	 
+		$DBAnswer = $this -> db -> query($query);
+        $DBAnswer = $DBAnswer -> result_array();
+		
+        if (count($DBAnswer)>0) {
+            return $DBAnswer;
+        } else {
+            return FALSE;
+        }	
+	}
 }
 ?>
