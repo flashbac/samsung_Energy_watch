@@ -1,24 +1,33 @@
 <?php
-   class Data_model extends CI_Model {
+   class Data_model extends CI_Model 
+   {
    	
-	public function __construct() {
+	public function __construct() 
+	{
        $this -> load -> database();
     }
 
-    public function getAllUserPosition($userID = FALSE) {
-        if (!is_numeric($userID)) {
+    public function getAllUserPosition($userID = FALSE) 
+    {
+        if (!is_numeric($userID)) 
+        {
             return FALSE;
     	}
 	}
 	
 	public function getLastValue($meterID){
 		
-		$query = "SELECT `Value`, `TimeStamp` FROM `value` WHERE `MeterID` = $meterID ORDER BY `TimeStamp` DESC LIMIT 1";
+		$query = "SELECT `Value`, `TimeStamp` 
+				  FROM `value` 
+				  WHERE `MeterID` = $meterID 
+				  ORDER BY `TimeStamp` DESC 
+				  LIMIT 1";
 		
 		$DBAnswer = $this -> db -> query($query);
         $DBAnswer = $DBAnswer -> result_array();
 		
-        if (count($DBAnswer)>0) {
+        if (count($DBAnswer)>0)
+		{
             return $DBAnswer;
         } else {
             return FALSE;
@@ -27,7 +36,8 @@
 		 
 	public function putValue($meterID, $value, $timeStamp)
 	{
-		if (!is_numeric($meterID) || !is_numeric($value)) {
+		if (!is_numeric($meterID) || !is_numeric($value)) 
+		{
         	return FALSE;
         }
 		
@@ -35,7 +45,8 @@
 		 * TimeStamp Eingabe möglich, wenn kein Wert vorhanden
 		 * aktuellen Wert mit Now() nehmen*/
 		 
-		if ($timeStamp == NULL){	
+		if ($timeStamp == NULL)
+		{	
 			$query = 	"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
 						"VALUES (NULL , '$meterID', '$value', now());";
 		}else{
@@ -45,14 +56,16 @@
 					
         $DBAnswer = $this -> db -> query($query);
 
-        if (count($DBAnswer)>0) {
+        if (count($DBAnswer)>0) 
+        {
             return TRUE; //$this -> db -> insert_id();
         } else {
             return FALSE;
         }
 	}
 	
-	public function getArea($meterID, $startTime, $endTime){
+	public function getArea($meterID, $startTime, $endTime)
+	{
 			
 		$query = "SELECT  `Value` ,  `TimeStamp` 
 				 FROM  `value` 
@@ -73,7 +86,8 @@
 		$DBAnswer = $this -> db -> query($query);
         $DBAnswer = $DBAnswer -> result_array();
 		
-        if (count($DBAnswer)>0) {
+        if (count($DBAnswer)>0) 
+        {
             return $DBAnswer;
         } else {
             return FALSE;
@@ -84,9 +98,45 @@
 	 * Funktion die ein 3 dim Array aufnimmt. 
 	 * Inhalt wäre: meterID,Timestamp und value - wird mit InsertInto eingefügt
 	 * */
-	 public function putArray($str){
+	 public function putArray($str)
+	 {
 		
+// Explode Variante
+
+		$array1 = explode(";",$str);
+		$temp = array();
+		$oneValue = array(); 
 		
+		foreach ($array1 as $temp) 
+		{
+			
+			$temp = explode(",",$str);
+			
+			foreach ($temp as $oneValue)
+			{
+				
+				if($oneValue[2] != NULL)
+				{
+					
+					$insert = 		"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
+									"VALUES (NULL , '$oneValue[0]', '$oneValue[1]', '$oneValue[2]');";
+						
+					$DBAnswer = $this -> db -> query($insert);
+						
+						if (count($DBAnswer)>0) 
+						{
+				            return $DBAnswer;
+				        } else {
+				            return FALSE;
+				        }
+				   	
+					// $oneValue = array(); oder reset($oneValue)?
+				}
+			}
+		}
+		
+/**	strtock Variante
+ * 	
 		$kette = "$str";								//Zeichenkette		
 		$temp1 = strtok($kette,";");					//Ausplitten des ersten Teiles ";"
 		$tempArray = array();							//Hier Array erzeugen
@@ -125,8 +175,7 @@
 				}
 				
 			$temp1 = strtok(";");
-		}
-						
+*/				
 	 }
 	 
 	 /**
@@ -134,7 +183,8 @@
 	  * Alle Parameter der Tabelle Meter
 	  * Rückgabewert meterID die vergeben wurde*/
 	  
-	  public function putMeter($UserID, $name, $meterNumber, $description, $unit){
+	  public function putMeter($UserID, $name, $meterNumber, $description, $unit)
+	  {
 		  	
 	  	//neuen Meter anlegen
 		  
@@ -151,11 +201,12 @@
 		  
 		  $DBAnswer = $this -> db -> query($lastMeter);
 		  
-		  if (count($DBAnswer)>0) {
+		  if (count($DBAnswer)>0) 
+		  {
 	            return $DBAnswer;
-	        } else {
+	      } else {
 	            return FALSE;
-	        }	
+	      }	
 	  } 
 }
 
