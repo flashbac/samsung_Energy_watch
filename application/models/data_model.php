@@ -106,7 +106,10 @@
 						
 						$insert = 	"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
 									"VALUES (NULL , '$tempArray[0]', '$tempArray[1]', '$tempArray[2]');";
-					
+						
+								
+						unset($tempArray);				//Array leeren
+						
 		  				$DBAnswer = $this -> db -> query($insert);
 						
 						if (count($DBAnswer)>0) {
