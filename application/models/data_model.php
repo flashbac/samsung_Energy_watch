@@ -106,6 +106,7 @@
 
 		$array1 = explode(";",$str);
 		
+		
 		$temp1 = array();
 		$oneValue1 = array(); 
 		$i = 0;
@@ -118,6 +119,7 @@
 
 			foreach ($temp1 as $oneValue)
 			{
+				//Abfrage in welches Türchen die Daten reinfallen sollen 
 				if($i == 0){
 					$meterID = $oneValue;
 				};
@@ -128,8 +130,10 @@
 					$timeStamp = $oneValue;
 				};
 				
+				//Wenn timeStamp belegt dann kann endlich gepushed werden
 				if(empty($timeStamp) != TRUE || $i=2)
 				{
+					//reset des Zaehlers
 					$i=-1;
 					$insert = 		"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
 									"VALUES (NULL , '$meterID', '$value', '$timeStamp');";
@@ -143,6 +147,7 @@
 				            return FALSE;
 				        }
 				}
+				//inkrementierung
 				$i = $i + 1;
 			}
 		}
