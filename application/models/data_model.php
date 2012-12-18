@@ -85,25 +85,54 @@
 	 * Inhalt wäre: meterID,Timestamp und value - wird mit InsertInto eingefügt
 	 * */
 	 public function putArray($str){
-			
-
-		$split1 = array(explode(",", explode(";", $str)));
 		
-		foreach ($split1 as $key => $value) {
-			 
-		 }
-		$split2 = explode(",", $split1);
+		
+		$kette = "$str";								//Zeichenkette		
+		$temp1 = strtok($kette,";");					//Ausplitten des ersten Teiles ";"
+		
+		while ($temp1) {								//Wenn ein Wert vorhanden dann gehe weiter 											1.TEILUNG
+					
+				$temp2 = strtok($temp1, ","); 			//zweiten und zugleich kleineren Teil der Zeichenkette nehmen und wieder splitten					
+				$tempArray = array();					//Hier Array erzeugen
+				$i = 0;									//Zählvariable
 				
+				while ($temp2) {						//																					2. Teilung
+								
+					$tempArray[$i] = $temp2;			//wenn Wert vorhanden dann in Array schreiben			
+					
+					if($i == 2){						//Wenn insgesamt 3 Werte vorhanden sind dann schreibe diese dann auch in die DB
+						
+						$i = 0;							//Null setztem
+						
+						$insert = 	"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
+									"VALUES (NULL , '$tempArray[0]', '$tempArray[1]', '$tempArray[2]');";
+					
+		  				$DBAnswer = $this -> db -> query($insert);
+						
+						if (count($DBAnswer)>0) {
+				            return $DBAnswer;
+				        } else {
+				            return FALSE;
+				        }	
+					}
+					
+					$temp1 = strtok(",");				//Damit "," nicht mit angegeben wird
+					$i = $i + 1;
+				}
+				
+			$temp1 = strtok(";");
+		}
+						
 	 }
 	 
 	 /**
 	  * Funktion die neuen Meter anlegt
 	  * Alle Parameter der Tabelle Meter
-	  * Rückgabewert meterID?? die vergeben wurde*/
+	  * Rückgabewert meterID die vergeben wurde*/
 	  
 	  public function putMeter($UserID, $name, $meterNumber, $description, $unit){
 		  	
-	  //neuen Meter anlegen
+	  	//neuen Meter anlegen
 		  
 		  $insert = "INSERT INTO `meter` (`ID`, `UserID`, `Name`, `MeterNumber`, `Description`, `Unit`)".
 					"VALUES (NULL , '$UserID', '$name', '$meterNumber', '$description', '$unit');";
