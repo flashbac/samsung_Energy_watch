@@ -101,12 +101,12 @@
 	  * Alle Parameter der Tabelle Meter
 	  * Rückgabewert meterID?? die vergeben wurde*/
 	  
-	  public function putMeter($name, $meterNumber, $description, $unit){
+	  public function putMeter($UserID, $name, $meterNumber, $description, $unit){
 		  	
 	  //neuen Meter anlegen
 		  
 		  $insert = "INSERT INTO `meter` (`ID`, `UserID`, `Name`, `MeterNumber`, `Description`, `Unit`)".
-					"VALUES (NULL , '$newUser', '$name', '$meterNumber', '$description', '$unit');";
+					"VALUES (NULL , '$UserID', '$name', '$meterNumber', '$description', '$unit');";
 					
 		  $DBAnswer = $this -> db -> query($insert);
 		
