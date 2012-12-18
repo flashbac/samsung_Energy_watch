@@ -42,5 +42,21 @@ class data extends CI_Controller {
 		}
 	}
 	
+	public function getValues($meterID, $startTS, $endTS)
+	{
+		echo json_encode($this -> Data_model -> getArea($meterID, $startTime, $endTime));
+	}
+	
+	public function putValues($valus)
+	{
+		if($anser = $this -> Data_model ->putArea($mvalues) )
+		{
+			echo "0";
+		}
+		else {
+			echo "1";
+		}
+	}
+	
 }
 ?>
