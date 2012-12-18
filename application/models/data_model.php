@@ -84,9 +84,16 @@
 	 * Funktion die ein 3 dim Array aufnimmt. 
 	 * Inhalt wäre: meterID,Timestamp und value - wird mit InsertInto eingefügt
 	 * */
-	 public function putArray(){
-	 	
+	 public function putArray($str){
+			
+
+		$split1 = array(explode(",", explode(";", $str)));
 		
+		foreach ($split1 as $key => $value) {
+			 
+		 }
+		$split2 = explode(",", $split1);
+				
 	 }
 	 
 	 /**
@@ -96,19 +103,7 @@
 	  
 	  public function putMeter($name, $meterNumber, $description, $unit){
 		  	
-	  	//Aktuell letzte UserID holen
-		  $lastUser = "SELECT  `meter`.`UserID` 
-		  			   FROM  `meter` 
-		  			   ORDER BY  `meter`.`UserID` DESC 
-		  			   LIMIT 1";
-		  
-		  $DBAnswer = $this -> db -> query($lastUser);
-	        
-		//Useraddition für den folgenden Insert Befehl
-		   
-		  $newUser = $DBAnswer + 1;
-		  
-		//neuen Meter anlegen
+	  //neuen Meter anlegen
 		  
 		  $insert = "INSERT INTO `meter` (`ID`, `UserID`, `Name`, `MeterNumber`, `Description`, `Unit`)".
 					"VALUES (NULL , '$newUser', '$name', '$meterNumber', '$description', '$unit');";
