@@ -105,22 +105,34 @@
 // Explode Variante
 
 		$array1 = explode(";",$str);
-		$temp = array();
-		$oneValue = array(); 
+		
+		$temp1 = array();
+		$oneValue1 = array(); 
+		$i = 0;
 		
 		foreach ($array1 as $temp) 
 		{
 			
-			$temp = explode(",",$str);
-			
-			foreach ($temp as $oneValue)
+			$temp2 = explode(",",$temp);	
+			$temp1 = $temp2;
+
+			foreach ($temp1 as $oneValue)
 			{
+				if($i == 0){
+					$meterID = $oneValue;
+				};
+				if($i == 1){
+					$value = $oneValue;
+				};	
+				if($i == 2){
+					$timeStamp = $oneValue;
+				};
 				
-				if($oneValue[2] != NULL)
+				if(empty($timeStamp) != TRUE || $i=2)
 				{
-					
+					$i=-1;
 					$insert = 		"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
-									"VALUES (NULL , '$oneValue[0]', '$oneValue[1]', '$oneValue[2]');";
+									"VALUES (NULL , '$meterID', '$value', '$timeStamp');";
 						
 					$DBAnswer = $this -> db -> query($insert);
 						
@@ -130,12 +142,8 @@
 				        } else {
 				            return FALSE;
 				        }
-				   	/**
-					 * Löschung des Array satztes...?
-					 * $oneValue = array(); oder reset($oneValue)?
-					 */
-					 $oneValue[2]=""; //<- muss passieren sonst geht Ablauf immer wieder in die If Abfrage hinein
 				}
+				$i = $i + 1;
 			}
 		}
 		
