@@ -82,7 +82,8 @@
 				 AND  `TimeStamp` >=  (SELECT date_format($startTime, '%Y-%m-%d %k:%i:%s'))
 				 AND  `TimeStamp` <=  (SELECT date_format($endTime, '%Y-%m-%d %k:%i:%s'))
  				 ORDER BY  `TimeStamp` DESC" ;
-			*/	 
+		*/
+			 
 		$DBAnswer = $this -> db -> query($query);
         $DBAnswer = $DBAnswer -> result_array();
 		
@@ -129,8 +130,11 @@
 				        } else {
 				            return FALSE;
 				        }
-				   	
-					// $oneValue = array(); oder reset($oneValue)?
+				   	/**
+					 * Löschung des Array satztes...?
+					 * $oneValue = array(); oder reset($oneValue)?
+					 */
+					 $oneValue[2]=""; //<- muss passieren sonst geht Ablauf immer wieder in die If Abfrage hinein
 				}
 			}
 		}
