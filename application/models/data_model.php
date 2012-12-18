@@ -24,14 +24,24 @@
             return FALSE;
         }
 	}
-	
-	public function putValue($meterID, $value)
+		 
+	public function putValue($meterID, $value, $timeStamp)
 	{
 		if (!is_numeric($meterID) || !is_numeric($value)) {
         	return FALSE;
         }
-		$query = 	"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
-					"VALUES (NULL , '$meterID', '$value', NOW( ));";
+		
+		/**Erweiterung 
+		 * TimeStamp Eingabe möglich, wenn kein Wert vorhanden
+		 * aktuellen Wert mit Now() nehmen*/
+		 
+		if ($timeStamp == NULL){	
+			$query = 	"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
+						"VALUES (NULL , '$meterID', '$value', now());";
+		}else{
+			$query = 	"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
+						"VALUES (NULL , '$meterID', '$value', $timeStamp);";	
+		}
 					
         $DBAnswer = $this -> db -> query($query);
 
@@ -51,7 +61,7 @@
 				 AND  `TimeStamp` <=  $endTime
  				 ORDER BY  `TimeStamp` DESC" ;
 		/*
-		 * Alternative mit Array Formatierung?
+		 * Alternative mit Datums Formatierung?
 		 * 
 		$query = "SELECT  `Value` ,  `TimeStamp` 
 				 FROM  `value` 
@@ -69,5 +79,54 @@
             return FALSE;
         }	
 	}
+	
+	/**
+	 * Funktion die ein 3 dim Array aufnimmt. 
+	 * Inhalt wäre: meterID,Timestamp und value - wird mit InsertInto eingefügt
+	 * */
+	 public function putArray(){
+	 	
+		
+	 }
+	 
+	 /**
+	  * Funktion die neuen Meter anlegt
+	  * Alle Parameter der Tabelle Meter
+	  * Rückgabewert meterID?? die vergeben wurde*/
+	  
+	  public function putMeter($name, $meterNumber, $description, $unit){
+		  	
+	  	//Aktuell letzte UserID holen
+		  $lastUser = "SELECT  `meter`.`UserID` 
+		  			   FROM  `meter` 
+		  			   ORDER BY  `meter`.`UserID` DESC 
+		  			   LIMIT 1";
+		  
+		  $DBAnswer = $this -> db -> query($lastUser);
+		  
+		  if (count($DBAnswer)>0) {
+	            return $DBAnswer;
+	        } else {
+	            return FALSE;
+	        }	
+	        
+		//User + 1 addieren
+		   
+		  $newUser = $DBAnswer + 1;
+		  
+		//neuen Meter anlegen
+		  
+		  $insert = "INSERT INTO `meter` (`ID`, `UserID`, `Name`, `MeterNumber`, `Description`, `Unit`)".
+					"VALUES (NULL , '$newUser', '$name', '$meterNumber', '$description', '$unit');";
+					
+		  $DBAnswer = $this -> db -> query($insert);
+		  
+		  if (count($DBAnswer)>0) {
+	            return $DBAnswer;
+	        } else {
+	            return FALSE;
+	        }	
+	  } 
 }
+
 ?>
