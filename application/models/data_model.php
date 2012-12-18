@@ -89,11 +89,12 @@
 		
 		$kette = "$str";								//Zeichenkette		
 		$temp1 = strtok($kette,";");					//Ausplitten des ersten Teiles ";"
+		$tempArray = array();							//Hier Array erzeugen
 		
 		while ($temp1) {								//Wenn ein Wert vorhanden dann gehe weiter 											1.TEILUNG
 					
 				$temp2 = strtok($temp1, ","); 			//zweiten und zugleich kleineren Teil der Zeichenkette nehmen und wieder splitten					
-				$tempArray = array();					//Hier Array erzeugen
+				// $tempArray = array();					
 				$i = 0;									//Zählvariable
 				
 				while ($temp2) {						//																					2. Teilung
