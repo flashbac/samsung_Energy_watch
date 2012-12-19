@@ -42,14 +42,14 @@ class data extends CI_Controller {
 		}
 	}
 	
-	public function getValues($meterID, $startTS, $endTS)
+	public function getAreaValues($meterID, $startTS, $endTS)
 	{
-		echo json_encode($this -> Data_model -> getArea($meterID, $startTime, $endTime));
+		echo json_encode($this -> Data_model -> getAreaValues($meterID, $startTime, $endTime));
 	}
 	
-	public function putValues($valus)
+	public function putAriaValues($valus)
 	{
-		if($anser = $this -> Data_model ->putArea($mvalues) )
+		if($anser = $this -> Data_model ->putAreaValues($mvalues) )
 		{
 			echo "0";
 		}
@@ -58,5 +58,17 @@ class data extends CI_Controller {
 		}
 	}
 	
+	/*
+	 * $UserID 		-(int) Gibt an für welchen User der Zähler angelegt wird
+	 * $Name		-(String) Name für den Meter
+	 * $Number		-(String) Gibt eine Zählernummer an 
+	 * $Discription -(String) Beschreibung für den Zähler 
+	 * $Unit		-(String) Einheißt 
+	 */
+	public function putMeter($UserID, $Name, $Number, $Discription, $Unit)
+	{
+		
+		
+	}
 }
 ?>
