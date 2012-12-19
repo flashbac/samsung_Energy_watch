@@ -220,8 +220,6 @@
 	            return FALSE;
 	      }	
 	  }
-	  
-	  public  
 }
 
 ?>
