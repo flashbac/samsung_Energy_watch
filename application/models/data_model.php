@@ -131,7 +131,7 @@
 				};
 				
 				//Wenn timeStamp belegt dann kann endlich gepushed werden
-				if(empty($timeStamp) != TRUE || $i=2)
+				if($i=2)
 				{
 					//reset des Zaehlers
 					$i=-1;
