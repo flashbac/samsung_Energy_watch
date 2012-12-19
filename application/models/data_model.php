@@ -64,7 +64,7 @@
         }
 	}
 	
-	public function getArea($meterID, $startTime, $endTime)
+	public function getAreaValues($meterID, $startTime, $endTime)
 	{
 			
 		$query = "SELECT  `Value` ,  `TimeStamp` 
@@ -99,7 +99,7 @@
 	 * Funktion die ein 3 dim Array aufnimmt. 
 	 * Inhalt wäre: meterID,Timestamp und value - wird mit InsertInto eingefügt
 	 * */
-	 public function putArray($str)
+	 public function putAreaValues($str)
 	 {
 		
 // Explode Variante
@@ -139,7 +139,8 @@
 									"VALUES (NULL , '$meterID', '$value', '$timeStamp');";
 						
 					$DBAnswer = $this -> db -> query($insert);
-
+					if($DBAnswer != FALSE)
+						return FALSE;
 				}
 				//inkrementierung
 				$i = $i + 1;
@@ -218,7 +219,9 @@
 	      } else {
 	            return FALSE;
 	      }	
-	  } 
+	  }
+	  
+	  public  
 }
 
 ?>
