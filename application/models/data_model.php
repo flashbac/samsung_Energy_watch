@@ -139,13 +139,7 @@
 									"VALUES (NULL , '$meterID', '$value', '$timeStamp');";
 						
 					$DBAnswer = $this -> db -> query($insert);
-						
-						if (count($DBAnswer)>0) 
-						{
-				            return $DBAnswer;
-				        } else {
-				            return FALSE;
-				        }
+
 				}
 				//inkrementierung
 				$i = $i + 1;
