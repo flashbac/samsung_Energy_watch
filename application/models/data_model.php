@@ -106,7 +106,6 @@
 
 		$array1 = explode(";",$str);
 		
-		
 		$temp1 = array();
 		$oneValue1 = array(); 
 		$i = 0;
@@ -116,12 +115,46 @@
 			
 			$temp2 = explode(",",$temp);	
 			$temp1 = $temp2;
-
+			
+			/**
+			 $DieWerte[] = array(
+   			'meterID' => $temp2[0],
+    		'value' => $temp2[1],
+    		'TimeStamp' => $temp2[2],
+    		)
+			 * 
+			 * $string = "";
+				$string = "INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`) VALUES";
+				Foreach($DieWerte as $wert)
+				{
+				  $string = $string."(NULL , '$wert['meterID'], $wert['value'], $wert['timeStamp'],";
+				}
+		}
+		
+		$DBAnswer = $this -> db -> query($string);
+								
+		if (count($DBAnswer)>0) {
+				return $DBAnswer;
+		} else {
+				return FALSE;
+		}	
+		$string = $string.";";
+			 
+			 * 
+			 * 
+			 * 
+			 ***/
+			  
 			foreach ($temp1 as $oneValue)
 			{
 				//Abfrage in welches Türchen die Daten reinfallen sollen 
 				if($i == 0){
 					$meterID = $oneValue;
+					
+					 /**$meterID = array()
+					 * $meterID[] = $oneValue;
+					 * */
+					 
 				};
 				if($i == 1){
 					$value = $oneValue;
@@ -146,48 +179,6 @@
 				$i = $i + 1;
 			}
 		}
-		
-/**	strtock Variante
- * 	
-		$kette = "$str";								//Zeichenkette		
-		$temp1 = strtok($kette,";");					//Ausplitten des ersten Teiles ";"
-		$tempArray = array();							//Hier Array erzeugen
-		
-		while ($temp1) {								//Wenn ein Wert vorhanden dann gehe weiter 											1.TEILUNG
-					
-				$temp2 = strtok($temp1, ","); 			//zweiten und zugleich kleineren Teil der Zeichenkette nehmen und wieder splitten					
-				// $tempArray = array();					
-				$i = 0;									//Zählvariable
-				
-				while ($temp2) {						//																					2. Teilung
-								
-					$tempArray[$i] = $temp2;			//wenn Wert vorhanden dann in Array schreiben			
-					
-					if($i == 2){						//Wenn insgesamt 3 Werte vorhanden sind dann schreibe diese dann auch in die DB
-						
-						$i = 0;							//Null setztem
-						
-						$insert = 	"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
-									"VALUES (NULL , '$tempArray[0]', '$tempArray[1]', '$tempArray[2]');";
-						
-								
-						unset($tempArray);				//Array leeren
-						
-		  				$DBAnswer = $this -> db -> query($insert);
-						
-						if (count($DBAnswer)>0) {
-				            return $DBAnswer;
-				        } else {
-				            return FALSE;
-				        }	
-					}
-					
-					$temp1 = strtok(",");				//Damit "," nicht mit angegeben wird
-					$i = $i + 1;
-				}
-				
-			$temp1 = strtok(";");
-*/				
 	 }
 	 
 	 /**
