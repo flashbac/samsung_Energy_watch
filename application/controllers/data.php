@@ -35,7 +35,7 @@ class data extends CI_Controller {
 		if( $timestamp != NULL)
 		{
 			If (defined('DEBUG')) {echo "Timestamp vorher:".$timestamp."\n";}
-			$timestamp = str_replace("%20", " ",$timestamp);
+			$timestamp = urldecode($timestamp);
 			$timestamp = str_replace("_", " ",$timestamp);
 			If (defined('DEBUG')) {echo "Timestamp nachher:".$timestamp;}
 		}
@@ -71,12 +71,19 @@ class data extends CI_Controller {
 	 * $Discription -(String) Beschreibung für den Zähler 
 	 * $Unit		-(String) Einheißt 
 	 */
-	public function putMeter($UserID, $Name, $Number, $Discription, $Unit)
+	public function putMeter($UserID, $Name, $Number, $Discription = "", $Unit)
 	{
-		if($anser = $this -> Data_model ->putMeter($UserID, $Name, $Number, $Description, $Unit))
+		echo "Vorher: ".$UserID."/".$Name."/".$Number."/".$Discription."/".$Unit."<br/>";
+		$UserID = urldecode($UserID);
+		$Name = urldecode($Name);
+		$Number = urldecode($Number);
+		$Discription = urldecode($Discription);
+		$Unit = urldecode($Unit);
+		echo "Nachher: ".$UserID."/".$Name."/".$Number."/".$Discription."/".$Unit;
+		 
+		if($anser = $this -> Data_model ->putMeter($UserID, $Name, $Number, $Discription, $Unit))
 		{
-			echo "MeterID: ";
-			echo $anser;
+			echo "MeterID: ".$anser;
 		}
 		else
 			echo "1";

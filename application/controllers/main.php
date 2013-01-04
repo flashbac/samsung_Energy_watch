@@ -523,7 +523,22 @@ class main extends CI_Controller {
         //Aufruf der Seite
         $this -> load -> view('main', $this -> layout_data);
     }
+	
+	
+	function hilfe()
+	{
+        $isAdmin = $this -> session -> userdata('isAdmin');
 
+        //Helper und Libraries laden
+        $this -> layout_data['cssfile'] = "help.css";
+		$contentData['isOK'] = true;
+		$this -> layout_data['content'] = $this -> load -> view("hilfe",$contentData, true);
+
+        //Aufruf der Seite
+        $this -> load -> view('main', $this -> layout_data);
+	
+	}
+	
     private function getModel($site) {
         switch ($site) {
             case 'site_neuesMitglied' :
@@ -580,192 +595,8 @@ class main extends CI_Controller {
         $this -> load -> view('phpskript/' . $skript);
     }
 
-    public function generateExcel($verid) {
-
-        $this -> load -> helper('download');
-        error_reporting(E_ALL);
-        // Include path
-
-        ini_set('include_path', ini_get('include_path') . ';../Classes/');
-        $this -> load -> library('PHPExcel');
-        include_once (APPPATH . '/libraries/PHPExcel/Writer/Excel5.php');
-
-        $teilnehmer = array( array("NAME" => "Lars", "NATION" => "Deutsch", "ALTER" => "22", "FUNKTION" => "Chef", "TAGE" => "45", "UEBERNACHTUNG" => "JA"), array("NAME" => "Sven", "NATION" => "Deutsch", "ALTER" => "52", "FUNKTION" => "Chef2", "TAGE" => "111", "UEBERNACHTUNG" => "NEIN"), );
-
-        $this -> load -> model('vera_model', 'vera');
-        $this -> load -> model('quali_model', 'quali');
-        $this -> load -> model('com_model', 'com');
-        $this -> load -> model('user_model', 'user');
-        $ver = $this -> vera -> getVeranstaltung($verid);
-
-        $quali = $this -> quali -> getQualifikation($ver["Thema"]);
-
-        $tmp = $this -> vera -> getNameOfVera($ver["VeranstaltungID"]);
-        $max_user = $tmp['MaxTeilnehmer'];
-        $teilnehmer = $this -> com -> getVeranstaltungUser($ver["VeranstaltungID"], 0, $max_user);
-
-        //		$teilnehmer = $this -> com -> getVeranstaltungUser($ver["VeranstaltungID"]);
-        //      print_r($teilnehmer);
-
-        $traeger = "Senat";
-        $thema = $quali["Beschreibung"];
-        $ort = $ver["Ort"];
-        $verBegin = $ver["DatumBegin"];
-        $verEnde = $ver["DatumEnde"];
-        $artDerMassnahme = $ver["Art"];
-
-        $datum = $ver["DatumBegin"];
-        $timestamp = explode(" ", $datum);
-        $filename = $timestamp[0] . "_" . $ver["Name"] . "_" . $ver["Thema"];
-        $filename = str_replace(":", "", $filename);
-
-        //echo sizeof($teilnehmer);
-
-        //print_r($teilnehmer);
-        //		echo count($teilnehmer);
-        //echo "ADS".$teilnehmer[0]['UserID'];
-        //		print_r($teilnehmer);
-        //		return;
-        $cc;
-        if ($teilnehmer[0]['UserID'] == "")
-            $cc = 0;
-        else
-            $cc = sizeof($teilnehmer);
-
-        for ($i = 0; $i < $cc; $i++) {
-            //print_r($this -> user -> get_user($teilnehmer[$i]['UserID']));
-            $teilnehmerData[$i] = $this -> user -> get_user($teilnehmer[$i]['UserID']);
-        }
-
-        //        return;
-        //print_r($teilnehmerData);
-        //		foreach ($teilnehmer as $aaa){
-        //			$a = $this -> user -> get_user($aaa['UserID']);
-        //			echo $a['Name']."<br>";
-        //		}
-
-        //echo $filename;
-
-        if ($cc == 0)
-            generateExcelTeilnehmerListe($traeger, $thema, $ort, $verBegin, $verEnde, $artDerMassnahme, $teilnehmerData, $teilnehmer, $filename, 0);
-
-        for ($i = 0; $i < $cc; $i += 11) {
-            //			if (sizeof($teilnehmer) > ($indexTeilnehmer + 11)) {
-            generateExcelTeilnehmerListe($traeger, $thema, $ort, $verBegin, $verEnde, $artDerMassnahme, $teilnehmerData, $teilnehmer, $filename, $i);
-            //			}
-        }
-        redirect('main/changeWebsite/excelDownload');
-        //      echo "Done writing file";
-    }
-
 }
 
-function generateExcelTeilnehmerListe($traeger, $thema, $ort, $verBegin, $verEnde, $artDerMassnahme, $teilnehmer, $teilnehmerListe, $fileName, $indexTeilnehmer = 0) {
-
-    $path = getcwd() . '/tmp';
-
-    $traegerCell = "A2";
-    $themaCell = "D2";
-    $ortCell = "A4";
-    $zeitraumCell = "C4";
-    $anzahlTageCell = "F4";
-    $artDerMassnahmeCell = "E5";
-
-    $OffsetTeilnehmerListe = 8;
-
-    $teilnehmerCol = array("NAME" => "B", "NATION" => "C", "ALTER" => "D", "FUNKTION" => "E", "LEER" => "F", "TAGE" => "G", "UEBERNACHTUNG" => "H");
-
-    //Todo - Zeitraum berechenn
-    if (isset($verEnde) && !empty($verEnde) && isset($verBegin) && !empty($verBegin)) {
-        $anzahlTage = floor((strtotime(substr($verEnde, 0, 10)) - strtotime(substr($verBegin, 0, 10))) / 86400);
-        $zeitraum = substr($verBegin, 0, 10) . " - " . chr(10) . substr($verEnde, 0, 10);
-    } else {
-        $anzahlTage = "";
-        $zeitraum = "";
-    }
-
-    //2007 ??
-    $objReader = new PHPExcel_Reader_Excel5();
-
-    $objPHPExcel = $objReader -> load(getcwd() . '/application/helpers/Teilnahmeliste Kurse.xls');
-    $sheet = $objPHPExcel -> getActiveSheet();
-
-    //Infos zur Veranstaltung
-    //ToDo: Hächcken setzen (Art der Ma�nahme)             $cell->getCalculatedValue();
-
-    $sheet -> setCellValue($traegerCell, get_cell($traegerCell, $objPHPExcel) . " " . $traeger);
-    $sheet -> setCellValue($themaCell, get_cell($themaCell, $objPHPExcel) . " " . $thema);
-    $sheet -> setCellValue($ortCell, get_cell($ortCell, $objPHPExcel) . " " . $ort);
-    $sheet -> setCellValue($zeitraumCell, get_cell($zeitraumCell, $objPHPExcel) . " " . $zeitraum);
-    $sheet -> setCellValue($anzahlTageCell, get_cell($anzahlTageCell, $objPHPExcel) . " " . $anzahlTage);
-    $sheet -> setCellValue($artDerMassnahmeCell, 'Art der Massnahme: ' . $artDerMassnahme);
-
-    $eintragungen = sizeof($teilnehmer) - $indexTeilnehmer;
-    if ($eintragungen > 11) {
-        $eintragungen = 11;
-    }
-    //print_r($teilnehmerListe);
-    //  echo "eintragungen: ".$eintragungen;
-    //Eintragen von Mitgliedern
-    for ($i = 0; $i < $eintragungen; $i++) {
-
-        if ($teilnehmerListe[$i]['UserID'] == 1)
-            $sheet -> setCellValue($teilnehmerCol["NAME"] . "" . ($i + $OffsetTeilnehmerListe), "Person wurde gelöscht");
-        
-else {
-            $sheet -> setCellValue($teilnehmerCol["NAME"] . "" . ($i + $OffsetTeilnehmerListe), $teilnehmer[$indexTeilnehmer + $i]["Name"] . ", " . $teilnehmer[$indexTeilnehmer + $i]["Vorname"] . ", " . $teilnehmer[$indexTeilnehmer + $i]["Strasse"] . " " . $teilnehmer[$indexTeilnehmer + $i]["Hausnr"] . ", " . $teilnehmer[$indexTeilnehmer + $i]["Plz"] . " " . $teilnehmer[$indexTeilnehmer + $i]["Ort"]);
-            $sheet -> setCellValue($teilnehmerCol["NATION"] . "" . ($i + $OffsetTeilnehmerListe), "");
-
-            //			echo "geb:".$teilnehmer[$indexTeilnehmer + $i]["Geburtstag"]."<br>";
-            if ($teilnehmer[$indexTeilnehmer + $i]["Geburtstag"] != "") {
-                $zerlegen = explode(".", $teilnehmer[$indexTeilnehmer + $i]["Geburtstag"]);
-                $gebjahr = $zerlegen[2];
-                $now = date("Y");
-                $alter = $now - $gebjahr;
-
-                //				echo $teilnehmerListe[$i]['UserID']." -->zerlegen 2:".$alter."<br>";
-                $sheet -> setCellValue($teilnehmerCol["ALTER"] . "" . ($i + $OffsetTeilnehmerListe), $alter);
-            }
-        }
-
-        //$teilnehmer[$indexTeilnehmer + $i]["NATION"]);
-
-        $sheet -> setCellValue($teilnehmerCol["FUNKTION"] . "" . ($i + $OffsetTeilnehmerListe), $teilnehmerListe[$indexTeilnehmer + $i]["Funktion"]);
-
-        $sheet -> setCellValue($teilnehmerCol["LEER"] . "" . ($i + $OffsetTeilnehmerListe), "");
-
-        $sheet -> setCellValue($teilnehmerCol["TAGE"] . "" . ($i + $OffsetTeilnehmerListe), "");
-        //$teilnehmer[$indexTeilnehmer + $i]["TAGE"]);
-
-        $sheet -> setCellValue($teilnehmerCol["UEBERNACHTUNG"] . "" . ($i + $OffsetTeilnehmerListe), "JA");
-        //$teilnehmer[$indexTeilnehmer + $i]["UEBERNACHTUNG"]);
-    }
-
-    //Excelliste schreiben
-
-    //  print_r($array_data);
-    // PHPExcel_Writer_Excel2007
-    $ersetzen = array('ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'ß' => 'ss', ' ' => '_', '\\' => '-', '/' => '-', '*' => '-', '?' => '-', '|' => '-', '<' => '-', '>' => '-', ':' => '-', '+' => '-', '"' => '-');
-
-    $fileName = strtr(strtolower($fileName), $ersetzen);
-
-    $pathForNewExcelFile = $path . "/" . $fileName . "" . getNextIndexOfExcelFile($path . "/" . $fileName) . ".xls";
-    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-
-    $objWriter -> save($pathForNewExcelFile);
-
-    $ddata = file_get_contents($pathForNewExcelFile);
-    // Read the file's contents
-    $dname = $fileName . "" . getNextIndexOfExcelFile($path . "/" . $fileName) . ".xls";
-
-    //force_download($dname, $ddata);
-    //echo "adasd".sizeof($teilnehmer);
-    //	if (sizeof($teilnehmer) > ($indexTeilnehmer + 11)) {
-    //
-    //		$indexTeilnehmer += 12;
-    //		generateExcelTeilnehmerListe($traeger, $thema, $ort, $zeitraum, $teilnehmer, $fileName, $indexTeilnehmer);
-    //	}
-}
 
 function get_cell($cell, $objPHPExcel) {
     $objCell = ($objPHPExcel -> getActiveSheet() -> getCell($cell));

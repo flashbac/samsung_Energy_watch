@@ -175,21 +175,15 @@
 					"VALUES (NULL , '$UserID', '$name', '$meterNumber', '$description', '$unit');";
 					
 		  $DBAnswer = $this -> db -> query($insert);
-		
-		//Aktuell letzte meterID holen für die Rückgabe
-		  $lastMeter = "SELECT  `meter`.`ID` 
-		  			   FROM  `meter` 
-		  			   ORDER BY  `meter`.`ID` DESC 
-		  			   LIMIT 1";
-		  
-		  $DBAnswer = $this -> db -> query($lastMeter);
-		  
+
+
 		  if (count($DBAnswer)>0) 
 		  {
-	            return $DBAnswer;
+	            return $this -> db -> insert_id();
 	      } else {
 	            return FALSE;
-	      }	
+	      }
+		  	
 	  }
 }
 
