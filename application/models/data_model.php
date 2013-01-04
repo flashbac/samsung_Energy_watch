@@ -1,4 +1,5 @@
 <?php
+//define ( 'DEBUG', TRUE);
    class Data_model extends CI_Model 
    {
    	
@@ -51,9 +52,16 @@
 						"VALUES (NULL , '$meterID', '$value', now());";
 		}else{
 			$query = 	"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
-						"VALUES (NULL , '$meterID', '$value', $timeStamp);";	
+						"VALUES (NULL , '$meterID', '$value', '$timeStamp');";	
 		}
-					
+		
+		If (defined('DEBUG')) {
+            echo '<div id="debug">';
+            echo "<p>SQL Query PutValue</p>";
+            echo "<p>SQL Query: " . $query . '</p>';
+            echo '</div>';
+        }
+				
         $DBAnswer = $this -> db -> query($query);
 
         if (count($DBAnswer)>0) 
@@ -116,35 +124,7 @@
 			$temp2 = explode(",",$temp);	
 			$temp1 = $temp2;
 			
-			/**
-			 $DieWerte[] = array(
-   			'meterID' => $temp2[0],
-    		'value' => $temp2[1],
-    		'TimeStamp' => $temp2[2],
-    		)
-			 * 
-			 * $string = "";
-				$string = "INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`) VALUES";
-				Foreach($DieWerte as $wert)
-				{
-				  $string = $string."(NULL , '$wert['meterID'], $wert['value'], $wert['timeStamp'],";
-				}
-		}
-		
-		$DBAnswer = $this -> db -> query($string);
-								
-		if (count($DBAnswer)>0) {
-				return $DBAnswer;
-		} else {
-				return FALSE;
-		}	
-		$string = $string.";";
-			 
-			 * 
-			 * 
-			 * 
-			 ***/
-			  
+
 			foreach ($temp1 as $oneValue)
 			{
 				//Abfrage in welches Türchen die Daten reinfallen sollen 

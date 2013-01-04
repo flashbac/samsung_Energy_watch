@@ -28,12 +28,18 @@ class data extends CI_Controller {
 		echo json_encode($this -> Data_model -> getLastValue($meterID));
 	}
 	
-	public function putValue($meterID, $value)
+	public function putValue($meterID, $value, $timestamp = NULL)
 	{
 		//$meterID = $_GET['meter'];
 		//$value = $_GET['value'];
-		
-		if($anser = $this -> Data_model ->putValue($meterID, $value) )
+		if( $timestamp != NULL)
+		{
+			If (defined('DEBUG')) {echo "Timestamp vorher:".$timestamp."\n";}
+			$timestamp = str_replace("%20", " ",$timestamp);
+			$timestamp = str_replace("_", " ",$timestamp);
+			If (defined('DEBUG')) {echo "Timestamp nachher:".$timestamp;}
+		}
+		if($anser = $this -> Data_model ->putValue($meterID, $value,$timestamp) )
 		{
 			echo "0 ".$anser ;	
 		}	
@@ -67,7 +73,13 @@ class data extends CI_Controller {
 	 */
 	public function putMeter($UserID, $Name, $Number, $Discription, $Unit)
 	{
-		
+		if($anser = $this -> Data_model ->putMeter($UserID, $Name, $Number, $Description, $Unit))
+		{
+			echo "MeterID: ";
+			echo $anser;
+		}
+		else
+			echo "1";
 		
 	}
 }
