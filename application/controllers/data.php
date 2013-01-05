@@ -55,6 +55,9 @@ class data extends CI_Controller {
 	
 	public function putAriaValues($valus)
 	{
+		echo "Vorher: ".$valus."<br/>";
+		$valus = urldecode($valus);
+		echo "Nachher: ".$valus."<br/>";
 		if($anser = $this -> Data_model ->putAreaValues($mvalues) )
 		{
 			echo "0";
