@@ -6,8 +6,8 @@
 
 
 <script type="text/javascript">
-
-		$(function () {
+var value;
+	$(function () {
     
     var chart = new Highcharts.Chart({
     
@@ -129,7 +129,7 @@
                 newVal = point.y - inc;
             }
             
-            point.update(newVal);
+            point.update(parseFloat(getvalue()));
             
         }, 3000);
     });
@@ -137,13 +137,10 @@
 
 function getvalue()
 {
-    
-    
    $.getJSON("<?php echo site_url("data/getLastValue/1"); ?>", function(data){ 
-   alert(data.Value);
-});
-    
-    return Math.random();
+    	value = data.data[0].Value;
+	});
+	return value;
 }
 
 </script>
