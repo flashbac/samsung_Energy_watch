@@ -138,9 +138,11 @@
 function getvalue()
 {
     
-    
-   $.getJSON("<?php echo site_url("data/getLastValue/1"); ?>", function(data){ 
-   alert(data.Value);
+   $.getJSON("<?php echo site_url("data/getLastValue/1"); ?>", function(result){ 
+   //alert( result.item1);
+    $.each(result, function(i, field){
+      alert(field);
+    });
 });
     
     return Math.random();
