@@ -26,7 +26,8 @@ class data extends CI_Controller {
 	
 	public function getLastValue($meterID)
 	{
-		echo json_encode($this -> Data_model -> getLastValue($meterID));
+		$data = array('data' => $this -> Data_model -> getLastValue($meterID));	
+		echo json_encode($data);
 	}
 	
 	public function putValue($meterID, $value, $timestamp = NULL)
