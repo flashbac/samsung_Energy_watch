@@ -17,19 +17,7 @@ var value;
             plotBackgroundColor: null,
             plotBackgroundImage: null,
             plotBorderWidth: 0,
-            plotShadow: false,
-            events: {
-                    load: function() {
-    
-                        // set up the updating of the chart each second
-                        var series = this.series[0];
-                        setInterval(function() {
-                            var x = getvalue();
-                            //series.addPoint([x], true, true);
-                            series = x;
-                        }, 2000);
-                    }
-                }
+            plotShadow: false
             },
         title: {
             text: 'Wattmeter'
@@ -110,7 +98,7 @@ var value;
             },
         series: [{
             name: 'Energie Verbrauch',
-            data: [80],
+            data: [parseFloat(getvalue())],
             tooltip: {
                 valueSuffix: ' Watt'
             }
@@ -128,14 +116,13 @@ var value;
             if (newVal < 0 || newVal > 200) {
                 newVal = point.y - inc;
             }
-            
             point.update(parseFloat(getvalue()));
             
-        }, 3000);
+        }, 5000);
     });
 });
 
-function getvalue()
+function getvalue1()
 {
    $.getJSON("<?php echo site_url("data/getLastValue/1"); ?>", function(data){ 
     	value = data.data[0].Value;
@@ -143,9 +130,28 @@ function getvalue()
 	return value;
 }
 
+function getvalue() {
+  // strUrl is whatever URL you need to call
+  var strUrl = "", strReturn = "";
+
+  jQuery.ajax({
+    url: "<?php echo site_url("data/getLastValue/1"); ?>",
+    success: function(html) {
+      strReturn = html;
+    },
+    async:false
+  });
+  var json = $.parseJSON(strReturn);
+  $('#unterschrift1').html('<p>letzte Aktualisierung: '+json.data[0].TimeStamp+'</p>');
+  return json.data[0].Value;
+}
+
 </script>
 
 
 <div id="container">
 
+    <div id="unterschrift1">
+        
+    </div>
 </div>
