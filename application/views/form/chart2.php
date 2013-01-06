@@ -78,20 +78,7 @@ var value;
             },
             title: {
                 text: 'Watt'
-            },
-            plotBands: [{
-                from: 0,
-                to: 120,
-                color: '#55BF3B' // green
-            }, {
-                from: 120,
-                to: 160,
-                color: '#DDDF0D' // yellow
-            }, {
-                from: 160,
-                to: 200,
-                color: '#DF5353' // red
-            }]        
+            }       
         },
         credits: {
             enabled: false
@@ -108,14 +95,8 @@ var value;
     // Add some life
     function (chart) {
         setInterval(function () {
-            var point = chart.series[0].points[0],
-                newVal,
-                inc = Math.round((Math.random() - 0.5) * 20);
+            var point = chart.series[0].points[0];
             
-            newVal = point.y + inc;
-            if (newVal < 0 || newVal > 200) {
-                newVal = point.y - inc;
-            }
             point.update(parseFloat(getvalue()));
             
         }, 5000);
@@ -142,7 +123,6 @@ function getvalue() {
     async:false
   });
   var json = $.parseJSON(strReturn);
-  $('#unterschrift1').html('<p>letzte Aktualisierung: '+json.data[0].TimeStamp+'</p>');
   return json.data[0].Value;
 }
 
@@ -151,7 +131,4 @@ function getvalue() {
 
 <div id="container">
 
-    <div id="unterschrift1">
-        
-    </div>
 </div>
