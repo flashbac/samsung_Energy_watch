@@ -185,6 +185,12 @@
 	      }
 		  	
 	  }
+	  
+	  public function getMeter($UserName,$passwort)
+	  {
+	  	
+	  	
+	  }
 }
 
 ?>

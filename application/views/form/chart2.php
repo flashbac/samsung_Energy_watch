@@ -1,6 +1,9 @@
 <?php $url = base_url() . 'js/'; ?>
 <script type="text/javascript" src="<?php echo $url?>jquery.js"></script>
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/highcharts.js"></script>
+<script type="text/javascript" src="<?php echo $url?>highcharts/js/highcharts-more.js"></script>
+<script type="text/javascript" src="<?php echo $url?>highcharts/js/modules/exporting.js"></script>
+
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
@@ -27,8 +30,8 @@
         },          
     
         yAxis: [{
-            min: 0,
-            max: 200,
+            min: -40,
+            max: 100,
             lineColor: '#339',
             tickColor: '#339',
             minorTickColor: '#339',
@@ -41,23 +44,6 @@
             tickLength: 5,
             minorTickLength: 5,
             endOnTick: false
-        }, {
-            min: 0,
-            max: 124,
-            tickPosition: 'outside',
-            lineColor: '#933',
-            lineWidth: 2,
-            minorTickPosition: 'outside',
-            tickColor: '#933',
-            minorTickColor: '#933',
-            tickLength: 5,
-            minorTickLength: 5,
-            labels: {
-                distance: 12,
-                rotation: 'auto'
-            },
-            offset: -20,
-            endOnTick: false
         }],
     
         series: [{
@@ -65,21 +51,16 @@
             data: [80],
             dataLabels: {
                 formatter: function () {
-                    var kmh = this.y,
-                        mph = Math.round(kmh * 0.621);
-                    return '<span style="color:#339">'+ kmh + ' km/h</span><br/>' +
-                        '<span style="color:#933">' + mph + ' mph</span>';
+                    var kmh = this.y;
+                    return '<span style="color:#339">'+ kmh + ' km/h</span>';
                 },
                 backgroundColor: {
                     linearGradient: {
                         x1: 0,
                         y1: 0,
-                        x2: 0,
-                        y2: 1
                     },
                     stops: [
-                        [0, '#DDD'],
-                        [1, '#FFF']
+                        [0, '#DDD']
                     ]
                 }
             },
@@ -101,13 +82,17 @@
             }
     
             point.update(newVal);
+            getValue();
     
         }, 3000);
     
     });
 
 	}); 
+
+
 </script>
+
 
 <div id="container">
 

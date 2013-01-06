@@ -16,6 +16,7 @@ class data extends CI_Controller {
         
         //Models laden
         $this -> load -> model('Data_model');
+		$this -> load -> model('Meter_model');
     }
 	// hallo world
 	public function index()
@@ -93,6 +94,11 @@ class data extends CI_Controller {
 		else
 			echo "1";
 		
+	}
+	
+	public function getMeter($UserID)
+	{
+		echo json_encode($this -> Meter_model -> getMeters($UserID));
 	}
 }
 ?>

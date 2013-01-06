@@ -81,6 +81,7 @@ if (!isset($_POST['Speichern'])) {
 			'MeterNumber' => $qdb['MeterNumber'],
 			'Description' => $qdb['Description'],
 			'Unit' => $qdb['Unit'],
+			'ID' => $qdb['ID'],
 			);
 	}
 	else 
@@ -136,8 +137,9 @@ $adminstrationsform = array(
             			'name' => 'Name', //Name von oben
 						'id' => 'Name', //Wie Name
 						'maxlength' => '40', //Zeichenanzahl
+						'size' => '60',
 						),
-					'value' => $qdata['MeterNumber'],
+					'value' => $qdata['Name'],
 				),
 				'MeterNumber' => array(
                     'htmltype' => 'text', 
@@ -146,6 +148,7 @@ $adminstrationsform = array(
                         'name' => 'MeterNumber', //Name von oben
                         'id' => 'MeterNumber', //Wie Name
                         'maxlength' => '40', //Zeichenanzahl
+                        'size' => '60',
                         ),
                     'value' => $qdata['MeterNumber'],
 				),
@@ -155,7 +158,8 @@ $adminstrationsform = array(
                     'html' => array(
                         'name' => 'Description', //Name von oben
                         'id' => 'Description', //Wie Name
-                        'maxlength' => '40', //Zeichenanzahl
+                        'maxlength' => '500', //Zeichenanzahl
+                        'size' => '60',
                         ),
                     'value' => $qdata['Description'],
                 ),
@@ -165,14 +169,21 @@ $adminstrationsform = array(
                     'html' => array(
                         'name' => 'Unit', //Name von oben
                         'id' => 'Unit', //Wie Name
-                        'maxlength' => '40', //Zeichenanzahl
+                        'maxlength' => '10', //Zeichenanzahl
+                        'size' => '60',
                         ),
                     'value' => $qdata['Unit'],
                 )
 			);
 echo form_open("main/changeWebsite/addMeter/".$meterID);
-echo form_fieldset('Z&auml;hler');
-
+if (empty($qdb['ID']))
+{
+	echo form_fieldset('Z&auml;hler');
+}
+else 
+{
+	echo form_fieldset('Z&auml;hler ID: '.$qdb['ID']);
+}
 foreach ($adminstrationsform as $element) {
 
     echo '<div class="input">';
