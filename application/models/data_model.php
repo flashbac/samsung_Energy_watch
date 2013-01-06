@@ -77,9 +77,9 @@
 			
 		$query = "SELECT  `Value` ,  `TimeStamp` 
 				 FROM  `value` 
-				 WHERE  `MeterID` = $meterID
-				 AND  `TimeStamp` >=  $startTime
-				 AND  `TimeStamp` <=  $endTime
+				 WHERE  `MeterID` = '$meterID'
+				 AND  `TimeStamp` >=  '$startTime'
+				 AND  `TimeStamp` <=  '$endTime'
  				 ORDER BY  `TimeStamp` DESC" ;
 		/*
 		 * Alternative mit Datums Formatierung?
