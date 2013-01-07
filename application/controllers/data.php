@@ -54,7 +54,8 @@ class data extends CI_Controller {
 	{
 		$startTS = urldecode($startTS);
 		$endTS = urldecode($endTS);
-		echo json_encode($this -> Data_model -> getAreaValues($meterID, $startTS, $endTS));
+		$data = array('data' => $this -> Data_model -> getAreaValues($meterID, $startTS, $endTS));
+		echo json_encode($data);
 	}
 	
 	public function putAriaValues($valus)
