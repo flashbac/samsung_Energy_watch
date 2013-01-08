@@ -26,15 +26,18 @@ $(function () {
                         var series = this.series[0];
                         setInterval(function() {
                         	var data = getValue();
-                            var x = data[0].TimeStamp, // current time
+                        	if (data != null)
+                        	{
+                            var x = (new Date()).getTime(), //data[0].TimeStamp, // current time
                                 y = data[0].Value;
-                            series.addPoint([x, y], true, true);
-                        }, 2000);
+                            series.addPoint([x, y]);
+                           }
+                        }, 10000);
                     }
                 }
             },
             title: {
-                text: 'Live random data'
+                text: 'Live Data'
             },
             xAxis: {
                 type: 'datetime',
@@ -46,9 +49,9 @@ $(function () {
                 },
                 plotLines: [{
                     value: 0,
-                    width: 1,
+                    width: 5,
                     color: '#808080'
-                }]
+                },]
             },
             tooltip: {
                 formatter: function() {
@@ -66,19 +69,30 @@ $(function () {
             series: [{
                 name: 'Random data',
                 data: (function() {
+                var data = [];
+                var d = getValue();
+                 
+                data.push({
+                            x: d[0].TimeStamp,
+                            y: d[0].Value
+                        });
+                return data;
+                })()
+                /*(function() {
                     // generate an array of random data
                     var data = [],
                         time = (new Date()).getTime(),
                         i;
-    
-                    for (i = -10; i <= 0; i++) {
+    				var d = getValue();
+
+                    for (i = -50; i <= 0; i++) {
                         data.push({
-                            x: time + i * 1000,
-                            y: getValue()
+                            x: d[0].TimeStamp,
+                            y: d[0].Value
                         });
                     }
                     return data;
-                })()
+                })()*/
             }]
         });
     });
@@ -90,38 +104,44 @@ function getLastValue() {
   var strUrl = "", strReturn = "";
 
   jQuery.ajax({
-    url: "<?php echo site_url("data/getLastValue/1"); ?>",
+    url: "<?php echo site_url("data/getLastValue/18"); ?>",
     success: function(html) {
       strReturn = html;
     },
     async:false
   });
   var json = $.parseJSON(strReturn);
+  
   return json.data;
 }
-function getValue(){
+
+function getValue()
+{
 	var data = getLastValue();
 	var ts = splitTS(data[0].TimeStamp);
-	var mydate = new Date ("July 1, 1986 02:20:00");
-	var myepoch = mydate.getTime()/1000.0;
-	if(ts <= lastTs)
+	data[0].TimeStamp = ts;
+	data[0].Value = parseFloat(data[0].Value) 
+	return data;
+}
+function getNewerValue(){
+	var data = getValue();
+	if(data[0].TimeStamp > lastTs)
 	{
-		alert('Date ist kleiner.');
-		
-		// lastTs = ts;
+		lastTs = ts;
 		return data;
 	}
 	else
 	{
-		alert('Date ist größer.');
 		return null;
 	}
 }
+
 function splitTS(date)
 {
-	vat t = date.split(/[- :]/);
-	var d = new date(t[0], t[1],t[2],t[3], t[4],t[5]); 
-	return d;
+	var t = date.split(/[- :]/);
+	var d = new Date(t[0], t[1]-1,t[2],t[3], t[4],t[5]);
+	 
+	return Date.parse(d);
 }
 
 		</script>
