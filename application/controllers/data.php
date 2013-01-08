@@ -100,7 +100,8 @@ class data extends CI_Controller {
 	
 	public function getMeter($UserID)
 	{
-		echo json_encode($this -> Meter_model -> getMeters($UserID));
+		$data = array('data' => $this -> Meter_model -> getMeters($UserID));	
+		echo json_encode($data);
 	}
 }
 ?>

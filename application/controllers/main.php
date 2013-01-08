@@ -251,6 +251,7 @@ class main extends CI_Controller {
                 break;
             case 'listmeters' :
                 $this -> load -> model('Meter_model');
+				$this -> load -> model('Data_model');
                 $site = "form/list_meter";
                 $contentData['pos'] = $para1;
                 $contentData['delID'] = FALSE;
@@ -309,6 +310,25 @@ class main extends CI_Controller {
                 
                 //$this -> load -> model('User_model');
                 $site = "form/meterChart";
+                $contentData['meterID'] = FALSE;
+                $contentData['date'] = FALSE;
+                if ($para1) {
+                    if (is_numeric($para1)) {
+                        $contentData['meterID'] = $para1;
+                        if ($para2) {
+                            $contentData['date'] = $para2;
+                        }
+                    } else {
+
+                    }
+                } else {
+                    $contentData['meterID'] = FALSE;
+                }
+                break;
+			case 'visualisierung' :
+                
+                //$this -> load -> model('User_model');
+                $site = "form/visualisierung";
                 $contentData['meterID'] = FALSE;
                 $contentData['date'] = FALSE;
                 if ($para1) {

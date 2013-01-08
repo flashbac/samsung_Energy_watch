@@ -103,13 +103,6 @@ var value;
     });
 });
 
-function getvalue1()
-{
-   $.getJSON("<?php echo site_url("data/getLastValue/1"); ?>", function(data){ 
-    	value = data.data[0].Value;
-	});
-	return value;
-}
 
 function getvalue() {
   // strUrl is whatever URL you need to call

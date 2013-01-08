@@ -10,7 +10,8 @@
 	
 	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/chart2"); ?>">aktuellen Verbrauch anzeigen</a></li>
 	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/chart"); ?>">Verbrauchs History</a></li>
-	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/meterChart"); ?>">Visualisierung</a></li>
+	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/meterChart"); ?>">Meter Chart</a></li>
+	<li><a class="u2" href="<?php echo site_url("main/changeWebsite/visualisierung"); ?>">Visualisierung</a></li>
 	
 	<li><a class="u1" ?>Hilfe</a></li>
 	

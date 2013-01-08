@@ -191,6 +191,20 @@
 	  	
 	  	
 	  }
+	  
+	  
+	public function deleteAllValuesByMeterID($meterID)
+	{
+		$query = "DELETE FROM `value` WHERE `MeterID` = $meterID;";
+		 
+		$DBAnswer = $this -> db -> query($query);
+
+		if ($this -> db -> affected_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }	
+	}
 }
 
 ?>
