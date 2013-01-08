@@ -13,35 +13,21 @@ $(document).ready(function() {
 });
 
 
-function getJson(extention) {
-  // strUrl is whatever URL you need to call
-  var strUrl = "", strReturn = "";
-  var newURL = window.location.protocol + "//" + window.location.host + "/" + extention;
-  
-  jQuery.ajax({
-    url: newURL,
-    success: function(html) {
-      strReturn = html;
-    },
-    async:false
-  });
-  var json = $.parseJSON(strReturn);
-  return json.data;
-}
+
 
 function addItem()
 {
 	var meter = getJson("samsung_Energy_watch/index.php/data/getMeter/1");
 	var element4 = document.getElementById("combo");
 	
-	for (var i in meter)
+	//for (var i in meter)
+	for (var i=0,l = meter.length; i<l; i++)
 	{
 	 	var option1 = document.createElement("option");
 	 	option1.value=meter[i].ID;
 	 	option1.innerHTML=meter[i].Name;
 	 	element4.options.add(option1);
- 	}
- 	
+ 	} 	
 }
 
 function tauschen(obj){
@@ -56,19 +42,18 @@ object.innerHTML= austausch;
 Date.firstDayOfWeek = 0;
 Date.format = 'yyyy/mm/dd';
 $(function() {
-        $( "#datepicker" ).datepicker();
-
+        $( "#datebis" ).datepicker();
+		$( "#datevon" ).datepicker();
     });
 
 </script>
 
-<form name=myform onchange="tauschen(this)">
+<form name=myform ">
 	<select name=mytextarea id="combo" >
 	</select>
-	<input type="button" name="Anzeigen" value="Anzeigen"
-	      onclick="addItem()">
-	<input type="text" name="von" id="von" value="">
-	<input type="text" id="datepicker" />
+	<input type="button" name="Anzeigen" value="Anzeigen" onclick="tauschen(this)" />
+	<input type="text" id="datevon" value="" />
+	<input type="text" id="datebis" value="" />
 </form>
 
 

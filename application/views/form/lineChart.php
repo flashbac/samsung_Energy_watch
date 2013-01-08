@@ -33,7 +33,7 @@ $(function() {
 		       },
 		        data: (function() {
 	                var data = [];
-	                var daten = getValues();
+	                var daten = getValues(15,'2013-01-06 00:00:00','2013-01-07 00:00:00');
 	                
 	                for (var i in daten)
 	                {
@@ -48,41 +48,6 @@ $(function() {
 		});
 	});
 
-
-function getLastValues() {
-  // strUrl is whatever URL you need to call
-  var strUrl = "", strReturn = "";
-
-  jQuery.ajax({
-    url: "<?php echo site_url("data/getAreaValues/15/2013-01-06 00:00:00/2013-01-07 00:00:00"); ?>",
-    success: function(html) {
-      strReturn = html;
-    },
-    async:false
-  });
-  var json = $.parseJSON(strReturn);
-  
-  return json.data;
-}
-
-function getValues()
-{
-	var daten = getLastValues();
-	for (var i in daten)
-	{
-		daten[i].TimeStamp = splitTS(daten[i].TimeStamp);
-		daten[i].Value = parseFloat(daten[i].Value);
-	}
-	return daten;
-}
-
-function splitTS(date)
-{
-	var t = date.split(/[- :]/);
-	var d = new Date(t[0], t[1]-1,t[2],t[3], t[4],t[5]);
-	 
-	return Date.parse(d);
-}
 
 </script>
 		
