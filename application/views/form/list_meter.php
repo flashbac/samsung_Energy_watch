@@ -19,14 +19,19 @@ $errors = array();
 $successes = array();
 
 if ($delID) {
-    $name = $this -> meter_model -> getMeter($delID);
-    $name = $name['Grundrichtung'] . ', ' . $name['Beschreibung'];
+    $name = $this -> Meter_model -> getMeter($delID);
+    $name = $name['Name'] . ' mit der Zählernummer: ' . $name['MeterNumber'];
 
     if ($name) {
-        if ($this -> Quali_model -> delete($delID)) {
-            $successes[] = '<p>' . htmlentities("Eintrag für $name wurde erfolgreich gelsöcht", 0, 'UTF-8') . '</p>';
+        if ($this -> Data_model -> deleteAllValuesByMeterID($delID)) {
+            $successes[] = '<p>' . htmlentities("Einträge für $name wurden erfolgreich gelöscht", 0, 'UTF-8') . '</p>';
         } else {
-            $errors[] = '<p>' . htmlentities("Der eintrag für $name konnte nicht gelöscht werden", 0, 'UTF-8') . '</p>';
+            $successes[] = '<p>' . htmlentities("Keine Eintrage für $name vorhanden.", 0, 'UTF-8') . '</p>';
+        }
+		if ($this -> Meter_model -> deletemeter($delID)) {
+			$successes[] = '<p>' . htmlentities("Der Zähler $name wurde erfolgreich gelöscht.", 0, 'UTF-8') . '</p>';
+        } else {
+            $errors[] = '<p>' . htmlentities("Keine Eintrage für $name vorhanden.", 0, 'UTF-8') . '</p>';
         }
     } else {
         $errors[] = '<p>' . htmlentities("Der Eintrag für $name konnte nicht gefunden werden", 0, 'UTF-8') . '</p>';
