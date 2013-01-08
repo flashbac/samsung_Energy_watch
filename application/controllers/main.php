@@ -329,6 +329,7 @@ class main extends CI_Controller {
                 
                 //$this -> load -> model('User_model');
                 $site = "form/visualisierung";
+				$this -> layout_data['cssfile'] = "jquery-ui.css";
                 $contentData['meterID'] = FALSE;
                 $contentData['date'] = FALSE;
                 if ($para1) {

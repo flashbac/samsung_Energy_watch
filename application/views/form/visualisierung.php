@@ -1,6 +1,10 @@
 <?php $url = base_url() . 'js/'; ?>
-<script type="text/javascript" src="<?php echo $url?>jquery.js"></script>
+<script type="text/javascript" src="<?php echo $url?>jquery-1.8.3.js"></script>
+<script type="text/javascript" src="<?php echo $url?>jquery-ui.js"></script>
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/highcharts.js"></script>
+<script type="text/javascript" src="<?php echo $url?>datepicker.js"></script>
+
+
 		
 <script type="text/javascript">
 	
@@ -46,10 +50,15 @@ var object = document.getElementById("container");
 var selIndex = selObj.selectedIndex;
 var austausch = "<p>"+selObj.options[selIndex].value;+"</p>";
 object.innerHTML= austausch;
-
-
 }
 
+
+Date.firstDayOfWeek = 0;
+Date.format = 'yyyy/mm/dd';
+$(function() {
+        $( "#datepicker" ).datepicker();
+
+    });
 
 </script>
 
@@ -58,7 +67,10 @@ object.innerHTML= austausch;
 	</select>
 	<input type="button" name="Anzeigen" value="Anzeigen"
 	      onclick="addItem()">
+	<input type="text" name="von" id="von" value="">
+	<input type="text" id="datepicker" />
 </form>
+
 
 
 		

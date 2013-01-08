@@ -109,7 +109,7 @@ function getvalue() {
   var strUrl = "", strReturn = "";
 
   jQuery.ajax({
-    url: "<?php echo site_url("data/getLastValue/1"); ?>",
+    url: "<?php echo site_url("data/getLastValue/17"); ?>",
     success: function(html) {
       strReturn = html;
     },
