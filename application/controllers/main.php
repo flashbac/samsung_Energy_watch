@@ -191,6 +191,7 @@ class main extends CI_Controller {
                 break;
             case 'listmeters' :
                 $this -> load -> model('Meter_model');
+				$this -> load -> model('Data_model');
                 $site = "form/list_meter";
                 $contentData['pos'] = $para1;
                 $contentData['delID'] = FALSE;
