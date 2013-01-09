@@ -128,6 +128,14 @@ function splitTS(date)
 	return Date.parse(d);
 }
 
+if ("webinos" in window)
+{
+    // get all available services
+    webinos.findServices("*", function(ser) {
+        // show service on page
+        alert(ser);
+    }, null);
+}
 </script>
 
 
