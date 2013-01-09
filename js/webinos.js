@@ -1080,7 +1080,7 @@ if(typeof webinos.util === "undefined") {
       if(isWebServer) {
         try {
           var xmlhttp = new XMLHttpRequest;
-          xmlhttp.open("GET", "/webinosConfig.json", false);
+          xmlhttp.open("GET", "./webinosConfig.json", false);
           xmlhttp.send();
           if(xmlhttp.status == 200) {
             var resp = JSON.parse(xmlhttp.responseText);
