@@ -80,8 +80,7 @@
 				 WHERE  `MeterID` = '$meterID'
 				 AND  `TimeStamp` >=  '$startTime'
 				 AND  `TimeStamp` <=  '$endTime'
- 				 ORDER BY  `TimeStamp`
-				 LIMIT 4000";
+ 				 ORDER BY  `TimeStamp`";
 		/*
 		 * Alternative mit Datums Formatierung?
 		 * 

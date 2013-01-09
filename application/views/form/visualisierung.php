@@ -15,6 +15,7 @@ $(document).ready(function() {
 
 function drawLineChart(id,from,to) {
 		// Create the chart
+		var numberOfValues;
 		window.chart = new Highcharts.StockChart({
 		    chart: {
 		        renderTo: 'container'
@@ -29,6 +30,7 @@ function drawLineChart(id,from,to) {
 		    },
 		    
 		    series: [{
+		    	
 		        name: 'AAPL Stock Price',
 		        type: 'spline',
 		    	tooltip: {
@@ -47,8 +49,10 @@ function drawLineChart(id,from,to) {
 	                 
 	                }
 	                alert(daten.length);
+	                numberOfValues = daten.length;
 	                return data;
-                })()	    
+                })(),
+                turboThreshold: numberOfValues,
 		    }]
 		});
 	}
@@ -73,7 +77,7 @@ function addItem()
 function drawChart(){
 var selObj = document.getElementById('combo');
 var selIndex = selObj.selectedIndex;
-drawLineChart(selObj.options[selIndex].value,'2013-01-08 00:00:00','2013-01-09 00:00:00');
+drawLineChart(selObj.options[selIndex].value,'2013-01-07 00:00:00','2013-01-09 00:00:00');
 
 }
 
