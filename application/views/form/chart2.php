@@ -5,7 +5,6 @@
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/modules/exporting.js"></script>
 <script type="text/javascript" src="<?php echo $url?>webinos.js"></script>
 
-
 <script type="text/javascript">
 var value;
 	$(function () {
@@ -131,10 +130,11 @@ function splitTS(date)
 if ("webinos" in window)
 {
     // get all available services
-    webinos.findServices("*", function(ser) {
+    webinos.discovery.findServices("*", function(ser) {
         // show service on page
         alert(ser);
     }, null);
+    webinos.Sensor.DiscoveryModule();
 }
 </script>
 

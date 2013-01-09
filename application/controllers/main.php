@@ -139,6 +139,22 @@ class main extends CI_Controller {
                 $this -> form_validation -> set_message('required', 'Das Feld %s ist erforderlich.');
                 $this -> form_validation -> set_rules($this -> user_model -> getValidationRulesCHANGEPW());
                 breaK;
+            /*case 'webinosConfig.json' :
+               $attachment_location = $_SERVER["CONTEXT_DOCUMENT_ROOT"] . "js/webinos_config.json";
+                if (file_exists($attachment_location)) {
+
+                header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
+                header("Cache-Control: public"); // needed for i.e.
+                header("Content-Type: application/zip");
+                header("Content-Transfer-Encoding: Binary");
+                header("Content-Length:".filesize($attachment_location));
+                header("Content-Disposition: attachment; filename=webinosConfig.json");
+                readfile($attachment_location);
+                die();        
+            } else {
+                die("Error: File not found.");
+            } 
+                breaK;*/
             case 'deleteuser' :
                 if ($isAdmin) {
                     if (!empty($para1)) {
