@@ -2,16 +2,22 @@
 <script type="text/javascript" src="<?php echo $url?>jquery-1.8.3.js"></script>
 <script type="text/javascript" src="<?php echo $url?>jquery-ui.js"></script>
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/highcharts.js"></script>
-<script type="text/javascript" src="<?php echo $url?>datepicker.js"></script>
+<script type="text/javascript" src="<?php echo $url?>epoch_classes.js"></script>
 <script type="text/javascript" src="<?php echo $url?>highstock/js/highstock.js"></script>
 <script type="text/javascript" src="<?php echo $url?>highstock/js/modules/exporting.js"></script>
 
 		
 <script type="text/javascript">
+
+		var dp_cal1,dp_cal2;
 	
 $(document).ready(function() {
   addItem();
+  dp_cal1 = new Epoch('epoch_popup','popup',document.getElementById('datevon'));
+  dp_cal2 = new Epoch('epoch_popup','popup',document.getElementById('datebis'));
 });
+
+  
 
 function drawLineChart(id,from,to) {
 
@@ -76,7 +82,7 @@ chart = new Highcharts.Chart({
                 name: 'Temperature',
                 data: (function() {
 	                var data = [];
-	                var daten = getValues(id,from,to);
+	                var daten = getValues(id,from,to,"<?php echo base_url(); ?>");
 	                
 	                for (var i=0,l = daten.length; i<l; i++)
 	                {
@@ -96,7 +102,7 @@ chart = new Highcharts.Chart({
 
 function addItem()
 {
-	var meter = getJson("samsung_Energy_watch/index.php/data/getMeter/1");
+	var meter = getJson("<?php echo base_url(); ?>index.php/data/getMeter/1");
 	var element4 = document.getElementById("combo");
 	
 	//for (var i in meter)
@@ -112,17 +118,21 @@ function addItem()
 function drawChart(){
 var selObj = document.getElementById('combo');
 var selIndex = selObj.selectedIndex;
-drawLineChart(selObj.options[selIndex].value,'2013-01-08 00:00:00','2013-01-09 00:00:00');
+var timeVon = dp2dateTS(document.getElementById('datevon').value);
+var timeBis = dp2dateTS(document.getElementById('datebis').value);
+drawLineChart(selObj.options[selIndex].value,timeVon,timeBis);
 
 }
 
 
-Date.firstDayOfWeek = 0;
-Date.format = 'yyyy/mm/dd';
 $(function() {
-        $( "#datebis" ).datepicker();
-		$( "#datevon" ).datepicker();
+
+	
+        //$( "#datebis" ).datepicker();
+		//$( "#datevon" ).datepicker();
     });
+
+
 
 </script>
 
@@ -130,7 +140,7 @@ $(function() {
 	<select name=mytextarea id="combo" >
 	</select>
 	<input type="button" name="Anzeigen" value="Anzeigen" onclick="drawChart()"/>
-	<input type="text" id="datevon" value="" />
+	<input type="text" id="datevon" value=""  />
 	<input type="text" id="datebis" value="" />
 </form>
 		

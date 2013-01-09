@@ -124,7 +124,8 @@
 			$temp2 = explode("_",$temp);	
 			$temp1 = $temp2;
 			
-
+			$value = 0;
+			$timeStamp = 0;
 			foreach ($temp1 as $oneValue)
 			{
 				//Abfrage in welches Türchen die Daten reinfallen sollen 
