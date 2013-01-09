@@ -109,33 +109,60 @@
 	 * */
 	 public function putAreaValues($str)
 	 {
-		
+
 // Explode Variante
 
-		$array1 = explode("~",$str);
-		
+		$array1 = explode(";",$str);
+
 		$temp1 = array();
 		$oneValue1 = array(); 
 		$i = 0;
-		
+
 		foreach ($array1 as $temp) 
 		{
-			
-			$temp2 = explode("_",$temp);	
+
+			$temp2 = explode(",",$temp);	
 			$temp1 = $temp2;
-			
-			$value = 0;
-			$timeStamp = 0;
+
+			/**
+			 $DieWerte[] = array(
+   			'meterID' => $temp2[0],
+    		'value' => $temp2[1],
+    		'TimeStamp' => $temp2[2],
+    		)
+			 * 
+			 * $string = "";
+				$string = "INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`) VALUES";
+				Foreach($DieWerte as $wert)
+				{
+				  $string = $string."(NULL , '$wert['meterID'], $wert['value'], $wert['timeStamp'],";
+				}
+		}
+		
+		$DBAnswer = $this -> db -> query($string);
+								
+		if (count($DBAnswer)>0) {
+				return $DBAnswer;
+		} else {
+				return FALSE;
+		}	
+		$string = $string.";";
+			 
+			 * 
+			 * 
+			 * 
+			 ***/
+
 			foreach ($temp1 as $oneValue)
 			{
 				//Abfrage in welches Türchen die Daten reinfallen sollen 
 				if($i == 0){
 					$meterID = $oneValue;
-					
+
 					 /**$meterID = array()
 					 * $meterID[] = $oneValue;
 					 * */
-					 
+
 				};
 				if($i == 1){
 					$value = $oneValue;
@@ -143,7 +170,7 @@
 				if($i == 2){
 					$timeStamp = $oneValue;
 				};
-				
+
 				//Wenn timeStamp belegt dann kann endlich gepushed werden
 				if($i=2)
 				{
@@ -151,7 +178,7 @@
 					$i=-1;
 					$insert = 		"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
 									"VALUES (NULL , '$meterID', '$value', '$timeStamp');";
-						
+
 					$DBAnswer = $this -> db -> query($insert);
 					if($DBAnswer != FALSE)
 						return FALSE;
@@ -161,7 +188,7 @@
 			}
 		}
 	 }
-	 
+
 	 /**
 	  * Funktion die neuen Meter anlegt
 	  * Alle Parameter der Tabelle Meter
