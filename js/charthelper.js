@@ -31,3 +31,11 @@ function splitTS(date)
 	 
 	return Date.parse(d);
 }
+
+function dateTS(date)
+{
+	var t = date.split(/[/]/);
+	var d = new Date(t[0], t[1]-1,t[2],'00', '00', '00');
+	 
+	return Date.parse(d);
+}

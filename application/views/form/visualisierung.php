@@ -61,7 +61,7 @@ function drawLineChart(id,from,to) {
 
 function addItem()
 {
-	var meter = getJson("<?php echo base_url(); ?>index.php/data/getMeter/15");
+	var meter = getJson("<?php echo base_url(); ?>index.php/data/getMeter/1");
 	var element4 = document.getElementById("combo");
 	
 	//for (var i in meter)
