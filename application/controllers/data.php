@@ -58,12 +58,12 @@ class data extends CI_Controller {
 		echo json_encode($data);
 	}
 	
-	public function putAriaValues($valus)
+	public function putAreaValues($values)
 	{
-		echo "Vorher: ".$valus."<br/>";
-		$valus = urldecode($valus);
-		echo "Nachher: ".$valus."<br/>";
-		if($anser = $this -> Data_model ->putAreaValues($mvalues) )
+		echo "Vorher: ".$values."<br/>";
+		$values = urldecode($values);
+		echo "Nachher: ".$values."<br/>";
+		if($anser = $this -> Data_model ->putAreaValues($values) )
 		{
 			echo "0";
 		}
