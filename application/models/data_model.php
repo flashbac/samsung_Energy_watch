@@ -112,7 +112,7 @@
 		
 // Explode Variante
 
-		$array1 = explode(";",$str);
+		$array1 = explode(":",$str);
 		
 		$temp1 = array();
 		$oneValue1 = array(); 
@@ -121,7 +121,7 @@
 		foreach ($array1 as $temp) 
 		{
 			
-			$temp2 = explode(",",$temp);	
+			$temp2 = explode("_",$temp);	
 			$temp1 = $temp2;
 			
 
