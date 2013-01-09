@@ -1,24 +1,3 @@
-﻿
-
-///////
-
-document.write("<div id=divForCalenderBack style='display:none'>");
-
-
-//if(typeof OnlyShowMonthYear != 'undefined')
-//    document.write("<iframe id = 'calenderBackFrame' src='javascript:false' scrolling='no' frameborder='0' style='width: 200px; height: 50px'>");
-//else
-    document.write("<iframe id = 'calenderBackFrame' src='javascript:false' scrolling='no' frameborder='0' style='width: 200px; height: 208px'>");
-
-        
-document.write("</iframe>");
-document.write("</div>");
-
-///////
-
-
-
-
 /*****************************************************************************
 Copyright (C) 2006  Nick Baicoianu
 
@@ -37,18 +16,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *****************************************************************************/
 //constructor for the main Epoch class (ENGLISH VERSION)
-function Epoch(name,mode,onlyShowMonthYear,multiselect)
+function Epoch(name,mode,targetelement,multiselect)
 {
 	this.state = 0;
 	this.name = name;
 	this.curDate = new Date();
-	//alert("Current date:"+ this.curDate);
 	this.mode = mode;
-	this.OnlyShowMonthYear = (onlyShowMonthYear == true);
 	this.selectMultiple = (multiselect == true); //'false' is not true or not set at all
 	
 	//the various calendar variables
-	//this.selectedDate = this.curDate; `
+	//this.selectedDate = this.curDate;
 	this.selectedDates = new Array();
 	this.calendar;
 	this.calHeading;
@@ -67,80 +44,43 @@ function Epoch(name,mode,onlyShowMonthYear,multiselect)
 	this.setDays();
 	this.displayYear = this.displayYearInitial;
 	this.displayMonth = this.displayMonthInitial;
-	this.createCalendar(); //create the calendar DOM element and its children, and their related objects
-
-}
-//-----------------------------------------------------------------------------
-
-
-function showCalender (obj,targetelement)
-{
 	
-    if(obj.mode == 'popup' && targetelement.type == 'text') //if the target element has been set to be an input text box
+	this.createCalendar(); //create the calendar DOM element and its children, and their related objects
+	
+	if(this.mode == 'popup' && targetelement && targetelement.type == 'text') //if the target element has been set to be an input text box
 	{
-		obj.tgt = targetelement;
-		obj.calendar.style.position = 'absolute';
-		
-		obj.topOffset = obj.tgt.offsetHeight+obj.tgt.offsetHeight-12; // the vertical distance (in pixels) to display the calendar from the Top of its input element
-		
-		obj.leftOffset = -30; 					// the horizontal distance (in pixels) to display the calendar from the Left of its input element
-		obj.calendar.style.top = obj.getTop(targetelement) + obj.topOffset + 'px';
-		obj.calendar.style.left = obj.getLeft(targetelement) + obj.leftOffset + 'px';
-		document.body.appendChild(obj.calendar);
-		obj.tgt.calendar = obj;
-		obj.tgt.onblur = function () {if(!this.calendar.mousein){this.calendar.hide();}}; //the calendar will popup when the input element is focused
-		obj.tgt.calendar.show();
-		
-		
-		divForCalenderBack.style.position    = obj.calendar.style.position ;
-		divForCalenderBack.topOffset = obj.topOffset ;
-		divForCalenderBack.leftOffset  = obj.leftOffset ;
-		divForCalenderBack.style.top = obj.calendar.style.top ;
-		divForCalenderBack.style.left =obj.calendar.style.left ;
-        
-
-        if(obj.OnlyShowMonthYear)
-            document.getElementById('calenderBackFrame').style.height = 50;
-        else
-            document.getElementById('calenderBackFrame').style.height = 208;
-
-
+		this.tgt = targetelement;
+		this.calendar.style.position = 'absolute';
+		this.topOffset = this.tgt.offsetHeight; // the vertical distance (in pixels) to display the calendar from the Top of its input element
+		this.leftOffset = 0; 					// the horizontal distance (in pixels) to display the calendar from the Left of its input element
+		this.calendar.style.top = this.getTop(targetelement) + this.topOffset + 'px';
+		this.calendar.style.left = this.getLeft(targetelement) + this.leftOffset + 'px';
+		document.body.appendChild(this.calendar);
+		this.tgt.calendar = this;
+		this.tgt.onfocus = function () {this.calendar.show();}; //the calendar will popup when the input element is focused
+		this.tgt.onblur = function () {if(!this.calendar.mousein){this.calendar.hide();}}; //the calendar will popup when the input element is focused
 	}
 	else
 	{
-		obj.container = targetelement;
-		obj.container.appendChild(obj.calendar);
+		this.container = targetelement;
+		this.container.appendChild(this.calendar);
 	}
 	
-	obj.state = 2; //0: initializing, 1: redrawing, 2: finished!
-	obj.visible ? obj.show() : obj.hide();
-} 
-
-
+	this.state = 2; //0: initializing, 1: redrawing, 2: finished!
+	this.visible ? this.show() : this.hide();
+}
+//-----------------------------------------------------------------------------
 Epoch.prototype.calConfig = function () //PRIVATE: initialize calendar variables
 {
 	//this.mode = 'flat'; //can be 'flat' or 'popup'
 	this.displayYearInitial = this.curDate.getFullYear(); //the initial year to display on load
 	this.displayMonthInitial = this.curDate.getMonth(); //the initial month to display on load (0-11)
-	if(typeof LimitDatePickerYearRange != 'undefined')
-	{
-	    d = new Date();
-	    year = d.getFullYear() - 1;
-	    this.rangeYearLower = year;
-	    this.rangeYearUpper = 2050;
-	    this.minDate = new Date(year,0,1);
-	    this.maxDate = new Date(2050,0,1);
-	}
-	else
-	{
-	    this.rangeYearLower = 1880;
-	    this.rangeYearUpper = this.curDate.getFullYear();
-	    //alert("range year upper: "+this.curDate.getFullYear());
-	    this.minDate = new Date(1880,0,1);
-	    this.maxDate = new Date(this.curDate.getFullYear(),0,1);
-	}
+	this.rangeYearLower = 2005;
+	this.rangeYearUpper = 2037;
+	this.minDate = new Date(2005,0,1);
+	this.maxDate = new Date(2037,0,1);
 	this.startDay = 0; // the day the week will 'start' on: 0(Sun) to 6(Sat)
-	this.showWeeks = false; //whether the week numbers will be shown
+	this.showWeeks = true; //whether the week numbers will be shown
 	this.selCurMonthOnly = false; //allow user to only select dates in the currently displayed month
 	this.clearSelectedOnChange = true; //whether to clear all selected dates when changing months
 	
@@ -199,23 +139,14 @@ Epoch.prototype.getLeft = function (element) //PRIVATE: returns the absolute Lef
 //-----------------------------------------------------------------------------
 Epoch.prototype.show = function () //PUBLIC: displays the calendar
 {
-
-    if(this.OnlyShowMonthYear)
-        document.getElementById('calenderBackFrame').style.height = 50;
-    else
-        document.getElementById('calenderBackFrame').style.height = 208;
-
 	this.calendar.style.display = 'block';
-	 divForCalenderBack.style.display = 'block';
 	this.visible = true;
 };
 //-----------------------------------------------------------------------------
 Epoch.prototype.hide = function () //PUBLIC: Hides the calendar
 {
 	this.calendar.style.display = 'none';
-	divForCalenderBack.style.display = 'none';
 	this.visible = false;
-	this.tgt.parentNode.focus();
 };
 //-----------------------------------------------------------------------------
 Epoch.prototype.toggle = function () //PUBLIC: Toggles (shows/hides) the calendar depending on its current state
@@ -263,28 +194,22 @@ Epoch.prototype.createCalendar = function ()  //PRIVATE: creates the full DOM im
 	tr.appendChild(td);
 	tbody.appendChild(tr);
 	
+	//create the calendar Day Heading
+	tr = document.createElement('tr');
+	td = document.createElement('td');
+	td.appendChild(this.createDayHeading());
+	tr.appendChild(td);
+	tbody.appendChild(tr);
 
-    //if(typeof OnlyShowMonthYear == 'undefined')
-    if(!this.OnlyShowMonthYear)
-    {
-        //create the calendar Day Heading
-        tr = document.createElement('tr');
-        td = document.createElement('td');
-        td.appendChild(this.createDayHeading());
-        tr.appendChild(td);
-        tbody.appendChild(tr);
-
-        //create the calendar Day Cells
-        tr = document.createElement('tr');
-        td = document.createElement('td');
-        td.setAttribute('id',this.name+'_cell_td');
-        this.calCellContainer = td; //used as a handle for manipulating the calendar cells as a whole
-        td.appendChild(this.createCalCells());
-        tr.appendChild(td);
-        tbody.appendChild(tr);
-    }
- 
-	                                                                                                                            
+	//create the calendar Day Cells
+	tr = document.createElement('tr');
+	td = document.createElement('td');
+	td.setAttribute('id',this.name+'_cell_td');
+	this.calCellContainer = td;	//used as a handle for manipulating the calendar cells as a whole
+	td.appendChild(this.createCalCells());
+	tr.appendChild(td);
+	tbody.appendChild(tr);
+	
 	//create the calendar footer
 	tr = document.createElement('tr');
 	td = document.createElement('td');
@@ -305,7 +230,6 @@ Epoch.prototype.createMainHeading = function () //PRIVATE: Creates the primary c
 {
 	//create the containing <div> element
 	var container = document.createElement('div');
-	
 	container.setAttribute('id',this.name+'_mainheading');
 	this.setClass(container,'mainheading');
 	//create the child elements and other variables
@@ -325,8 +249,6 @@ Epoch.prototype.createMainHeading = function () //PRIVATE: Creates the primary c
 		this.monthSelect.appendChild(opt);
 	}
 	//and fill the year select box
-//	alert("hi");
-	//alert("lower: "+this.rangeYearLower+"\n Upper: "+this.rangeYearUpper);
 	for(i=this.rangeYearLower;i<=this.rangeYearUpper;i++)
 	{
 		opt = document.createElement('option');
@@ -334,9 +256,7 @@ Epoch.prototype.createMainHeading = function () //PRIVATE: Creates the primary c
 		if(this.state == 0 && this.displayYear == i) {
 			opt.setAttribute('selected','selected');
 		}
-		//alert("in");
 		opt.appendChild(document.createTextNode(i));
-		//alert("i="+i);
 		this.yearSelect.appendChild(opt);		
 	}
 	//add the appropriate children for the month buttons
@@ -353,21 +273,13 @@ Epoch.prototype.createMainHeading = function () //PRIVATE: Creates the primary c
 	monthDn.onmouseup = function () {this.owner.prevMonth();};
 	this.monthSelect.onchange = function() {
 		this.owner.displayMonth = this.value;
-		this.owner.displayYear = this.owner.yearSelect.value;
-   
-        //if(typeof OnlyShowMonthYear == 'undefined')
-        if(!this.owner.OnlyShowMonthYear)
-            this.owner.goToMonth(this.owner.displayYear,this.owner.displayMonth);
-  
+		this.owner.displayYear = this.owner.yearSelect.value; 
+		this.owner.goToMonth(this.owner.displayYear,this.owner.displayMonth);
 	};
 	this.yearSelect.onchange = function() {
 		this.owner.displayMonth = this.owner.monthSelect.value;
-		this.owner.displayYear = this.value;
-   
-        //if(typeof OnlyShowMonthYear == 'undefined')
-        if(!this.owner.OnlyShowMonthYear)
-		    this.owner.goToMonth(this.owner.displayYear,this.owner.displayMonth);
-   
+		this.owner.displayYear = this.value; 
+		this.owner.goToMonth(this.owner.displayYear,this.owner.displayMonth);
 	};
 	
 	//and finally add the elements to the containing div
@@ -381,7 +293,6 @@ Epoch.prototype.createMainHeading = function () //PRIVATE: Creates the primary c
 Epoch.prototype.createFooter = function () //PRIVATE: creates the footer of the calendar - goes under the calendar cells
 {
 	var container = document.createElement('div');
-
 	var clearSelected = document.createElement('input');
 	clearSelected.setAttribute('type','button');
 	clearSelected.setAttribute('value',this.clearbtn_caption);
@@ -389,29 +300,6 @@ Epoch.prototype.createFooter = function () //PRIVATE: creates the footer of the 
 	clearSelected.owner = this;
 	clearSelected.onclick = function() { this.owner.resetSelections(false);};
 	container.appendChild(clearSelected);
-	
-	
-
-	//if(typeof OnlyShowMonthYear != 'undefined')
-	if(this.OnlyShowMonthYear)
-    {
-        var clearSelected = document.createElement('input');
-        clearSelected.setAttribute('type','button');
-        clearSelected.setAttribute('value','Select');
-        clearSelected.setAttribute('title','Select');
-        clearSelected.owner = this;
-        clearSelected.onclick = function()
-        {
-            var monthYear = parseInt(this.owner.monthSelect.value) + 1 + "/" + this.owner.yearSelect.value;
-            if(this.owner.tgt)
-                this.owner.tgt.value = monthYear;
-            this.owner.hide();
-        };
-        container.appendChild(clearSelected);
-    }
-
-                                    
-	
 	return container;
 };
 //-----------------------------------------------------------------------------
@@ -584,15 +472,9 @@ Epoch.prototype.nextMonth = function () //PUBLIC: go to the next month.  if the 
 	this.displayMonth = this.monthSelect.value;
 	this.displayYear = this.yearSelect.value;
 	
-
-    //if(typeof OnlyShowMonthYear == 'undefined')
-    if(!this.OnlyShowMonthYear)
-    {
-	    //and refresh the calendar for the new month/year
-	    this.deleteCells();
-	    this.calCellContainer.appendChild(this.createCalCells());
-	}
-
+	//and refresh the calendar for the new month/year
+	this.deleteCells();
+	this.calCellContainer.appendChild(this.createCalCells());
 };
 //-----------------------------------------------------------------------------
 Epoch.prototype.prevMonth = function () //PUBLIC: go to the previous month.  if the month is january, go to december of the previous year
@@ -616,15 +498,9 @@ Epoch.prototype.prevMonth = function () //PUBLIC: go to the previous month.  if 
 	this.displayMonth = this.monthSelect.value;
 	this.displayYear = this.yearSelect.value;
 	
-
-    //if(typeof OnlyShowMonthYear == 'undefined')
-    if(!this.OnlyShowMonthYear)
-    {
-	    //and refresh the calendar for the new month/year
-	    this.deleteCells();
-	    this.calCellContainer.appendChild(this.createCalCells());
-	}
-
+	//and refresh the calendar for the new month/year
+	this.deleteCells();
+	this.calCellContainer.appendChild(this.createCalCells());
 };
 //-----------------------------------------------------------------------------
 Epoch.prototype.addZero = function (vNumber) //PRIVATE: pads a 2 digit number with a leading zero
@@ -740,7 +616,6 @@ CalHeading.prototype.onclick = function ()
 /*****************************************************************************/
 function WeekHeading(owner,tableCell,week,row)
 {
-
 	this.owner = owner;
 	this.tableCell = tableCell;
 	this.week = week;
@@ -749,7 +624,6 @@ function WeekHeading(owner,tableCell,week,row)
 	this.tableCell.setAttribute('className','wkhead'); //<iehack>
 	//the event handlers
 	this.tableCell.onclick = this.onclick;
-
 }
 //-----------------------------------------------------------------------------
 WeekHeading.prototype.onclick = function ()
@@ -833,7 +707,7 @@ CalCell.prototype.onclick = function ()
 					owner.selectedDates.push(cell.date);
 				}
 			}
-			else
+			else		
 			{
 				var tmp = owner.selectedDates; // to reduce indirection
 				//if the cell has been deselected, remove it from the owner calendar's selectedDates array
@@ -925,8 +799,7 @@ Date.prototype.getUeDay = function () //returns the number of DAYS since the UNI
 Date.prototype.dateFormat = function(format)
 {
 	if(!format) { // the default date format to use - can be customized to the current locale
-		format = 'd/m/Y';
-		//format = 'm/d/Y';
+		format = 'm/d/Y';
 	}
 	LZ = function(x) {return(x < 0 || x > 9 ? '' : '0') + x};
 	var MONTH_NAMES = new Array('January','February','March','April','May','June','July','August','September','October','November','December','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
@@ -992,23 +865,3 @@ Array.prototype.arrayIndex = function(searchVal,startIndex) //similar to array.i
 	return -1;
 };
 /*****************************************************************************/
-
-//////////
-
-var calender;
-var smallCalender;
-
-window.onload = function () 
-{
-    if(typeof OnlyShowMonthYear == 'undefined')
-   	    calender        =   new Epoch('epoch_popup','popup');
-   	else if(OnlyShowMonthYear == true)
-   	    calender        =   new Epoch('epoch_popup','popup', true);
-   	else
-   	{
-   	    calender        =   new Epoch('epoch_popup','popup');
-   	    smallCalender   =   new Epoch('epoch_popup','popup', true);
-   	}
-}
-
-//////////
