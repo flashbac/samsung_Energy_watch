@@ -2,15 +2,19 @@
 <script type="text/javascript" src="<?php echo $url?>jquery-1.8.3.js"></script>
 <script type="text/javascript" src="<?php echo $url?>jquery-ui.js"></script>
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/highcharts.js"></script>
-<script type="text/javascript" src="<?php echo $url?>datepicker.js"></script>
+<script type="text/javascript" src="<?php echo $url?>epoch_classes.js"></script>
 <script type="text/javascript" src="<?php echo $url?>highstock/js/highstock.js"></script>
 
 
 		
 <script type="text/javascript">
 	
+	var dp_cal1,dp_cal2;
+	
 $(document).ready(function() {
   addItem();
+  dp_cal1 = new Epoch('epoch_popup','popup',document.getElementById('datevon'));
+  dp_cal2 = new Epoch('epoch_popup','popup',document.getElementById('datebis'));
 });
 
 function drawLineChart(id,from,to) {
@@ -81,21 +85,15 @@ drawLineChart(selObj.options[selIndex].value,'2013-01-07 00:00:00','2013-01-09 0
 
 }
 
-
-Date.firstDayOfWeek = 0;
-Date.format = 'yyyy/mm/dd';
-$(function() {
-        $( "#datebis" ).datepicker();
-		$( "#datevon" ).datepicker();
-    });
-
 </script>
 
 <form name=myform ">
 	<select name=mytextarea id="combo" >
 	</select>
 	<input type="button" name="Anzeigen" value="Anzeigen" onclick="drawChart()"/>
-	<input type="text" id="datevon" value="" />
+	Datum: von
+	<input type="text" id="datevon" value=""  />
+	bis
 	<input type="text" id="datebis" value="" />
 </form>
 		

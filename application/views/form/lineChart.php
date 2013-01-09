@@ -20,7 +20,7 @@ $(document).ready(function() {
   
 
 function drawLineChart(id,from,to) {
-
+var numberOfValues;
 chart = new Highcharts.Chart({
             chart: {
                 renderTo: 'container',
@@ -32,28 +32,22 @@ chart = new Highcharts.Chart({
                 }
             },
             title: {
-                text: 'Atmosphere Temperature by Altitude'
+                text: 'Line Chart vom Zähler'
             },
             subtitle: {
-                text: 'According to the Standard Atmosphere Model'
+                text: 'Discription'
             },
             xAxis: {
-                reversed: false,
+                type: 'datetime',
+				//maxZoom: 14 * 24 * 3600000, // fourteen days
                 title: {
                     enabled: true,
                     text: 'Tempeture'
-                },
-                labels: {
-                    formatter: function() {
-                        return this.value +'km';
-                    }
-                },
-                maxPadding: 0.05,
-                showLastLabel: true
+                }
             },
             yAxis: {
                 title: {
-                    text: 'Time'
+                    text: 'Value'
                 },
                 labels: {
                     formatter: function() {
@@ -65,17 +59,20 @@ chart = new Highcharts.Chart({
             legend: {
                 enabled: false
             },
-            tooltip: {
-                formatter: function() {
-                    return ''+
-                        this.x +'°C'+ this.y +'Time';
-                }
-            },
+			tooltip: {
+				shared: true
+			}, 
             plotOptions: {
                 spline: {
-                    marker: {
-                        enable: false
-                    }
+                     marker: {
+						enabled: false,
+						states: {
+							hover: {
+								enabled: true,
+								radius: 5
+							}
+						}
+					} 
                 }
             },
             series: [{
@@ -91,8 +88,11 @@ chart = new Highcharts.Chart({
 	                            y: daten[i].Value
 	                        });
 	                }
+	                alert(daten.length);
+	                numberOfValues = daten.length;
 	                return data;
-                })()
+                })(),
+                turboThreshold: numberOfValues,
             }]
         });
 
@@ -124,23 +124,15 @@ drawLineChart(selObj.options[selIndex].value,timeVon,timeBis);
 
 }
 
-
-$(function() {
-
-	
-        //$( "#datebis" ).datepicker();
-		//$( "#datevon" ).datepicker();
-    });
-
-
-
 </script>
 
 <form name=myform ">
 	<select name=mytextarea id="combo" >
 	</select>
 	<input type="button" name="Anzeigen" value="Anzeigen" onclick="drawChart()"/>
+	Datum: von
 	<input type="text" id="datevon" value=""  />
+	bis
 	<input type="text" id="datebis" value="" />
 </form>
 		
