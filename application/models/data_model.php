@@ -20,8 +20,8 @@
 		
 		$query = "SELECT `Value`, `TimeStamp` 
 				  FROM `value` 
-				  WHERE `MeterID` = $meterID 
-				  ORDER BY `TimeStamp` DESC 
+				  WHERE `MeterID` = $meterID
+				  ORDER BY  `TimeStamp` DESC 
 				  LIMIT 1";
 		
 		$DBAnswer = $this -> db -> query($query);
@@ -80,7 +80,8 @@
 				 WHERE  `MeterID` = '$meterID'
 				 AND  `TimeStamp` >=  '$startTime'
 				 AND  `TimeStamp` <=  '$endTime'
- 				 ORDER BY  `TimeStamp` DESC" ;
+ 				 ORDER BY  `TimeStamp`
+				 LIMIT 4000";
 		/*
 		 * Alternative mit Datums Formatierung?
 		 * 

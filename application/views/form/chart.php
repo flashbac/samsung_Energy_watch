@@ -3,7 +3,7 @@
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/highcharts.js"></script>
 
 <script type="text/javascript">
-        jQuery(document).ready(function() 
+        $(document).ready(function() 
             {
                 chart = new Highcharts.Chart({
             chart: {

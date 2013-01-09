@@ -44,7 +44,9 @@ function drawLineChart(id,from,to) {
 	                            x: daten[i].TimeStamp,
 	                            y: daten[i].Value
 	                        });
+	                 
 	                }
+	                alert(daten.length);
 	                return data;
                 })()	    
 		    }]
@@ -71,7 +73,7 @@ function addItem()
 function drawChart(){
 var selObj = document.getElementById('combo');
 var selIndex = selObj.selectedIndex;
-drawLineChart(selObj.options[selIndex].value,'2013-01-07 00:00:00','2013-01-08 00:00:00');
+drawLineChart(selObj.options[selIndex].value,'2013-01-08 00:00:00','2013-01-09 00:00:00');
 
 }
 
