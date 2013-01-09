@@ -38,7 +38,7 @@ function drawLineChart(id,from,to) {
 	                var data = [];
 	                var daten = getValues(id,from,to);
 	                
-	                for (var i in daten)
+	                for (var i=0,l = daten.length; i<l; i++)
 	                {
 	                	data.push({
 	                            x: daten[i].TimeStamp,
@@ -71,7 +71,7 @@ function addItem()
 function drawChart(){
 var selObj = document.getElementById('combo');
 var selIndex = selObj.selectedIndex;
-drawLineChart(selObj.options[selIndex].value,'2013-01-06 00:00:00','2013-01-07 00:00:00');
+drawLineChart(selObj.options[selIndex].value,'2013-01-07 00:00:00','2013-01-08 00:00:00');
 
 }
 

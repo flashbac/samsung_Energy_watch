@@ -18,7 +18,7 @@ function getJson(extention) {
 function getValues(id,from,to)
 {
 	var daten = getJson("samsung_Energy_watch/index.php/data/getAreaValues/"+id+"/"+from+"/"+to);
-	for (var i in daten)
+	for (var i=0,l = daten.length; i<l; i++)
 	{
 		daten[i].TimeStamp = splitTS(daten[i].TimeStamp);
 		daten[i].Value = parseFloat(daten[i].Value);

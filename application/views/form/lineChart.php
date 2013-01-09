@@ -33,9 +33,9 @@ $(function() {
 		       },
 		        data: (function() {
 	                var data = [];
-	                var daten = getValues(15,'2013-01-06 00:00:00','2013-01-07 00:00:00');
+	                var daten = getValues(id,from,to);
 	                
-	                for (var i in daten)
+	                for (var i=0,l = daten.length; i<l; i++)
 	                {
 	                	data.push({
 	                            x: daten[i].TimeStamp,
