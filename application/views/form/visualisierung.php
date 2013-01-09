@@ -38,7 +38,7 @@ function drawLineChart(id,from,to) {
 		       },
 		        data: (function() {
 	                var data = [];
-	                var daten = getValues(id,from,to);
+	                var daten = getValues(id,from,to,"<?php echo base_url(); ?>");
 	                
 	                for (var i=0,l = daten.length; i<l; i++)
 	                {
@@ -61,7 +61,7 @@ function drawLineChart(id,from,to) {
 
 function addItem()
 {
-	var meter = getJson("samsung_Energy_watch/index.php/data/getMeter/1");
+	var meter = getJson("<?php echo base_url(); ?>index.php/data/getMeter/15");
 	var element4 = document.getElementById("combo");
 	
 	//for (var i in meter)

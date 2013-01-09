@@ -1,10 +1,8 @@
-function getJson(extention) {
+function getJson(destination) {
   // strUrl is whatever URL you need to call
-  var strUrl = "", strReturn = "";
-  var newURL = window.location.protocol + "//" + window.location.host + "/" + extention;
-  
+
   jQuery.ajax({
-    url: newURL,
+    url: destination,
     success: function(html) {
       strReturn = html;
     },
@@ -15,9 +13,9 @@ function getJson(extention) {
 }
 
 
-function getValues(id,from,to)
+function getValues(id,from,to,basePath)
 {
-	var daten = getJson("samsung_Energy_watch/index.php/data/getAreaValues/"+id+"/"+from+"/"+to);
+	var daten = getJson(basePath+"index.php/data/getAreaValues/"+id+"/"+from+"/"+to);
 	for (var i=0,l = daten.length; i<l; i++)
 	{
 		daten[i].TimeStamp = splitTS(daten[i].TimeStamp);
