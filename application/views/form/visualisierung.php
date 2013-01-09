@@ -52,7 +52,6 @@ function drawLineChart(id,from,to) {
 	                        });
 	                 
 	                }
-	                alert(daten.length);
 	                numberOfValues = daten.length;
 	                return data;
                 })(),

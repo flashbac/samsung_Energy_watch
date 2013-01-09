@@ -88,7 +88,6 @@ chart = new Highcharts.Chart({
 	                            y: daten[i].Value
 	                        });
 	                }
-	                alert(daten.length);
 	                numberOfValues = daten.length;
 	                return data;
                 })(),
