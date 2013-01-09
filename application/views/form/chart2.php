@@ -3,6 +3,7 @@
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/highcharts.js"></script>
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/highcharts-more.js"></script>
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/modules/exporting.js"></script>
+<script type="text/javascript" src="<?php echo $url?>webinos.js"></script>
 
 
 <script type="text/javascript">
