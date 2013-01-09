@@ -112,7 +112,7 @@
 		
 // Explode Variante
 
-		$array1 = explode(":",$str);
+		$array1 = explode("~",$str);
 		
 		$temp1 = array();
 		$oneValue1 = array(); 
