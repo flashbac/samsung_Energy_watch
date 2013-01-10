@@ -115,7 +115,7 @@
 	 {
 	
 // Explode Variante
-//test
+
 		$array1 = explode("~",$str);
 
 		$insertString = "INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`) VALUES";
