@@ -107,88 +107,46 @@
 	 * Funktion die ein 3 dim Array aufnimmt. 
 	 * Inhalt wäre: meterID,Timestamp und value - wird mit InsertInto eingefügt
 	 * */
+	/**
+	 * Funktion die ein 3 dim Array aufnimmt. 
+	 * Inhalt wäre: meterID,Timestamp und value - wird mit InsertInto eingefügt
+	 * */
 	 public function putAreaValues($str)
 	 {
-
+	
 // Explode Variante
+//test
+		$array1 = explode("~",$str);
 
-		$array1 = explode(";",$str);
-
-		$temp1 = array();
-		$oneValue1 = array(); 
-		$i = 0;
-
-		foreach ($array1 as $temp) 
+		$insertString = "INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`) VALUES";
+		
+		foreach ($array1 as $row) 
 		{
-
-			$temp2 = explode(",",$temp);	
-			$temp1 = $temp2;
-
-			/**
-			 $DieWerte[] = array(
-   			'meterID' => $temp2[0],
-    		'value' => $temp2[1],
-    		'TimeStamp' => $temp2[2],
-    		)
-			 * 
-			 * $string = "";
-				$string = "INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`) VALUES";
-				Foreach($DieWerte as $wert)
-				{
-				  $string = $string."(NULL , '$wert['meterID'], $wert['value'], $wert['timeStamp'],";
-				}
+			$element = explode("_",$row);	
+			$insertString = $insertString."(NULL , '$element[0]', '$element[1]','$element[2]'),";					
 		}
 		
-		$DBAnswer = $this -> db -> query($string);
+		$insertString = $insertString.";";
+		
+		$insertString = str_replace(",;", ";", $insertString);
+		
+		If (defined('DEBUG')) {
+            echo '<div id="debug">';
+            echo "<p>SQL Query PutAreaValues</p>";
+            echo "<p>SQL Query: " . $insertString . '</p>';
+            echo '</div>';
+        }
+        
+		$DBAnswer = $this -> db -> query($insertString);
 								
 		if (count($DBAnswer)>0) {
 				return $DBAnswer;
 		} else {
 				return FALSE;
 		}	
-		$string = $string.";";
-			 
-			 * 
-			 * 
-			 * 
-			 ***/
-
-			foreach ($temp1 as $oneValue)
-			{
-				//Abfrage in welches Türchen die Daten reinfallen sollen 
-				if($i == 0){
-					$meterID = $oneValue;
-
-					 /**$meterID = array()
-					 * $meterID[] = $oneValue;
-					 * */
-
-				};
-				if($i == 1){
-					$value = $oneValue;
-				};	
-				if($i == 2){
-					$timeStamp = $oneValue;
-				};
-
-				//Wenn timeStamp belegt dann kann endlich gepushed werden
-				if($i=2)
-				{
-					//reset des Zaehlers
-					$i=-1;
-					$insert = 		"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
-									"VALUES (NULL , '$meterID', '$value', '$timeStamp');";
-
-					$DBAnswer = $this -> db -> query($insert);
-					if($DBAnswer != FALSE)
-						return FALSE;
-				}
-				//inkrementierung
-				$i = $i + 1;
-			}
-		}
-	 }
-
+		
+	}
+	 
 	 /**
 	  * Funktion die neuen Meter anlegt
 	  * Alle Parameter der Tabelle Meter
