@@ -95,8 +95,8 @@
     function (chart) {
         setInterval(function () {
             var point = chart.series[0].points[0];
-            var daten = parseFloat(getValue(17,"<?php echo base_url(); ?>").Value);
-            alert(daten);
+            var daten = parseFloat(getValue(17,"<?php echo base_url(); ?>"));
+            alert(daten.TimeStamp.getYear());
             point.update(parseFloat(daten.Value));
             chart.yAxis[0].axisTitle.attr({
                 text: daten.TimeStamp.getYear()
