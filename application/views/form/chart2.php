@@ -6,9 +6,24 @@
 <script type="text/javascript" src="<?php echo $url?>charthelper.js"></script>
 
 <script type="text/javascript">
-	$(function () {
-    
-    var chart = new Highcharts.Chart({
+$('#combo').change(function()
+{
+    alert('Value change to ' + $(this).attr('value'));
+});
+
+$(document).ready(function() {
+  addItem();
+});
+
+var chart = null;
+var id = 0;
+var updateftk = null;
+
+function drawChart() {
+    if(chart != null){
+        chart.destroy();
+    }
+    chart = new Highcharts.Chart({
     
         chart: {
             renderTo: 'container',
@@ -58,13 +73,14 @@
         // the value axis
         yAxis: {
             min: 0,
-            max: 200,
+            max: 1000,
             
             minorTickInterval: 'auto',
             minorTickWidth: 1,
             minorTickLength: 10,
             minorTickPosition: 'inside',
             minorTickColor: '#666',
+            endOnTick: true ,
     
             tickPixelInterval: 30,
             tickWidth: 2,
@@ -84,7 +100,7 @@
             },
         series: [{
             name: 'Energie Verbrauch',
-            data: [parseFloat(getValue(17,"<?php echo base_url(); ?>").Value)],
+            data: [parseFloat(getValue(id,"<?php echo base_url(); ?>").Value)],
             tooltip: {
                 valueSuffix: ' Watt'
             }
@@ -92,40 +108,61 @@
     
     }, 
     // Add some life
-    function (chart) {
+    updateChart());
+}
+
+function updateChart() {
+        updatefkt = this;
         setInterval(function () {
             var point = chart.series[0].points[0];
-            var daten = parseFloat(getValue(17,"<?php echo base_url(); ?>"));
-            alert(daten.TimeStamp.getYear());
+            var daten = getValue(id,"<?php echo base_url(); ?>");
+            var d = new Date(daten.TimeStamp);
+            var text;
+            if(isToday(d)){
+                text = "Heute\n"+addDigit(d.getHours())+":"+addDigit(d.getMinutes())+":"+addDigit(d.getSeconds());
+            }else{
+                text = addDigit(d.getDate())+"."+addDigit(d.getMonth()+1)+"."+d.getFullYear()+" "+addDigit(d.getHours())+":"+addDigit(d.getMinutes())+":"+addDigit(d.getSeconds());
+            }
+            
             point.update(parseFloat(daten.Value));
             chart.yAxis[0].axisTitle.attr({
-                text: daten.TimeStamp.getYear()
+                text: text
             });
             
         }, 5000);
-    });
-});
+    }
 
-function splitTS(date)
+function addItem()
 {
-	var t = date.split(/[- :]/);
-	var d = new Date(t[0], t[1]-1,t[2],t[3], t[4],t[5]);
-	 
-	return Date.parse(d);
+    var meter = getJson("<?php echo base_url(); ?>index.php/data/getMeter/1");
+    var element4 = document.getElementById("combo");
+    
+    //for (var i in meter)
+    for (var i=0,l = meter.length; i<l; i++)
+    {
+        var option1 = document.createElement("option");
+        option1.value=meter[i].ID;
+        option1.innerHTML=meter[i].Name;
+        element4.options.add(option1);
+    }
+    id = meter[0].ID;
+    drawChart();
+    updateMeterID();
 }
 
-
-/*if ("webinos" in window)
-{
-    // get all available services
-    webinos.discovery.findServices("*", function(ser) {
-        // show service on page
-        alert(ser);
-    }, null);
-    webinos.Sensor.DiscoveryModule();
-}*/
+function updateMeterID(){
+    var selObj = document.getElementById('combo');
+    var selIndex = selObj.selectedIndex;
+    id = selObj.options[selIndex].value;
+   chart.setTitle({text: selObj.options[selIndex].innerHTML});
+    updateChart();
+}
 </script>
 
+<div id="combobox">
+    <select name="combo" id="combo" onchange="updateMeterID()">
+    </select>
+</div>
 
 <div id="container">
 

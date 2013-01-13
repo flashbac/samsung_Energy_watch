@@ -46,3 +46,16 @@ function dp2dateTS(date)
 	 
 	return d;
 }
+
+function isToday(date){
+	var d = new Date();
+	if(d.getFullYear() == date.getFullYear() && d.getDate() == date.getDate() && d.getMonth() == date.getMonth()){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+function addDigit(n){
+	return n<10? '0'+n:''+n;
+}
