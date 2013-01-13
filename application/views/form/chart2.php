@@ -3,10 +3,9 @@
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/highcharts.js"></script>
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/highcharts-more.js"></script>
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/modules/exporting.js"></script>
-<script type="text/javascript" src="<?php echo $url?>webinos.js"></script>
+<script type="text/javascript" src="<?php echo $url?>charthelper.js"></script>
 
 <script type="text/javascript">
-var value;
 	$(function () {
     
     var chart = new Highcharts.Chart({
@@ -85,7 +84,7 @@ var value;
             },
         series: [{
             name: 'Energie Verbrauch',
-            data: [parseFloat(getvalue())],
+            data: [parseFloat(getValue(17,"<?php echo base_url(); ?>").Value)],
             tooltip: {
                 valueSuffix: ' Watt'
             }
@@ -96,28 +95,16 @@ var value;
     function (chart) {
         setInterval(function () {
             var point = chart.series[0].points[0];
-            
-            point.update(parseFloat(getvalue()));
+            var daten = parseFloat(getValue(17,"<?php echo base_url(); ?>").Value);
+            alert(daten);
+            point.update(parseFloat(daten.Value));
+            chart.yAxis[0].axisTitle.attr({
+                text: daten.TimeStamp.getYear()
+            });
             
         }, 5000);
     });
 });
-
-
-function getvalue() {
-  // strUrl is whatever URL you need to call
-  var strUrl = "", strReturn = "";
-
-  jQuery.ajax({
-    url: "<?php echo site_url("data/getLastValue/17"); ?>",
-    success: function(html) {
-      strReturn = html;
-    },
-    async:false
-  });
-  var json = $.parseJSON(strReturn);
-  return json.data[0].Value;
-}
 
 function splitTS(date)
 {
@@ -127,7 +114,8 @@ function splitTS(date)
 	return Date.parse(d);
 }
 
-if ("webinos" in window)
+
+/*if ("webinos" in window)
 {
     // get all available services
     webinos.discovery.findServices("*", function(ser) {
@@ -135,7 +123,7 @@ if ("webinos" in window)
         alert(ser);
     }, null);
     webinos.Sensor.DiscoveryModule();
-}
+}*/
 </script>
 
 

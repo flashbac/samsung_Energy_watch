@@ -24,6 +24,13 @@ function getValues(id,from,to,basePath)
 	return daten;
 }
 
+function getValue(id,basePath) {
+  var daten = getJson(basePath+"index.php/data/getLastValue/"+id);
+  daten[0].TimeStamp = splitTS(daten[0].TimeStamp);
+  daten[0].Value = parseFloat(daten[0].Value);
+  return daten[0];
+}
+
 function splitTS(date)
 {
 	var t = date.split(/[- :]/);
