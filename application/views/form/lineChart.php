@@ -12,9 +12,9 @@
 		var dp_cal1,dp_cal2;
 	
 $(document).ready(function() {
-  addItem();
-  dp_cal1 = new Epoch('epoch_popup','popup',document.getElementById('datevon'));
-  dp_cal2 = new Epoch('epoch_popup','popup',document.getElementById('datebis'));
+  //addItem();
+  //dp_cal1 = new Epoch('epoch_popup','popup',document.getElementById('datevon'));
+  //dp_cal2 = new Epoch('epoch_popup','popup',document.getElementById('datebis'));
 });
 
 var chart;
@@ -22,6 +22,48 @@ var chart;
 function drawLineChart(id,from,to) {
 var numberOfValues;
 var MeterDaten = getJson("<?php echo base_url(); ?>index.php/data/getDataFromMeter/"+id);
+
+function MeterValues(id,from,to){
+	 
+	 var series = [{
+                name: 'Temperature',
+                data: (function() {
+	                var data = [];
+	                var daten = getValues(id,from,to,"<?php echo base_url(); ?>");
+	                
+	                for (var i=0,l = daten.length; i<l; i++)
+	                {
+	                	data.push({
+	                            x: daten[i].TimeStamp,
+	                            y: daten[i].Value
+	                        });
+	                 
+	                }
+	                numberOfValues = daten.length;
+	                return data;
+                })(),
+                turboThreshold: numberOfValues,
+            },{
+                name: 'Temperature',
+                data: (function() {
+	                var data = [];
+	                var daten = getValues(17,from,to,"<?php echo base_url(); ?>");
+	                
+	                for (var i=0,l = daten.length; i<l; i++)
+	                {
+	                	data.push({
+	                            x: daten[i].TimeStamp,
+	                            y: daten[i].Value
+	                        });
+	                 
+	                }
+	                numberOfValues = daten.length;
+	                return data;
+                })(),
+                turboThreshold: numberOfValues,
+            }];
+	 return series;
+};
 
 chart = new Highcharts.Chart({
             chart: {
@@ -72,24 +114,7 @@ chart = new Highcharts.Chart({
 					} 
                 }
             },
-            series: [{
-                name: 'Temperature',
-                data: (function() {
-	                var data = [];
-	                var daten = getValues(id,from,to,"<?php echo base_url(); ?>");
-	                
-	                for (var i=0,l = daten.length; i<l; i++)
-	                {
-	                	data.push({
-	                            x: daten[i].TimeStamp,
-	                            y: daten[i].Value
-	                        });
-	                }
-	                numberOfValues = daten.length;
-	                return data;
-                })(),
-                turboThreshold: numberOfValues,
-            }]
+            series: MeterValues(id,from,to)
         });
 
 }
@@ -102,6 +127,7 @@ function addItem()
 	var element4 = document.getElementById("combo");
 	
 	//for (var i in meter)
+	
 	for (var i=0,l = meter.length; i<l; i++)
 	{
 	 	var option1 = document.createElement("option");
@@ -114,8 +140,8 @@ function addItem()
 function drawChart(){
 	var selObj = document.getElementById('combo');
 	var selIndex = selObj.selectedIndex;
-	var timeVon = dp2dateTS(document.getElementById('datevon','00:00:00').value);
-	var timeBis = dp2dateTS(document.getElementById('datebis','23:59:59').value);
+	var timeVon = dp2dateTS(document.getElementById('datevon').value,'00:00:00');
+	var timeBis = dp2dateTS(document.getElementById('datebis').value,'23:59:59');
 	drawLineChart(selObj.options[selIndex].value,timeVon,timeBis);
 }
 
@@ -131,19 +157,50 @@ function updateSeries(){
 		'</form>';
 }
 
+var anzahl = 1;
+function addMeterInView()
+{
+	var meter = getJson("<?php echo base_url(); ?>index.php/data/getMeter/1");
+	
+	$("#config").append('<form id="f'+ (anzahl) +'">');
+	$("#f"+anzahl).append('<select name=mytextarea id="combo' + anzahl + '" ></select>');
+	for (var i=0,l = meter.length; i<l; i++)
+	{
+		$("#combo"+anzahl).append('<option value="'+meter[i].ID+'">'+meter[i].Name+'</option>')
+	}
+	$("#f"+anzahl).append('Datum: von');
+	$("#f"+anzahl).append('<input type="text" id="datevon'+anzahl+'" value=""  />');
+	$("#f"+anzahl).append('Datum: bis');
+	$("#f"+anzahl).append('<input type="text" id="datebis'+anzahl+'" value=""  />');
+	new Epoch('epoch_popup','popup',document.getElementById('datevon'+anzahl));
+	new Epoch('epoch_popup','popup',document.getElementById('datebis'+anzahl));
+	$("#f"+anzahl).append('<input type="button" value="-" onclick="$(#config )" />');
+
+	anzahl++;
+}
+
 </script>
 
+<form name="hinzufügen">
+		<input type="button" name="Hinzufuegen" value="Hinzuf&uuml;gen" onclick="addMeterInView()" />
+		<input type="button" name="Anzeigen" value="Anzeigen" onclick="drawChart()"/>
+</form>
+
 <div id="config">
-	<form name=myform ">
+
+<!--	<form id="f1">
 		<select name=mytextarea id="combo" >
 		</select>
-		<input type="button" name="Anzeigen" value="Anzeigen" onclick="drawChart()"/>
 		Datum: von
 		<input type="text" id="datevon" value=""  />
 		bis
 		<input type="text" id="datebis" value="" />
-	</form>
+</form> -->
 </div>		
+
+
+
+
 
 <div id="container">
 
