@@ -80,7 +80,9 @@ function addItem()
 function drawChart(){
 var selObj = document.getElementById('combo');
 var selIndex = selObj.selectedIndex;
-drawLineChart(selObj.options[selIndex].value,'2013-01-07 00:00:00','2013-01-09 00:00:00');
+var timeVon = dp2dateTS(document.getElementById('datevon').value,'00:00:00');
+var timeBis = dp2dateTS(document.getElementById('datebis').value,'23:59:59');
+drawLineChart(selObj.options[selIndex].value,timeVon,timeBis);
 
 }
 

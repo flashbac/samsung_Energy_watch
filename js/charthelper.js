@@ -39,10 +39,11 @@ function splitTS(date)
 	return Date.parse(d);
 }
 
-function dp2dateTS(date)
+
+function dp2dateTS(date,time)
 {
 	var t = date.split(/[/]/);
-	var d = t[2]+"-"+t[0]+"-"+t[1]+" 00:00:00";
+	var d = t[2]+"-"+t[0]+"-"+t[1]+" "+time;
 	 
 	return d;
 }
