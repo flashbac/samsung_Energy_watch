@@ -112,12 +112,12 @@ function addItem()
 }
 
 function drawChart(){
-
-var selObj = document.getElementById('combo');
-var selIndex = selObj.selectedIndex;
-var timeVon = dp2dateTS(document.getElementById('datevon','00:00:00').value);
-var timeBis = dp2dateTS(document.getElementById('datebis','23:59:59').value);
-drawLineChart(selObj.options[selIndex].value,timeVon,timeBis);
+	var selObj = document.getElementById('combo');
+	var selIndex = selObj.selectedIndex;
+	var timeVon = dp2dateTS(document.getElementById('datevon','00:00:00').value);
+	var timeBis = dp2dateTS(document.getElementById('datebis','23:59:59').value);
+	drawLineChart(selObj.options[selIndex].value,timeVon,timeBis);
+}
 
 function updateSeries(){
 	var str = '	<form name=myform ">'+
