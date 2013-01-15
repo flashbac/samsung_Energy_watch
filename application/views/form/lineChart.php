@@ -17,10 +17,12 @@ $(document).ready(function() {
   dp_cal2 = new Epoch('epoch_popup','popup',document.getElementById('datebis'));
 });
 
-  
+var chart;
 
 function drawLineChart(id,from,to) {
 var numberOfValues;
+var MeterDaten = getJson("<?php echo base_url(); ?>index.php/data/getDataFromMeter/"+id);
+
 chart = new Highcharts.Chart({
             chart: {
                 renderTo: 'container',
@@ -32,27 +34,22 @@ chart = new Highcharts.Chart({
                 }
             },
             title: {
-                text: 'Line Chart vom Zähler'
+                text: MeterDaten.Name
             },
             subtitle: {
-                text: 'Discription'
+                text: MeterDaten.Description
             },
             xAxis: {
                 type: 'datetime',
 				//maxZoom: 14 * 24 * 3600000, // fourteen days
                 title: {
                     enabled: true,
-                    text: 'Tempeture'
+                    text: 'Timestamp'
                 }
             },
             yAxis: {
                 title: {
-                    text: 'Value'
-                },
-                labels: {
-                    formatter: function() {
-                        return this.value + '°';
-                    }
+                    text: MeterDaten.Unit
                 },
                 lineWidth: 2
             },
@@ -115,26 +112,39 @@ function addItem()
 }
 
 function drawChart(){
+
 var selObj = document.getElementById('combo');
 var selIndex = selObj.selectedIndex;
 var timeVon = dp2dateTS(document.getElementById('datevon','00:00:00').value);
 var timeBis = dp2dateTS(document.getElementById('datebis','23:59:59').value);
 drawLineChart(selObj.options[selIndex].value,timeVon,timeBis);
 
+function updateSeries(){
+	var str = '	<form name=myform ">'+
+		'<select name=mytextarea id="combo" >'+
+		'</select>'+
+		'<input type="button" name="Anzeigen" value="Anzeigen" onclick="drawChart()"/>'+
+		'Datum: von'+
+		'<input type="text" id="datevon" value=""  />'+
+		'bis'+
+		'<input type="text" id="datebis" value="" />'+
+		'</form>';
 }
 
 </script>
 
-<form name=myform ">
-	<select name=mytextarea id="combo" >
-	</select>
-	<input type="button" name="Anzeigen" value="Anzeigen" onclick="drawChart()"/>
-	Datum: von
-	<input type="text" id="datevon" value=""  />
-	bis
-	<input type="text" id="datebis" value="" />
-</form>
-		
+<div id="config">
+	<form name=myform ">
+		<select name=mytextarea id="combo" >
+		</select>
+		<input type="button" name="Anzeigen" value="Anzeigen" onclick="drawChart()"/>
+		Datum: von
+		<input type="text" id="datevon" value=""  />
+		bis
+		<input type="text" id="datebis" value="" />
+	</form>
+</div>		
+
 <div id="container">
 
 </div>

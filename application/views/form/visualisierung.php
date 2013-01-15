@@ -20,6 +20,7 @@ $(document).ready(function() {
 function drawLineChart(id,from,to) {
 		// Create the chart
 		var numberOfValues;
+		var MeterDaten = getJson("<?php echo base_url(); ?>index.php/data/getDataFromMeter/"+id);
 		window.chart = new Highcharts.StockChart({
 		    chart: {
 		        renderTo: 'container'
@@ -30,12 +31,47 @@ function drawLineChart(id,from,to) {
 		    },
 
 		    title: {
-		        text: 'AAPL Stock Price'
+		        text: MeterDaten.Name
 		    },
-		    
+		    subtitle: {
+                text: MeterDaten.Description
+            },
+            xAxis: {
+                type: 'datetime',
+				//maxZoom: 14 * 24 * 3600000, // fourteen days
+                title: {
+                    enabled: true,
+                    text: 'Timestamp'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: MeterDaten.Unit
+                },
+                lineWidth: 2
+            },
+            legend: {
+                enabled: false
+            },
+			tooltip: {
+				shared: true
+			}, 
+            plotOptions: {
+                spline: {
+                     marker: {
+						enabled: false,
+						states: {
+							hover: {
+								enabled: true,
+								radius: 5
+							}
+						}
+					} 
+                }
+            },
 		    series: [{
 		    	
-		        name: 'AAPL Stock Price',
+		        name: 'Value',
 		        type: 'spline',
 		    	tooltip: {
 		    		valueDecimals: 2
