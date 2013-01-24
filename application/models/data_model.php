@@ -34,14 +34,50 @@
             return FALSE;
         }
 	}
-		 
+    
+    public function getIDfromMeternumber($meterID)
+    {
+        if (!is_numeric($meterID)) 
+        {
+            return 0;
+        }
+        
+        $query = "SELECT `ID`
+                  FROM `meter` 
+                  WHERE `MeterNumber` = $meterID";
+        
+        $DBAnswer = $this -> db -> query($query);
+        $DBAnswer = $DBAnswer -> result_array();
+
+        if (count($DBAnswer)>0) 
+        {
+            return $DBAnswer[0]['ID'];
+        } else {
+            return 0;
+        }
+    }
+
 	public function putValue($meterID, $value, $timeStamp)
 	{
 		if (!is_numeric($meterID) || !is_numeric($value)) 
 		{
         	return FALSE;
         }
-		
+        
+        /*
+         * so meterID ist nicht die DB id sonder die nummer des Meters, sowas wie die Serialnumber 
+         * deswegen müssen wir diese zu der DB id zupordnen
+         * wenn es die Sierlanumber noch nicht gibt, erstellen wir einträge für ihn
+         */
+        $meterNumber = $this->getIDfromMeternumber($meterID);
+        if($meterNumber != 0){
+            
+            $meterID = $meterNumber;
+        } else{
+            return FALSE;
+        }
+
+        
 		/**Erweiterung 
 		 * TimeStamp Eingabe möglich, wenn kein Wert vorhanden
 		 * aktuellen Wert mit Now() nehmen*/
