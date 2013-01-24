@@ -112,25 +112,50 @@ function drawChart() {
 }
 
 function updateChart() {
-        updatefkt = this;
-        setInterval(function () {
-            var point = chart.series[0].points[0];
-            var daten = getValue(id,"<?php echo base_url(); ?>");
-            var d = new Date(daten.TimeStamp);
-            var text;
-            if(isToday(d)){
-                text = "Heute\n"+addDigit(d.getHours())+":"+addDigit(d.getMinutes())+":"+addDigit(d.getSeconds());
-            }else{
-                text = addDigit(d.getDate())+"."+addDigit(d.getMonth()+1)+"."+d.getFullYear()+" "+addDigit(d.getHours())+":"+addDigit(d.getMinutes())+":"+addDigit(d.getSeconds());
-            }
-            
-            point.update(parseFloat(daten.Value));
-            chart.yAxis[0].axisTitle.attr({
-                text: text
-            });
-            
-        }, 5000);
+        if(typeof updatefkt!='undefined'){
+	        clearInterval(updatefkt);
+	        
+        }
+        updatefkt = setInterval(function (){
+        	var point = chart.series[0].points[0];
+	            var daten = getValue(id,"<?php echo base_url(); ?>");
+	            var d = new Date(daten.TimeStamp);
+	            var text;
+	            if(isToday(d)){
+	                text = "Heute\n"+addDigit(d.getHours())+":"+addDigit(d.getMinutes())+":"+addDigit(d.getSeconds());
+	            }else{
+	                text = addDigit(d.getDate())+"."+addDigit(d.getMonth()+1)+"."+d.getFullYear()+" "+addDigit(d.getHours())+":"+addDigit(d.getMinutes())+":"+addDigit(d.getSeconds());
+	            }
+	            
+	            point.update(parseFloat(daten.Value));
+	            chart.yAxis[0].axisTitle.attr({
+	                text: text
+	            });}, 5000);
+        chartValueUpdate();
+         
     }
+
+
+function chartValueUpdate() {
+            if(chart!=null)
+         	{
+	            var point = chart.series[0].points[0];
+	            var daten = getValue(id,"<?php echo base_url(); ?>");
+	            var d = new Date(daten.TimeStamp);
+	            var text;
+	            if(isToday(d)){
+	                text = "Heute\n"+addDigit(d.getHours())+":"+addDigit(d.getMinutes())+":"+addDigit(d.getSeconds());
+	            }else{
+	                text = addDigit(d.getDate())+"."+addDigit(d.getMonth()+1)+"."+d.getFullYear()+" "+addDigit(d.getHours())+":"+addDigit(d.getMinutes())+":"+addDigit(d.getSeconds());
+	            }
+	            
+	            point.update(parseFloat(daten.Value));
+	            chart.yAxis[0].axisTitle.attr({
+	                text: text,
+	                max: parseFloat(getValue(id,"<?php echo base_url(); ?>").Value)+120,
+	            });
+        	}
+        }
 
 function addItem()
 {
@@ -147,6 +172,7 @@ function addItem()
     }
     id = meter[0].ID;
     drawChart();
+    
     updateMeterID();
 }
 
@@ -155,7 +181,9 @@ function updateMeterID(){
     var selIndex = selObj.selectedIndex;
     id = selObj.options[selIndex].value;
    chart.setTitle({text: selObj.options[selIndex].innerHTML});
+    
     updateChart();
+
 }
 </script>
 
