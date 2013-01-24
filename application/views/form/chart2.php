@@ -4,8 +4,8 @@
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/highcharts-more.js"></script>
 <script type="text/javascript" src="<?php echo $url?>highcharts/js/modules/exporting.js"></script>
 <script type="text/javascript" src="<?php echo $url?>charthelper.js"></script>
-
 <script type="text/javascript">
+
 $('#combo').change(function()
 {
     alert('Value change to ' + $(this).attr('value'));
