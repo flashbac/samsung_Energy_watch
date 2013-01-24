@@ -145,18 +145,6 @@ function drawChart(){
 	drawLineChart(selObj.options[selIndex].value,timeVon,timeBis);
 }
 
-function updateSeries(){
-	var str = '	<form name=myform ">'+
-		'<select name=mytextarea id="combo" >'+
-		'</select>'+
-		'<input type="button" name="Anzeigen" value="Anzeigen" onclick="drawChart()"/>'+
-		'Datum: von'+
-		'<input type="text" id="datevon" value=""  />'+
-		'bis'+
-		'<input type="text" id="datebis" value="" />'+
-		'</form>';
-}
-
 var anzahl = 1;
 function addMeterInView()
 {
@@ -174,9 +162,14 @@ function addMeterInView()
 	$("#f"+anzahl).append('<input type="text" id="datebis'+anzahl+'" value=""  />');
 	new Epoch('epoch_popup','popup',document.getElementById('datevon'+anzahl));
 	new Epoch('epoch_popup','popup',document.getElementById('datebis'+anzahl));
-	$("#f"+anzahl).append('<input type="button" value="-" onclick="$(#config )" />');
-
+	$("#f"+anzahl).append('<input type="button" value="-" onclick="delmeter('+anzahl+')" />');
 	anzahl++;
+}
+
+function delmeter(id)
+{
+	$("#f"+id).remove();
+	
 }
 
 </script>
@@ -188,19 +181,12 @@ function addMeterInView()
 
 <div id="config">
 
-<!--	<form id="f1">
-		<select name=mytextarea id="combo" >
-		</select>
-		Datum: von
-		<input type="text" id="datevon" value=""  />
-		bis
-		<input type="text" id="datebis" value="" />
-</form> -->
 </div>		
 
-
-
-
+<p>Minimalwert</p>
+<p>Mittelwert</p>
+<p>Maximalwert</p>
+<p>Arbeit</p>
 
 <div id="container">
 
