@@ -157,8 +157,21 @@
 		
 		foreach ($array1 as $row) 
 		{
-			$element = explode("_",$row);	
-			$insertString = $insertString."(NULL , '$element[0]', '$element[1]','$element[2]'),";					
+			if ($row != "")
+			{
+				//print_r($row);
+				//echo "<br>";
+				$element = explode("_",$row);
+				
+			    $meterNumber = $this->getIDfromMeternumber($element[0]);
+	        	if($meterNumber != 0){
+	        		$element[0]=$meterNumber;
+	            } else{
+	            	return FALSE;
+	        	}
+	        	
+				$insertString = $insertString."(NULL , '$element[0]', '$element[1]','$element[2]'),";
+			}					
 		}
 		
 		$insertString = $insertString.";";
