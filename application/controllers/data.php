@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-
+//define ( 'DEBUG', TRUE);
 /*
  * Dieser Controller enthällt den funktionen welche zur Datenausgabe benötigt werden.
  * Die Datenausgabe erfolgt im Json format
@@ -41,6 +41,7 @@ class data extends CI_Controller {
 			$timestamp = str_replace("_", " ",$timestamp);
 			If (defined('DEBUG')) {echo "Timestamp nachher:".$timestamp;}
 		}
+
 		if($anser = $this -> Data_model ->putValue($meterID, $value,$timestamp) )
 		{
 			echo "0 ".$anser ;	

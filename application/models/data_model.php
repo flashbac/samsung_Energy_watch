@@ -37,14 +37,11 @@
     
     public function getIDfromMeternumber($meterID)
     {
-        if (!is_numeric($meterID)) 
-        {
-            return 0;
-        }
+        
         
         $query = "SELECT `ID`
                   FROM `meter` 
-                  WHERE `MeterNumber` = $meterID";
+                  WHERE `MeterNumber` = '$meterID';";
         
         $DBAnswer = $this -> db -> query($query);
         $DBAnswer = $DBAnswer -> result_array();
@@ -59,8 +56,9 @@
 
 	public function putValue($meterID, $value, $timeStamp)
 	{
-		if (!is_numeric($meterID) || !is_numeric($value)) 
+		if ( !is_numeric($value)) 
 		{
+			echo "Value not Numeric";
         	return FALSE;
         }
         
@@ -69,10 +67,11 @@
          * deswegen müssen wir diese zu der DB id zupordnen
          * wenn es die Sierlanumber noch nicht gibt, erstellen wir einträge für ihn
          */
+
         $meterNumber = $this->getIDfromMeternumber($meterID);
+
         if($meterNumber != 0){
             
-            $meterID = $meterNumber;
         } else{
             return FALSE;
         }
@@ -85,10 +84,10 @@
 		if ($timeStamp == NULL)
 		{	
 			$query = 	"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
-						"VALUES (NULL , '$meterID', '$value', now());";
+						"VALUES (NULL , '$meterNumber', '$value', now());";
 		}else{
 			$query = 	"INSERT INTO `value` (`ID`, `MeterID`, `Value`, `TimeStamp`)".
-						"VALUES (NULL , '$meterID', '$value', '$timeStamp');";	
+						"VALUES (NULL , '$meterNumber', '$value', '$timeStamp');";	
 		}
 		
 		If (defined('DEBUG')) {
@@ -158,8 +157,21 @@
 		
 		foreach ($array1 as $row) 
 		{
-			$element = explode("_",$row);	
-			$insertString = $insertString."(NULL , '$element[0]', '$element[1]','$element[2]'),";					
+			if ($row != "")
+			{
+				//print_r($row);
+				//echo "<br>";
+				$element = explode("_",$row);
+				
+			    $meterNumber = $this->getIDfromMeternumber($element[0]);
+	        	if($meterNumber != 0){
+	        		$element[0]=$meterNumber;
+	            } else{
+	            	return FALSE;
+	        	}
+	        	
+				$insertString = $insertString."(NULL , '$element[0]', '$element[1]','$element[2]'),";
+			}					
 		}
 		
 		$insertString = $insertString.";";
