@@ -138,6 +138,13 @@ function addItem()
 }
 
 function drawChart(){
+	var elemnetlist = document.getElementsByClassName('FormArray')
+	
+	//for(var i= 0; i<elementlist.length;i++)
+	//{
+		//elementlist[i].cildNode[1]
+	//}
+	
 	var selObj = document.getElementById('combo');
 	var selIndex = selObj.selectedIndex;
 	var timeVon = dp2dateTS(document.getElementById('datevon').value,'00:00:00');
@@ -150,8 +157,8 @@ function addMeterInView()
 {
 	var meter = getJson("<?php echo base_url(); ?>index.php/data/getMeter/1");
 	
-	$("#config").append('<form id="f'+ (anzahl) +'">');
-	$("#f"+anzahl).append('<select name=mytextarea id="combo' + anzahl + '" ></select>');
+	$("#config").append('<form id="f'+ (anzahl) +'" class="FormArray">');
+	$("#f"+anzahl).append('<select name=mytextarea" id="combo' + anzahl + '" ></select>');
 	for (var i=0,l = meter.length; i<l; i++)
 	{
 		$("#combo"+anzahl).append('<option value="'+meter[i].ID+'">'+meter[i].Name+'</option>')
@@ -159,7 +166,7 @@ function addMeterInView()
 	$("#f"+anzahl).append('Datum: von');
 	$("#f"+anzahl).append('<input type="text" id="datevon'+anzahl+'" value=""  />');
 	$("#f"+anzahl).append('Datum: bis');
-	$("#f"+anzahl).append('<input type="text" id="datebis'+anzahl+'" value=""  />');
+	$("#f"+anzahl).append('<input type="text" id="datebis'+anzahl+'"  value=""  />');
 	new Epoch('epoch_popup','popup',document.getElementById('datevon'+anzahl));
 	new Epoch('epoch_popup','popup',document.getElementById('datebis'+anzahl));
 	$("#f"+anzahl).append('<input type="button" value="-" onclick="delmeter('+anzahl+')" />');
