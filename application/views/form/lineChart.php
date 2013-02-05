@@ -23,99 +23,97 @@ function drawLineChart(id,from,to) {
 var numberOfValues;
 var MeterDaten = getJson("<?php echo base_url(); ?>index.php/data/getDataFromMeter/"+id);
 
-function MeterValues(id,from,to){
-	 
-	 var series = [{
-                name: 'Temperature',
-                data: (function() {
-	                var data = [];
-	                var daten = getValues(id,from,to,"<?php echo base_url(); ?>");
-	                
-	                for (var i=0,l = daten.length; i<l; i++)
-	                {
-	                	data.push({
-	                            x: daten[i].TimeStamp,
-	                            y: daten[i].Value
-	                        });
-	                 
-	                }
-	                numberOfValues = daten.length;
-	                return data;
-                })(),
-                turboThreshold: numberOfValues,
-            },{
-                name: 'Temperature',
-                data: (function() {
-	                var data = [];
-	                var daten = getValues(17,from,to,"<?php echo base_url(); ?>");
-	                
-	                for (var i=0,l = daten.length; i<l; i++)
-	                {
-	                	data.push({
-	                            x: daten[i].TimeStamp,
-	                            y: daten[i].Value
-	                        });
-	                 
-	                }
-	                numberOfValues = daten.length;
-	                return data;
-                })(),
-                turboThreshold: numberOfValues,
-            }];
-	 return series;
-};
-
-chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'container',
-                type: 'spline',
-                //inverted: false,
-                //width: 500,
-                style: {
-                    margin: '0 auto'
-                }
-            },
-            title: {
-                text: MeterDaten.Name
-            },
-            subtitle: {
-                text: MeterDaten.Description
-            },
-            xAxis: {
-                type: 'datetime',
-				//maxZoom: 14 * 24 * 3600000, // fourteen days
-                title: {
-                    enabled: true,
-                    text: 'Timestamp'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: MeterDaten.Unit
-                },
-                lineWidth: 2
-            },
-            legend: {
-                enabled: false
-            },
-			tooltip: {
-				shared: true
-			}, 
-            plotOptions: {
-                spline: {
-                     marker: {
-						enabled: false,
-						states: {
-							hover: {
-								enabled: true,
-								radius: 5
-							}
+	function MeterValues(id,from,to){
+		 
+		var series = [{
+	     	name: 'Temperature',
+	        data: (function() {
+	            var data = [];
+	            var daten = getValues(id,from,to,"<?php echo base_url(); ?>");
+	               
+	            for (var i=0,l = daten.length; i<l; i++)
+	            {
+		          	data.push({
+			            x: daten[i].TimeStamp,
+		    	        y: daten[i].Value
+		            });
+		        }
+		        numberOfValues = daten.length;
+		        return data;
+	        })(),
+	        turboThreshold: numberOfValues,
+		},{
+	    	name: 'Temperature',
+	        	data: (function() {
+		        	var data = [];
+		            var daten = getValues(15,from,to,"<?php echo base_url(); ?>");
+		               
+		            for (var i=0,l = daten.length; i<l; i++)
+		            {
+		            	data.push({
+		                	x: daten[i].TimeStamp,
+		                    y: daten[i].Value
+		                });
+		            }
+		            numberOfValues = daten.length;
+		            return data;
+	    		})(),
+	      	turboThreshold: numberOfValues,
+	     }];
+		 return series;
+	};
+	
+	chart = new Highcharts.Chart({
+		chart: {
+	    	renderTo: 'container',
+	        type: 'spline',
+	        //inverted: false,
+	        //width: 500,
+	        style: {
+	        	margin: '0 auto'
+	        }
+	    },
+	    title: {
+	    	text: MeterDaten.Name
+	    },
+	    subtitle: {
+	    	text: MeterDaten.Description
+	    },
+	    xAxis: {
+	    	type: 'datetime',
+			//maxZoom: 14 * 24 * 3600000, // fourteen days
+	        title: {
+	        	enabled: true,
+	            text: 'Timestamp'
+	        }
+	    },
+	    yAxis: {
+	    	title: {
+	        	text: MeterDaten.Unit
+	        },
+	        lineWidth: 2
+	    },
+	    legend: {
+	    	enabled: false
+	    },
+		tooltip: {
+			shared: true
+		}, 
+	    plotOptions: {
+	    	spline: {
+	        	marker: {
+					enabled: false,
+					states: {
+						hover: {
+							enabled: true,
+							radius: 5
 						}
-					} 
-                }
-            },
-            series: MeterValues(id,from,to)
-        });
+					}
+				} 
+	        }
+	    },
+        series: MeterValues(id,from,to)
+	});
 
 }
 
@@ -138,18 +136,23 @@ function addItem()
 }
 
 function drawChart(){
-	var elemnetlist = document.getElementsByClassName('FormArray')
+	var elemnetlist = document.getElementsByClassName('FormArray');
 	
-	//for(var i= 0; i<elementlist.length;i++)
-	//{
-		//elementlist[i].cildNode[1]
-	//}
+	var ID;
+	var StartTS;
+	var EndTS;
+	for(var i = 0; i < elemnetlist.length;i++)
+	{
+		ID = elemnetlist[i][0].value;
+		StartTS = elemnetlist[i][1].value;
+		EndTS = elemnetlist[i][2].value;
+	}
 	
-	var selObj = document.getElementById('combo');
-	var selIndex = selObj.selectedIndex;
-	var timeVon = dp2dateTS(document.getElementById('datevon').value,'00:00:00');
-	var timeBis = dp2dateTS(document.getElementById('datebis').value,'23:59:59');
-	drawLineChart(selObj.options[selIndex].value,timeVon,timeBis);
+	//var selObj = document.getElementById('combo');
+	//var selIndex = selObj.selectedIndex;
+	var timeVon = dp2dateTS(StartTS,'00:00:00');
+	var timeBis = dp2dateTS(EndTS,'23:59:59');
+	drawLineChart(ID,timeVon,timeBis);
 }
 
 var anzahl = 1;
@@ -181,20 +184,19 @@ function delmeter(id)
 
 </script>
 
-<form name="hinzufügen">
-		<input type="button" name="Hinzufuegen" value="Hinzuf&uuml;gen" onclick="addMeterInView()" />
-		<input type="button" name="Anzeigen" value="Anzeigen" onclick="drawChart()"/>
-</form>
-
 <div id="config">
-
+	<form name="hinzufügen">
+			<input type="button" name="Hinzufuegen" value="Hinzuf&uuml;gen" onclick="addMeterInView()" />
+			<input type="button" name="Anzeigen" value="Anzeigen" onclick="drawChart()"/>
+	</form>
 </div>		
+
+<div id="container">
+
+</div>
 
 <p>Minimalwert</p>
 <p>Mittelwert</p>
 <p>Maximalwert</p>
 <p>Arbeit</p>
 
-<div id="container">
-
-</div>
