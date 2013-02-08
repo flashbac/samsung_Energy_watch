@@ -27,7 +27,7 @@ var numberOfValues;
 		var series = new Array();
 		for (var i=0;i< id.length; i++)
 		{
-			var MeterDaten = getJson("<?php echo base_url(); ?>index.php/data/getDataFromMeter/"+id);
+			var MeterDaten = getJson("<?php echo base_url(); ?>index.php/data/getDataFromMeter/"+id[i]);
 			series.push({
 		     	name: MeterDaten.Name+" ("+MeterDaten.Unit+")",
 		        data: (function() {
