@@ -190,9 +190,11 @@ function addMeterInView()
 		$("#combo"+anzahl).append('<option value="'+meter[i].ID+'">'+meter[i].Name+'</option>')
 	}
 	$("#f"+anzahl).append('Datum: von');
-	$("#f"+anzahl).append('<input type="text" id="datevon'+anzahl+'" value=""  />');
+	var now = new Date();
+	var nowstr = now.getFullYear()+"/"+now.getMonth()+"/"+now.getDay();
+	$("#f"+anzahl).append('<input type="text" id="datevon'+anzahl+'" value="'+nowstr+'"  />');
 	$("#f"+anzahl).append('Datum: bis');
-	$("#f"+anzahl).append('<input type="text" id="datebis'+anzahl+'"  value=""  />');
+	$("#f"+anzahl).append('<input type="text" id="datebis'+anzahl+'"  value="'+nowstr+'"  />');
 	new Epoch('epoch_popup','popup',document.getElementById('datevon'+anzahl));
 	new Epoch('epoch_popup','popup',document.getElementById('datebis'+anzahl));
 	$("#f"+anzahl).append('<input type="button" value="-" onclick="delmeter('+anzahl+')" />');
