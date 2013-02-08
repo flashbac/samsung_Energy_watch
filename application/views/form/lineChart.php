@@ -21,45 +21,67 @@ var chart;
 
 function drawLineChart(id,from,to) {
 var numberOfValues;
-var MeterDaten = getJson("<?php echo base_url(); ?>index.php/data/getDataFromMeter/"+id);
+
 
 	function MeterValues(id,from,to){
-		 
-		var series = [{
-	     	name: 'Temperature',
-	        data: (function() {
-	            var data = [];
-	            var daten = getValues(id,from,to,"<?php echo base_url(); ?>");
-	               
-	            for (var i=0,l = daten.length; i<l; i++)
-	            {
-		          	data.push({
-			            x: daten[i].TimeStamp,
-		    	        y: daten[i].Value
-		            });
-		        }
-		        numberOfValues = daten.length;
-		        return data;
-	        })(),
-	        turboThreshold: numberOfValues,
-		},{
-	    	name: 'Temperature',
-	        	data: (function() {
-		        	var data = [];
-		            var daten = getValues(15,from,to,"<?php echo base_url(); ?>");
+		var series = new Array();
+		for (var i=0;i< id.length; i++)
+		{
+			var MeterDaten = getJson("<?php echo base_url(); ?>index.php/data/getDataFromMeter/"+id);
+			series.push({
+		     	name: MeterDaten.Name+" ("+MeterDaten.Unit+")",
+		        data: (function() {
+		            var data = [];
+		            var daten = getValues(id[i],from,to,"<?php echo base_url(); ?>");
 		               
-		            for (var i=0,l = daten.length; i<l; i++)
+		            for (var k=0,l = daten.length; k<l; k++)
 		            {
-		            	data.push({
-		                	x: daten[i].TimeStamp,
-		                    y: daten[i].Value
-		                });
-		            }
-		            numberOfValues = daten.length;
-		            return data;
-	    		})(),
-	      	turboThreshold: numberOfValues,
-	     }];
+			          	data.push({
+				            x: daten[k].TimeStamp,
+			    	        y: daten[k].Value
+			            });
+			        }
+			        numberOfValues = daten.length;
+			        return data;
+		        })(),
+		        turboThreshold: numberOfValues,
+			});
+		}
+		// var series = [{
+	     	// name: 'Temperature',
+	        // data: (function() {
+	            // var data = [];
+	            // var daten = getValues(id,from,to,"<?php echo base_url(); ?>");
+// 	               
+	            // for (var i=0,l = daten.length; i<l; i++)
+	            // {
+		          	// data.push({
+			            // x: daten[i].TimeStamp,
+		    	        // y: daten[i].Value
+		            // });
+		        // }
+		        // numberOfValues = daten.length;
+		        // return data;
+	        // })(),
+	        // turboThreshold: numberOfValues,
+		// },{
+	    	// name: 'Temperature',
+	        	// data: (function() {
+		        	// var data = [];
+		            // var daten = getValues(15,from,to,"<?php //echo base_url(); ?>");
+// 		               
+		            // for (var i=0,l = daten.length; i<l; i++)
+		            // {
+		            	// data.push({
+		                	// x: daten[i].TimeStamp,
+		                    // y: daten[i].Value
+		                // });
+		            // }
+		            // numberOfValues = daten.length;
+		            // return data;
+	    		// })(),
+	      	// turboThreshold: numberOfValues,
+	     // }];
 		 return series;
 	};
 	
@@ -74,10 +96,10 @@ var MeterDaten = getJson("<?php echo base_url(); ?>index.php/data/getDataFromMet
 	        }
 	    },
 	    title: {
-	    	text: MeterDaten.Name
+	    	text: "MultiChart"
 	    },
 	    subtitle: {
-	    	text: MeterDaten.Description
+	    	text: ""
 	    },
 	    xAxis: {
 	    	type: 'datetime',
@@ -89,12 +111,13 @@ var MeterDaten = getJson("<?php echo base_url(); ?>index.php/data/getDataFromMet
 	    },
 	    yAxis: {
 	    	title: {
-	        	text: MeterDaten.Unit
+	        	text: ""
 	        },
 	        lineWidth: 2
 	    },
 	    legend: {
-	    	enabled: false
+	    	enabled: true,
+	    	
 	    },
 		tooltip: {
 			shared: true
@@ -138,12 +161,12 @@ function addItem()
 function drawChart(){
 	var elemnetlist = document.getElementsByClassName('FormArray');
 	
-	var ID;
+	var ID = new Array();
 	var StartTS;
 	var EndTS;
 	for(var i = 0; i < elemnetlist.length;i++)
 	{
-		ID = elemnetlist[i][0].value;
+		ID.push(elemnetlist[i][0].value);
 		StartTS = elemnetlist[i][1].value;
 		EndTS = elemnetlist[i][2].value;
 	}

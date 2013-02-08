@@ -22,7 +22,7 @@ class main extends CI_Controller {
 
         //tamplate laden
         $this -> layout_data['case'] = "OK";
-        $this -> layout_data['pageTitle'] = "JRK - Mitgliederverwaldung";
+        $this -> layout_data['pageTitle'] = "Energy Watch";
         $this -> layout_data['header'] = $this -> load -> view('header', $this -> layout_data, true);
         $this -> layout_data['navigation'] = $this -> load -> view('navigation', NULL, true);
 
