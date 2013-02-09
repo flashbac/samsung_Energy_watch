@@ -16,7 +16,7 @@
             enabled: false
             },
             title: {
-                text: 'Monnatlicher Verbrauch',
+                text: 'Monatlicher Verbrauch',
                 x: -20 //center
             },
             xAxis: {
