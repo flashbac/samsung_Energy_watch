@@ -44,14 +44,20 @@ div#h1
 	
 }
 
+div#navi {
+	width: 17%;
+	float: left; 
+}
+
 div#content 
 	{
 	border: none;
 	position: absolute;
 	top: 6em;
-	margin-left: 15em;
-	width: 1037px;
+	left: 19%;
+	width: 80%;
 	height: auto;
+	float:left;
 
 	}
 	

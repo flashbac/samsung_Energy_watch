@@ -1,6 +1,8 @@
+
+
 div#navi ul { 
 	list-style: none;
-	width: 236px; 
+	/*width: 236px;*/ 
 	margin-bottom: 10em;
 	padding: 0; 
 	}
@@ -9,7 +11,7 @@ div#navi li {
 	margin-bottom:0px;  
 	padding:0px 0px 0px 4px;
 	position: relative; 
-	top: 100px;
+	top: 80px;
 	}
 
 div#navi a.u1 {

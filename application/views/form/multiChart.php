@@ -13,15 +13,18 @@
 	
 $(document).ready(function() {
   //addItem();
-  //dp_cal1 = new Epoch('epoch_popup','popup',document.getElementById('datevon'));
-  //dp_cal2 = new Epoch('epoch_popup','popup',document.getElementById('datebis'));
+  dp_cal1 = new Epoch('epoch_popup','popup',document.getElementById('datevon'));
+  dp_cal2 = new Epoch('epoch_popup','popup',document.getElementById('datebis'));
 });
 
 var chart;
 
-function drawLineChart(id,from,to) {
-var numberOfValues;
 
+function drawLineChart(id,from,to) {
+var numberOfValues = 0;
+var arbeit = 0;
+
+$("#container").append('<p><img src="<?php echo base_url(); ?>/img/ajax-loader.gif" alt="Loading"></p>');
 
 	function MeterValues(id,from,to){
 		var series = new Array();
@@ -30,27 +33,32 @@ var numberOfValues;
 			var MeterDaten = getJson("<?php echo base_url(); ?>index.php/data/getDataFromMeter/"+id[i]);
 			series.push({
 		     	name: MeterDaten.Name+" ("+MeterDaten.Unit+")",
+		     	
 		        data: (function() {
 		            var data = [];
 		            var daten = getValues(id[i],from,to,"<?php echo base_url(); ?>");
-		               
 		            for (var k=0,l = daten.length; k<l; k++)
 		            {
+		            	if (id[i] ==9)
+		            	{
+		            		arbeit+=daten[k].Value/12;
+		            	}
 			          	data.push({
 				            x: daten[k].TimeStamp,
 			    	        y: daten[k].Value
 			            });
 			        }
-			        numberOfValues = daten.length;
+			        numberOfValues += daten.length;
 			        return data;
 		        })(),
 		        turboThreshold: numberOfValues,
 			});
 		}
+		//alert(numberOfValues);
 		return series;
 	};
 	
-	chart = new Highcharts.Chart({
+	chart = new Highcharts.StockChart({
 		chart: {
 	    	renderTo: 'container',
 	        type: 'spline',
@@ -60,8 +68,13 @@ var numberOfValues;
 	        	margin: '0 auto'
 	        }
 	    },
+	    
+		rangeSelector: {
+			selected: 0,
+		    enabled: false
+		},
 	    title: {
-	    	text: "MultiChart"
+	    	text: "Gesamtübersicht"
 	    },
 	    subtitle: {
 	    	text: ""
@@ -82,11 +95,20 @@ var numberOfValues;
 	    },
 	    legend: {
 	    	enabled: true,
-	    	
+	    	align: 'right',
+        	borderColor: 'black',
+        	borderWidth: 2,
+	    	layout: 'vertical',
+	    	verticalAlign: 'top',
+	    	y: 25,
+	    	shadow: true
 	    },
 		tooltip: {
 			shared: true
-		}, 
+		},
+		credits: {
+            enabled: false
+        }, 
 	    plotOptions: {
 	    	spline: {
 	        	marker: {
@@ -102,6 +124,36 @@ var numberOfValues;
 	    },
         series: MeterValues(id,from,to)
 	});
+	
+	var legegndx = chart.legend.group.translateX;
+	var pRx = legegndx; //chart.chartWidth - 210;
+    var pRy = 250
+    // chart.renderer.rect(pRx, pRy, 200, 120, 5)
+        // .attr({
+            // 'stroke-width': 2,
+            // stroke: 'black',
+            // fill: 'white',
+            // zIndex: 3
+        // })
+        // .add();
+
+    var Mma = getJson("<?php echo base_url(); ?>index.php/data/getAreaValuesmma/"+"9"+"/"+from+"/"+to);
+    var max = Mma[0].Max;
+    var min = Mma[0].Min;
+    var avg = Mma[0].Avg;
+    chart.renderer.label('Gesamtverbrauch: <br>Max: '+max+' kW<br>Min: '+min+' kW<br>Durchschnitt: '+ runde(avg,3)+' kW<br>Arbeit: '+ runde(arbeit,3) +' kW/h', pRx+5, pRy-5)
+    	.attr({
+        	//fill: colors[0],
+            stroke: 'black',
+            'stroke-width': 2,
+            padding: 5,
+            r: 5
+        })
+        .css({
+        	color: 'black',
+            width: '200px'
+        })
+        .add()
 
 }
 
@@ -124,22 +176,18 @@ function addItem()
 }
 
 function drawChart(){
-	var elemnetlist = document.getElementsByClassName('FormArray');
-	
 	var ID = new Array();
-	var StartTS;
-	var EndTS;
-	for(var i = 0; i < elemnetlist.length;i++)
-	{
-		ID.push(elemnetlist[i][0].value);
-		StartTS = elemnetlist[i][1].value;
-		EndTS = elemnetlist[i][2].value;
-	}
 	
-	//var selObj = document.getElementById('combo');
-	//var selIndex = selObj.selectedIndex;
-	var timeVon = dp2dateTS(StartTS,'00:00:00');
-	var timeBis = dp2dateTS(EndTS,'23:59:59');
+	var meter = getJson("<?php echo base_url(); ?>index.php/data/getMeter/1");
+	var element4 = document.getElementById("combo");
+	
+	for (var i=0,l = meter.length; i<l; i++)
+	{
+	 	ID.push(meter[i].ID);
+ 	} 	
+	
+	var timeVon = dp2dateTS(document.getElementById('datevon').value,'00:00:00');
+    var timeBis = dp2dateTS(document.getElementById('datebis').value,'23:59:59');
 	drawLineChart(ID,timeVon,timeBis);
 }
 
@@ -173,10 +221,13 @@ function delmeter(id)
 }
 
 </script>
-
 <div id="config">
 	<form name="hinzufügen">
-			<input type="button" name="Hinzufuegen" value="Hinzuf&uuml;gen" onclick="addMeterInView()" />
+			<!-- <input type="button" name="Hinzufuegen" value="Hinzuf&uuml;gen" onclick="addMeterInView()" /> -->
+			Datum: von
+			<input type="text" id="datevon" value=""  />
+			bis
+			<input type="text" id="datebis" value="" />
 			<input type="button" name="Anzeigen" value="Anzeigen" onclick="drawChart()"/>
 	</form>
 </div>		
@@ -185,8 +236,4 @@ function delmeter(id)
 
 </div>
 
-<p>Minimalwert</p>
-<p>Mittelwert</p>
-<p>Maximalwert</p>
-<p>Arbeit</p>
 

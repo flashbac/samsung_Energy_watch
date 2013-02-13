@@ -1,5 +1,5 @@
-<p><img id="logojpg" src="<?php echo base_url() ?>/image/jrk_logo.jpg"
-	alt="Beuth-Logo" width="100" height="96" /></p>
+<p><img id="logojpg" src="<?php echo base_url() ?>img/Beuth_Logo_single.gif"
+	alt="Beuth-Logo" width="132" height="100" /></p>
 	
 <style type="text/css">
 <!-- @import "<?php echo base_url() ?>"/css/header.css; -->

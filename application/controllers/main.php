@@ -233,7 +233,12 @@ class main extends CI_Controller {
                 $site = "form/lineChart";
 				$this -> layout_data['cssfile'] = "epoch_styles.css";
 				$this -> layout_data['jsfile'] = "charthelper.js";		
-                break;					
+                break;
+			case 'multiChart' :
+                $site = "form/multiChart";
+				$this -> layout_data['cssfile'] = "epoch_styles.css";
+				$this -> layout_data['jsfile'] = "charthelper.js";		
+                break;						
 			case 'visualisierung' :
                 $site = "form/visualisierung";
 				$this -> layout_data['cssfile'] = "epoch_styles.css";

@@ -27,7 +27,8 @@ function drawLineChart(id,from,to) {
 		    },
 
 		    rangeSelector: {
-		        selected: 1
+		        selected: 0,
+		        enabled: false
 		    },
 
 		    title: {
@@ -41,7 +42,7 @@ function drawLineChart(id,from,to) {
 				//maxZoom: 14 * 24 * 3600000, // fourteen days
                 title: {
                     enabled: true,
-                    text: 'Timestamp'
+                    text: 'Datum / Uhrzeit'
                 }
             },
             yAxis: {
@@ -71,7 +72,7 @@ function drawLineChart(id,from,to) {
             },
 		    series: [{
 		    	
-		        name: 'Value',
+		        name: 'Wert',
 		        type: 'spline',
 		    	tooltip: {
 		    		valueDecimals: 2
@@ -94,6 +95,7 @@ function drawLineChart(id,from,to) {
                 turboThreshold: numberOfValues,
 		    }]
 		});
+
 	}
 
 

@@ -125,8 +125,28 @@
 				 AND  `TimeStamp` >=  (SELECT date_format($startTime, '%Y-%m-%d %k:%i:%s'))
 				 AND  `TimeStamp` <=  (SELECT date_format($endTime, '%Y-%m-%d %k:%i:%s'))
  				 ORDER BY  `TimeStamp` DESC" ;
-		*/
-			 
+		*/	 
+		$DBAnswer = $this -> db -> query($query);
+        $DBAnswer = $DBAnswer -> result_array();
+		
+        if (count($DBAnswer)>0) 
+        {
+            return $DBAnswer;
+        } else {
+            return FALSE;
+        }	
+	}
+	
+	public function getMaxMinAvgFromAreaValues($meterID, $startTime, $endTime)
+	{
+			
+		$query = "SELECT  MAX(`Value`) as Max, MIN(`Value`) as Min ,AVG(`Value`) as Avg 
+				 FROM  `value` 
+				 WHERE  `MeterID` = '$meterID'
+				 AND  `TimeStamp` >=  '$startTime'
+				 AND  `TimeStamp` <=  '$endTime'
+ 				 ORDER BY  `TimeStamp`";
+
 		$DBAnswer = $this -> db -> query($query);
         $DBAnswer = $DBAnswer -> result_array();
 		

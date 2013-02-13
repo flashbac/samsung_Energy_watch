@@ -102,13 +102,13 @@ Epoch.prototype.calConfig = function () //PRIVATE: initialize calendar variables
 //-----------------------------------------------------------------------------
 Epoch.prototype.setLang = function()  //all language settings for Epoch are made here.  Check Date.dateFormat() for the Date object's language settings
 {
-	this.daylist = new Array('Su','Mo','Tu','We','Th','Fr','Sa','Su','Mo','Tu','We','Th','Fr','Sa'); /*<lang:en>*/
-	this.months_sh = new Array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
-	this.monthup_title = 'Go to the next month';
-	this.monthdn_title = 'Go to the previous month';
-	this.clearbtn_caption = 'Clear';
-	this.clearbtn_title = 'Clears any dates selected on the calendar';
-	this.maxrange_caption = 'This is the maximum range';
+	this.daylist = new Array('So','Mo','Di','Mi','Do','Fr','Sa','So','Mo','Di','Mi','Do','Fr','Sa'); /*<lang:de>*/
+	this.months_sh = new Array('Jan','Feb','Mar','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dec');
+	this.monthup_title = 'Nächster Monat';
+	this.monthdn_title = 'Voheriger Monat';
+	this.clearbtn_caption = 'Löschen';
+	this.clearbtn_title = 'Lösche alle Ausgewählten Daten.';
+	this.maxrange_caption = 'Das Maximim ist erricht.';
 };
 //-----------------------------------------------------------------------------
 Epoch.prototype.getTop = function (element) //PRIVATE: returns the absolute Top value of element, in pixels
@@ -724,7 +724,8 @@ CalCell.prototype.onclick = function ()
 			owner.selectedDates = new Array(cell.date);
 			if(owner.tgt) //if there is a target element to place the value in, do so
 			{
-				owner.tgt.value = owner.selectedDates[0].dateFormat();
+				var theDate= owner.selectedDates[0];
+				owner.tgt.value = theDate.getDate()+"."+(theDate.getMonth()+1)+"."+theDate.getFullYear(); //dateFormat(theDate,"d/m/y");
 				if(owner.mode == 'popup') {
 					owner.hide();
 				}

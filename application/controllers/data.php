@@ -55,7 +55,16 @@ class data extends CI_Controller {
 	{
 		$startTS = urldecode($startTS);
 		$endTS = urldecode($endTS);
-		$data = array('data' => $this -> Data_model -> getAreaValues($meterID, $startTS, $endTS));
+		$data = array('data' => $this -> Data_model -> getAreaValues($meterID, $startTS, $endTS),
+					   'mma' => $this -> Data_model -> getMaxMinAvgFromAreaValues($meterID, $startTS, $endTS));
+		echo json_encode($data);
+	}
+	
+	public function getAreaValuesMma($meterID, $startTS, $endTS)
+	{
+		$startTS = urldecode($startTS);
+		$endTS = urldecode($endTS);
+		$data = array('data' => $this -> Data_model -> getMaxMinAvgFromAreaValues($meterID, $startTS, $endTS));
 		echo json_encode($data);
 	}
 	

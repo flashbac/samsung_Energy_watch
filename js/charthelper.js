@@ -42,8 +42,8 @@ function splitTS(date)
 
 function dp2dateTS(date,time)
 {
-	var t = date.split(/[/]/);
-	var d = t[2]+"-"+t[0]+"-"+t[1]+" "+time;
+	var t = date.split(/[.]/);
+	var d = t[2]+"-"+t[1]+"-"+t[0]+" "+time;
 	 
 	return d;
 }
@@ -59,4 +59,13 @@ function isToday(date){
 
 function addDigit(n){
 	return n<10? '0'+n:''+n;
+}
+
+function runde(x, n) {
+  if (n < 1 || n > 14) return false;
+  var e = Math.pow(10, n);
+  var k = (Math.round(x * e) / e).toString();
+  if (k.indexOf('.') == -1) k += '.';
+  k += e.toString().substring(1);
+  return k.substring(0, k.indexOf('.') + n+1);
 }
