@@ -32,6 +32,9 @@ $("#container").append('<p><img src="<?php echo base_url(); ?>/img/ajax-loader.g
 		{
 			var MeterDaten = getJson("<?php echo base_url(); ?>index.php/data/getDataFromMeter/"+id[i]);
 			series.push({
+		     	tooltip: {
+		    		valueDecimals: 3
+		       	},
 		     	name: MeterDaten.Name+" ("+MeterDaten.Unit+")",
 		     	
 		        data: (function() {
@@ -64,6 +67,7 @@ $("#container").append('<p><img src="<?php echo base_url(); ?>/img/ajax-loader.g
 	        type: 'spline',
 	        //inverted: false,
 	        //width: 500,
+	        height:550,
 	        style: {
 	        	margin: '0 auto'
 	        }
@@ -84,7 +88,7 @@ $("#container").append('<p><img src="<?php echo base_url(); ?>/img/ajax-loader.g
 			//maxZoom: 14 * 24 * 3600000, // fourteen days
 	        title: {
 	        	enabled: true,
-	            text: 'Timestamp'
+	            text: 'Datum / Uhrzeit'
 	        }
 	    },
 	    yAxis: {
@@ -125,23 +129,16 @@ $("#container").append('<p><img src="<?php echo base_url(); ?>/img/ajax-loader.g
         series: MeterValues(id,from,to)
 	});
 	
+	
 	var legegndx = chart.legend.group.translateX;
 	var pRx = legegndx; //chart.chartWidth - 210;
     var pRy = 250
-    // chart.renderer.rect(pRx, pRy, 200, 120, 5)
-        // .attr({
-            // 'stroke-width': 2,
-            // stroke: 'black',
-            // fill: 'white',
-            // zIndex: 3
-        // })
-        // .add();
 
-    var Mma = getJson("<?php echo base_url(); ?>index.php/data/getAreaValuesmma/"+"9"+"/"+from+"/"+to);
-    var max = Mma[0].Max;
-    var min = Mma[0].Min;
-    var avg = Mma[0].Avg;
-    chart.renderer.label('Gesamtverbrauch: <br>Max: '+max+' kW<br>Min: '+min+' kW<br>Durchschnitt: '+ runde(avg,3)+' kW<br>Arbeit: '+ runde(arbeit,3) +' kW/h', pRx+5, pRy-5)
+    var Mma = getJson("<?php echo base_url(); ?>index.php/data/getAreaValuesmma/"+9+"/"+from+"/"+to);
+    var max = runde(Mma[0].Max,3);
+    var min = runde(Mma[0].Min,3);
+    var avg = runde(Mma[0].Avg,3);
+    chart.renderer.label('Gesamtverbrauch: <br>Max: '+max+' kW<br>Min: '+min+' kW<br>Durchschnitt: '+avg+' kW<br>Arbeit: '+ runde(arbeit,3) +' kWh', pRx+5, pRy-5)
     	.attr({
         	//fill: colors[0],
             stroke: 'black',
@@ -183,7 +180,10 @@ function drawChart(){
 	
 	for (var i=0,l = meter.length; i<l; i++)
 	{
-	 	ID.push(meter[i].ID);
+	 	if (meter[i].Unit == "kW") 
+	 	{
+	 		ID.push(meter[i].ID);
+	 	}
  	} 	
 	
 	var timeVon = dp2dateTS(document.getElementById('datevon').value,'00:00:00');
